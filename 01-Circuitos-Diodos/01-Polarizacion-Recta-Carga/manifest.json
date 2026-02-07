@@ -1,0 +1,49 @@
+{
+  "id": "dio-01-polarizacion-recta-carga",
+  "topic": "Polarización y Recta de Carga del Diodo",
+  "type": "learning_module",
+  "status": "active",
+  "last_updated": "2026-02-07",
+
+  "human_purpose": "Comprender el funcionamiento fundamental del diodo, su ecuación característica (Shockley), las regiones de operación, los efectos de la temperatura y la determinación del punto de operación mediante la recta de carga.",
+  "tags": ["diodo", "polarización", "recta de carga", "Shockley", "curva IV", "temperatura", "punto de operación"],
+  "difficulty": "básico",
+  "estimated_time": "2-3 horas",
+
+  "resource_map": {
+    "entry_point": "DIO-01-Intro.md",
+    "main_theory": "theory/DIO-01-Teoria-Diodo.md",
+    "cheat_sheet": null,
+    "methods": [],
+    "problems": [],
+    "answers": null,
+    "solutions": []
+  },
+
+  "subtopics": [
+    {"id": "1.1.1", "title": "Ecuación de Shockley", "concepts": ["corriente de saturación", "voltaje térmico", "factor de idealidad"]},
+    {"id": "1.1.2", "title": "Regiones de operación", "concepts": ["directa", "inversa", "ruptura", "voltaje de umbral"]},
+    {"id": "1.1.3", "title": "Efectos de la temperatura", "concepts": ["coeficiente térmico", "duplicación de Is", "voltaje de umbral vs temperatura"]},
+    {"id": "1.1.4", "title": "Recta de carga", "concepts": ["punto de operación", "punto Q", "análisis gráfico"]}
+  ],
+
+  "ai_contract": {
+    "default_output": "markdown",
+    "allowed_tasks": ["explain_concept", "generate_problems", "verify_solution", "generate_graphs"],
+    "solution_guidelines": {
+      "require_context": true,
+      "step_by_step": true
+    }
+  },
+
+  "references": [
+    {
+      "citation": "Boylestad, R. L. & Nashelsky, L. Electrónica: Teoría de Circuitos y Dispositivos Electrónicos. Pearson, 11ª ed.",
+      "mapping": {"Capítulo 1-2": "Diodos y aplicaciones"}
+    },
+    {
+      "citation": "Sedra, A. S. & Smith, K. C. Circuitos Microelectrónicos. Oxford, 7ª ed.",
+      "mapping": {"Capítulo 3": "Diodos"}
+    }
+  ]
+}

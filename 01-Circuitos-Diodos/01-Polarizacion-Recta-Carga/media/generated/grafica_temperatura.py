@@ -91,6 +91,6 @@ plt.text(-3.0, 2, 'Región de Polarización Inversa ($I \\approx 0$)',
 plt.text(-5.2, -12, 'Región de\nRuptura', 
          ha='right', fontsize=10, fontweight='bold', color='purple')
 
-output_path = 'Tema 1/curva_temperatura_diodo.png'
+output_path = '01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_temperatura_diodo.png'
 plt.savefig(output_path, dpi=100)
 print(f"Gráfica actualizada guardada en: {output_path}")

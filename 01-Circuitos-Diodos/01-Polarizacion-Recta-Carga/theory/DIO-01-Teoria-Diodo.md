@@ -1,18 +1,14 @@
-<!-- 
-METADATA DEL DOCUMENTO
-----------------------
-Última actualización: 06 de Febrero, 2026
-Estado: Borrador Avanzado
-Módulos implementados:
-  - Definición teórica y Ecuación de Shockley.
-  - Regiones de operación (Directa, Inversa, Ruptura).
-  - Efectos de la temperatura (Coeficientes térmicos).
-  - Galería de gráficos (Python generada): Curva Global + Zoom Inversa.
-  - Ejemplo práctico de cálculo numérico (20°C vs 100°C).
-Pendiente:
-  - Añadir simulaciones de otros semiconductores.
-  - Añadir circuito equivalente.
+<!--
+::METADATA::
+type: theory
+topic_id: dio-01-diodo
+file_id: DIO-01-Teoria-Diodo
+status: review
+audience: both
+last_updated: 2026-02-07
 -->
+
+> 🏠 **Navegación:** [← Volver al Índice](../../../WIKI_INDEX.md) | [📚 Glosario](../../../glossary.md) | [← Módulo](../../00-Index.md)
 
 # El Diodo
 
@@ -118,15 +114,15 @@ Esta sección contiene las gráficas generadas computacionalmente para ilustrar 
 
 ### 1. Curva Característica Global
 Muestra la curva completa del diodo, incluyendo las zonas de conducción ideal y ruptura.
-![Curva Característica Global](curva_diodo_general.png)
+![Curva Característica Global](../media/generated/curva_diodo_general.png)
 
 ### 2. Detalles de la Región Inversa (Zoom)
 A menudo se simplifica diciendo que la corriente en inversa es cero. Sin embargo, al hacer un **zoom** a escala microscópica, observamos la **Corriente de Fuga ($I_S$)**.
 
 Esta gráfica muestra específicamente la magnitud del desfase entre el eje cero (corriente nula) y la curva real de corriente de fuga:
-![Zoom Región Inversa](curva_diodo_zoom_inversa.png)
+![Zoom Región Inversa](../media/generated/curva_diodo_zoom_inversa.png)
 
-> **Nota Técnica:** Las gráficas anteriores fueron generadas automáticamente utilizando el script `curva_diodo.py` ubicado en esta misma carpeta, el cual utiliza la ecuación teórica de Shockley para modelar el comportamiento.
+> **Nota Técnica:** Las gráficas anteriores fueron generadas automáticamente utilizando el script [`curva_diodo.py`](../media/generated/curva_diodo.py), el cual utiliza la ecuación teórica de Shockley para modelar el comportamiento.
 
 ---
 
@@ -233,12 +229,12 @@ A continuación se presentan tres vistas detalladas de las regiones de operació
 
 ### 1. Región Directa (Encendido)
 Se aprecia claramente el desplazamiento del voltaje de umbral. A 100°C (Rojo), el diodo conduce significativamente antes.
-![Región Directa](curva_temp_directa.png)
+![Región Directa](../media/generated/curva_temp_directa.png)
 
 ### 2. Región Inversa (Zoom - Corriente de Fuga)
 En esta escala ampliada (picoamperios/nanoamperios), vemos que la corriente de fuga aumenta drásticamente con la temperatura, aunque sigue siendo muy pequeña para propósitos generales.
-![Región Inversa](curva_temp_inversa.png)
+![Región Inversa](../media/generated/curva_temp_inversa.png)
 
 ### 3. Región de Ruptura
 El voltaje de ruptura se mantiene relativamente estable (en este modelo $V_{BR} \approx -5V$), pero la pendiente de la avalancha es pronunciada.
-![Región Ruptura](curva_temp_ruptura.png)
+![Región Ruptura](../media/generated/curva_temp_ruptura.png)

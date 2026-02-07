@@ -40,7 +40,7 @@ plt.annotate('', xy=(-4.5, 0.1), xytext=(-0.5, 0.1), arrowprops=dict(arrowstyle=
 
 plt.ylim(-3, 3) 
 plt.xlim(-6.5, 1.5)
-plt.savefig('Tema 1/curva_diodo_general.png', dpi=100)
+plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_diodo_general.png', dpi=100)
 print("Gráfica general guardada.")
 
 # ---------------- GRAFICA 2: ZOOM INVERSA ----------------
@@ -81,5 +81,5 @@ plt.text(-4.0, 0.00005, 'Voltaje Inverso Aplicado', color='purple', fontsize=9)
 
 plt.legend()
 plt.tight_layout()
-plt.savefig('Tema 1/curva_diodo_zoom_inversa.png', dpi=100)
+plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_diodo_zoom_inversa.png', dpi=100)
 print("Gráfica de zoom guardada.")

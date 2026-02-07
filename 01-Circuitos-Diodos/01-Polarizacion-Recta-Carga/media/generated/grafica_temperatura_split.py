@@ -77,7 +77,7 @@ plt.grid(True, linestyle='--', alpha=0.5)
 plt.legend()
 plt.ylim(0, 20)
 plt.xlim(0, 1.3)
-plt.savefig('Tema 1/curva_temp_directa.png', dpi=100)
+plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_temp_directa.png', dpi=100)
 print("Generada: curva_temp_directa.png")
 
 # ----------------- GRÁFICA 2: POLARIZACIÓN INVERSA (ZOOM) -----------------
@@ -105,7 +105,7 @@ plt.legend()
 # A -100°C -> ~0pA
 plt.yscale('symlog', linthresh=1) # Log scale para ver diferencias grandes
 plt.ylim(-200, 10) # Hasta un poco por encima de 0
-plt.savefig('Tema 1/curva_temp_inversa.png', dpi=100)
+plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_temp_inversa.png', dpi=100)
 print("Generada: curva_temp_inversa.png")
 
 # ----------------- GRÁFICA 3: REGIÓN DE RUPTURA -----------------
@@ -125,5 +125,5 @@ plt.grid(True, linestyle='--', alpha=0.5)
 plt.legend(loc='lower left')
 plt.ylim(-20, 0)
 plt.xlim(-6.0, -4.5)
-plt.savefig('Tema 1/curva_temp_ruptura.png', dpi=100)
+plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_temp_ruptura.png', dpi=100)
 print("Generada: curva_temp_ruptura.png")

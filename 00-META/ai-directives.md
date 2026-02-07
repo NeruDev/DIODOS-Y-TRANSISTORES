@@ -1,4 +1,16 @@
-# Directivas Generales del Proyecto
+<!--
+::METADATA::
+type: reference
+topic_id: ai-directives
+file_id: ai-directives
+status: stable
+audience: ai_context
+last_updated: 2026-02-07
+-->
+
+# 🔧 Directivas Técnicas para IA — Diodos y Transistores
+
+> Reglas técnicas complementarias al [Contrato IA](ia-contract.md).
 
 Este documento recopila las mejores prácticas, correcciones y observaciones técnicas derivadas del desarrollo del material didáctico del repositorio.
 
