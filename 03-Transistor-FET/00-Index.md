@@ -26,12 +26,12 @@ Este módulo cubre el transistor de efecto de campo: configuraciones de polariza
 
 | # | Subtema | Tema del Temario | Estado |
 |---|---------|------------------|--------|
-| 01 | [Polarización Fija](01-Polarizacion-Fija/) | 3.1.1 | 📝 Pendiente |
-| 02 | [Autopolarización](02-Autopolarizacion/) | 3.1.2 | 📝 Pendiente |
-| 03 | [Divisor de Voltaje](03-Divisor-Voltaje/) | 3.2 | 📝 Pendiente |
-| 04 | [Compuerta y Drenador Común](04-Compuerta-Drenador-Comun/) | 3.3 | 📝 Pendiente |
-| 05 | [Polarización de MOSFET](05-Polarizacion-MOSFET/) | 3.4 | 📝 Pendiente |
-| 06 | [Redes Combinadas](06-Redes-Combinadas/) | 3.5 | 📝 Pendiente |
+| 01 | [Polarización Fija](theory/FET-01-Teoria-Polarizacion-Fija.md) | 3.1.1 | 📝 Pendiente |
+| 02 | [Autopolarización](theory/FET-02-Teoria-Autopolarizacion.md) | 3.1.2 | 📝 Pendiente |
+| 03 | [Divisor de Voltaje](theory/FET-03-Teoria-Divisor-Voltaje.md) | 3.2 | 📝 Pendiente |
+| 04 | [Compuerta y Drenador Común](theory/FET-04-Teoria-Compuerta-Drenador-Comun.md) | 3.3 | 📝 Pendiente |
+| 05 | [Polarización de MOSFET](theory/FET-05-Teoria-Polarizacion-MOSFET.md) | 3.4 | 📝 Pendiente |
+| 06 | [Redes Combinadas](theory/FET-06-Teoria-Redes-Combinadas.md) | 3.5 | 📝 Pendiente |
 
 ## Tiempo Estimado
 

@@ -1,0 +1,15 @@
+<!--
+::METADATA::
+type: theory
+topic_id: fet-06
+file_id: FET-06-Teoria-Redes-Combinadas
+status: draft
+audience: both
+last_updated: 2026-02-07
+-->
+
+> 🏠 **Navegación:** [← Módulo](../00-Index.md) | [📋 Índice Wiki](../../WIKI_INDEX.md) | [📚 Glosario](../../glossary.md)
+
+# 3.5 — Redes Combinadas
+
+*Contenido pendiente de desarrollo.*

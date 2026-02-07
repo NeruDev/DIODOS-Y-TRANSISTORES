@@ -1,0 +1,60 @@
+{
+  "id": "dio-circuitos-diodos",
+  "topic": "Circuitos de Aplicación con Diodos",
+  "type": "learning_module",
+  "status": "active",
+  "last_updated": "2026-02-07",
+
+  "human_purpose": "Comprender los circuitos de aplicación con diodos: polarización, recta de carga, rectificación, filtrado, recortadores, sujetadores, multiplicadores, diodo Zener y otros diodos especiales.",
+  "tags": ["diodo", "polarización", "recta de carga", "rectificación", "filtrado", "recortadores", "sujetadores", "multiplicadores", "Zener", "Schottky", "Varactor"],
+  "difficulty": "básico-intermedio",
+  "estimated_time": "12-16 horas",
+
+  "resource_map": {
+    "entry_point": "DIO-00-Intro.md",
+    "theory": [
+      "theory/DIO-01-Teoria-Diodo.md",
+      "theory/DIO-02-Teoria-Circuitos-Serie-Paralelo.md",
+      "theory/DIO-03-Teoria-Rectificacion-Filtrado.md",
+      "theory/DIO-04-Teoria-Recortadores.md",
+      "theory/DIO-05-Teoria-Sujetadores.md",
+      "theory/DIO-06-Teoria-Multiplicadores.md",
+      "theory/DIO-07-Teoria-Diodo-Zener.md",
+      "theory/DIO-08-Teoria-Otros-Diodos.md"
+    ],
+    "methods": [],
+    "problems": [],
+    "solutions": []
+  },
+
+  "subtopics": [
+    {"id": "1.1", "title": "Polarización y recta de carga", "file": "DIO-01", "status": "review"},
+    {"id": "1.2", "title": "Circuitos serie, paralelo, serie-paralelo en DC", "file": "DIO-02", "status": "draft"},
+    {"id": "1.3.1", "title": "Rectificación y filtrado", "file": "DIO-03", "status": "draft"},
+    {"id": "1.3.2", "title": "Recortadores", "file": "DIO-04", "status": "draft"},
+    {"id": "1.3.3", "title": "Sujetadores", "file": "DIO-05", "status": "draft"},
+    {"id": "1.3.4", "title": "Multiplicadores", "file": "DIO-06", "status": "draft"},
+    {"id": "1.4", "title": "Diodo Zener y circuitos reguladores", "file": "DIO-07", "status": "draft"},
+    {"id": "1.5", "title": "Otros diodos", "file": "DIO-08", "status": "draft"}
+  ],
+
+  "ai_contract": {
+    "default_output": "markdown",
+    "allowed_tasks": ["explain_concept", "generate_problems", "verify_solution", "generate_graphs"],
+    "solution_guidelines": {
+      "require_context": true,
+      "step_by_step": true
+    }
+  },
+
+  "references": [
+    {
+      "citation": "Boylestad, R. L. & Nashelsky, L. Electrónica: Teoría de Circuitos y Dispositivos Electrónicos. Pearson, 11ª ed.",
+      "mapping": {"Capítulo 1-2": "Diodos y aplicaciones", "Capítulo 3": "Diodos especiales"}
+    },
+    {
+      "citation": "Sedra, A. S. & Smith, K. C. Circuitos Microelectrónicos. Oxford, 7ª ed.",
+      "mapping": {"Capítulo 3": "Diodos"}
+    }
+  ]
+}

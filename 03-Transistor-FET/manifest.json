@@ -1,0 +1,52 @@
+{
+  "id": "fet-transistor-unipolar",
+  "topic": "Transistor Unipolar (FET, MOSFET)",
+  "type": "learning_module",
+  "status": "draft",
+  "last_updated": "2026-02-07",
+
+  "human_purpose": "Comprender el transistor de efecto de campo: configuraciones de polarización, curva universal, MOSFET y redes combinadas.",
+  "tags": ["FET", "JFET", "MOSFET", "polarización", "autopolarización", "divisor de voltaje", "curva universal"],
+  "difficulty": "intermedio",
+  "estimated_time": "10-14 horas",
+
+  "resource_map": {
+    "entry_point": "FET-00-Intro.md",
+    "theory": [
+      "theory/FET-01-Teoria-Polarizacion-Fija.md",
+      "theory/FET-02-Teoria-Autopolarizacion.md",
+      "theory/FET-03-Teoria-Divisor-Voltaje.md",
+      "theory/FET-04-Teoria-Compuerta-Drenador-Comun.md",
+      "theory/FET-05-Teoria-Polarizacion-MOSFET.md",
+      "theory/FET-06-Teoria-Redes-Combinadas.md"
+    ],
+    "methods": [],
+    "problems": [],
+    "solutions": []
+  },
+
+  "subtopics": [
+    {"id": "3.1.1", "title": "Polarización fija", "file": "FET-01", "status": "draft"},
+    {"id": "3.1.2", "title": "Autopolarización", "file": "FET-02", "status": "draft"},
+    {"id": "3.2", "title": "Polarización por divisor de voltaje", "file": "FET-03", "status": "draft"},
+    {"id": "3.3", "title": "Compuerta y drenador común", "file": "FET-04", "status": "draft"},
+    {"id": "3.4", "title": "Polarización de MOSFET", "file": "FET-05", "status": "draft"},
+    {"id": "3.5", "title": "Redes combinadas", "file": "FET-06", "status": "draft"}
+  ],
+
+  "ai_contract": {
+    "default_output": "markdown",
+    "allowed_tasks": ["explain_concept", "generate_problems", "verify_solution", "generate_graphs"],
+    "solution_guidelines": {
+      "require_context": true,
+      "step_by_step": true
+    }
+  },
+
+  "references": [
+    {
+      "citation": "Boylestad, R. L. & Nashelsky, L. Electrónica: Teoría de Circuitos y Dispositivos Electrónicos. Pearson, 11ª ed.",
+      "mapping": {"Capítulo 6-7": "FET y polarización"}
+    }
+  ]
+}

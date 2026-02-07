@@ -1,0 +1,46 @@
+{
+  "id": "amp-amplificadores",
+  "topic": "Amplificadores con Transistores BJT y FET",
+  "type": "learning_module",
+  "status": "draft",
+  "last_updated": "2026-02-07",
+
+  "human_purpose": "Comprender el análisis de amplificadores en pequeña señal con BJT y JFET/MOSFET: modelos, parámetros y configuraciones.",
+  "tags": ["amplificador", "pequeña señal", "modelo re", "modelo híbrido", "JFET", "BJT", "ganancia", "transconductancia"],
+  "difficulty": "avanzado",
+  "estimated_time": "12-16 horas",
+
+  "resource_map": {
+    "entry_point": "AMP-00-Intro.md",
+    "theory": [
+      "theory/AMP-01-Teoria-Introduccion-Pequena-Senal.md",
+      "theory/AMP-02-Teoria-Amplificador-BJT.md",
+      "theory/AMP-03-Teoria-Amplificador-JFET.md"
+    ],
+    "methods": [],
+    "problems": [],
+    "solutions": []
+  },
+
+  "subtopics": [
+    {"id": "4.1", "title": "Introducción a amplificadores en pequeña señal", "file": "AMP-01", "status": "draft"},
+    {"id": "4.2", "title": "Amplificador con BJT", "file": "AMP-02", "status": "draft"},
+    {"id": "4.3", "title": "Amplificador con JFET", "file": "AMP-03", "status": "draft"}
+  ],
+
+  "ai_contract": {
+    "default_output": "markdown",
+    "allowed_tasks": ["explain_concept", "generate_problems", "verify_solution", "generate_graphs"],
+    "solution_guidelines": {
+      "require_context": true,
+      "step_by_step": true
+    }
+  },
+
+  "references": [
+    {
+      "citation": "Boylestad, R. L. & Nashelsky, L. Electrónica: Teoría de Circuitos y Dispositivos Electrónicos. Pearson, 11ª ed.",
+      "mapping": {"Capítulo 8-10": "Análisis en pequeña señal BJT y FET"}
+    }
+  ]
+}

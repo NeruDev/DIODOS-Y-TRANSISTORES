@@ -28,9 +28,9 @@ Este módulo aborda los amplificadores en pequeña señal: modelos re e híbrido
 
 | # | Subtema | Tema del Temario | Estado |
 |---|---------|------------------|--------|
-| 01 | [Introducción a Amplificadores en Pequeña Señal](01-Introduccion-Pequena-Senal/) | 4.1 | 📝 Pendiente |
-| 02 | [Amplificador con BJT](02-Amplificador-BJT/) | 4.2 | 📝 Pendiente |
-| 03 | [Amplificador con JFET](03-Amplificador-JFET/) | 4.3 | 📝 Pendiente |
+| 01 | [Introducción a Amplificadores en Pequeña Señal](theory/AMP-01-Teoria-Introduccion-Pequena-Senal.md) | 4.1 | 📝 Pendiente |
+| 02 | [Amplificador con BJT](theory/AMP-02-Teoria-Amplificador-BJT.md) | 4.2 | 📝 Pendiente |
+| 03 | [Amplificador con JFET](theory/AMP-03-Teoria-Amplificador-JFET.md) | 4.3 | 📝 Pendiente |
 
 ## Tiempo Estimado
 

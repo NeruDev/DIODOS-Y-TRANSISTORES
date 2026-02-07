@@ -60,12 +60,16 @@ Este repositorio sigue la **Plantilla de Arquitectura Modular Universal** (ver [
 ```
 DIODOS-Y-TRANSISTORES/
 ├── 📄 README.md, WIKI_INDEX.md, glossary.md, Temario.md
-├── 🎛️ 00-META/          → Centro de control (reglas, estándares, herramientas)
-├── 📚 01-Circuitos-Diodos/  → Módulo 1: Aplicaciones con diodos
-├── 📚 02-Transistor-BJT/    → Módulo 2: Transistor bipolar
-├── 📚 03-Transistor-FET/    → Módulo 3: Transistor unipolar
-├── 📚 04-Amplificadores/    → Módulo 4: Amplificadores BJT y FET
-└── 📚 05-Proyecto-Final/    → Módulo 5: Diseño de fuente de alimentación
+├── 🎛️ 00-META/              → Centro de control (reglas, estándares, herramientas)
+├── 📚 01-Circuitos-Diodos/   → Módulo 1: Aplicaciones con diodos
+│   ├── theory/               → Archivos de teoría por subtema (DIO-01..DIO-08)
+│   ├── methods/ problems/ solutions/
+│   ├── media/generated/      → Gráficas y scripts Python
+│   └── Notas/
+├── 📚 02-Transistor-BJT/     → Módulo 2: Transistor bipolar
+├── 📚 03-Transistor-FET/     → Módulo 3: Transistor unipolar
+├── 📚 04-Amplificadores/     → Módulo 4: Amplificadores BJT y FET
+└── 📚 05-Proyecto-Final/     → Módulo 5: Diseño de fuente de alimentación
 ```
 
 ---
@@ -75,11 +79,12 @@ DIODOS-Y-TRANSISTORES/
 ### Para Estudiantes
 1. Consulta el [Temario](Temario.md) para ver los temas de la materia.
 2. Navega al módulo de interés desde la tabla de arriba.
-3. Dentro de cada subtema: `theory/` → `methods/` → `problems/` → `solutions/`.
-4. Usa el [Glosario](glossary.md) para consultar definiciones.
+3. En cada módulo: los subtemas están en `theory/` como archivos individuales.
+4. Complementa con `methods/`, `problems/` y `solutions/` del mismo módulo.
+5. Usa el [Glosario](glossary.md) para consultar definiciones.
 
 ### Para Asistentes IA
 1. **Leer primero:** [Contrato IA](00-META/ia-contract.md).
-2. Navegar a subtema vía `manifest.json`.
-3. Consultar `_directives.md` del subtema.
+2. Navegar al módulo vía `manifest.json` en la raíz del módulo.
+3. Consultar `_directives.md` del módulo.
 4. Generar contenido siguiendo las reglas establecidas.

@@ -26,8 +26,8 @@ Diseño de una fuente de alimentación regulada, utilizando tanto regulador tran
 
 | # | Subtema | Tema del Temario | Estado |
 |---|---------|------------------|--------|
-| 01 | [Fuente con Regulador Transistorizado](01-Fuente-Regulador-Transistorizado/) | 5.1.1 | 📝 Pendiente |
-| 02 | [Fuente con Regulador de Circuito Integrado](02-Fuente-Regulador-CI/) | 5.1.2 | 📝 Pendiente |
+| 01 | [Fuente con Regulador Transistorizado](theory/PRO-01-Teoria-Fuente-Regulador-Transistorizado.md) | 5.1.1 | 📝 Pendiente |
+| 02 | [Fuente con Regulador de Circuito Integrado](theory/PRO-02-Teoria-Fuente-Regulador-CI.md) | 5.1.2 | 📝 Pendiente |
 
 ## Tiempo Estimado
 

@@ -1,0 +1,52 @@
+{
+  "id": "bjt-transistor-bipolar",
+  "topic": "Transistor Bipolar (BJT)",
+  "type": "learning_module",
+  "status": "draft",
+  "last_updated": "2026-02-07",
+
+  "human_purpose": "Comprender el transistor bipolar BJT: características, parámetros, punto de operación, configuraciones de polarización, conmutación y estabilidad.",
+  "tags": ["BJT", "transistor", "bipolar", "polarización", "emisor común", "base común", "colector común", "conmutación", "estabilidad"],
+  "difficulty": "intermedio",
+  "estimated_time": "10-14 horas",
+
+  "resource_map": {
+    "entry_point": "BJT-00-Intro.md",
+    "theory": [
+      "theory/BJT-01-Teoria-Caracteristicas-Parametros.md",
+      "theory/BJT-02-Teoria-Polarizacion-Emisor-Comun.md",
+      "theory/BJT-03-Teoria-Polarizacion-Base-Comun.md",
+      "theory/BJT-04-Teoria-Polarizacion-Colector-Comun.md",
+      "theory/BJT-05-Teoria-Conmutacion.md",
+      "theory/BJT-06-Teoria-Estabilidad.md"
+    ],
+    "methods": [],
+    "problems": [],
+    "solutions": []
+  },
+
+  "subtopics": [
+    {"id": "2.1", "title": "Características, parámetros y punto de operación", "file": "BJT-01", "status": "draft"},
+    {"id": "2.2.1", "title": "Polarización en emisor común", "file": "BJT-02", "status": "draft"},
+    {"id": "2.2.2", "title": "Polarización en base común", "file": "BJT-03", "status": "draft"},
+    {"id": "2.2.3", "title": "Polarización en colector común", "file": "BJT-04", "status": "draft"},
+    {"id": "2.3", "title": "Conmutación", "file": "BJT-05", "status": "draft"},
+    {"id": "2.4", "title": "Estabilidad", "file": "BJT-06", "status": "draft"}
+  ],
+
+  "ai_contract": {
+    "default_output": "markdown",
+    "allowed_tasks": ["explain_concept", "generate_problems", "verify_solution", "generate_graphs"],
+    "solution_guidelines": {
+      "require_context": true,
+      "step_by_step": true
+    }
+  },
+
+  "references": [
+    {
+      "citation": "Boylestad, R. L. & Nashelsky, L. Electrónica: Teoría de Circuitos y Dispositivos Electrónicos. Pearson, 11ª ed.",
+      "mapping": {"Capítulo 4-5": "Transistor BJT y polarización DC"}
+    }
+  ]
+}

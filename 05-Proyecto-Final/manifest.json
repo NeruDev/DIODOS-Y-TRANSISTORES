@@ -1,0 +1,44 @@
+{
+  "id": "pro-proyecto-final",
+  "topic": "Proyecto Final — Fuente de Alimentación",
+  "type": "learning_module",
+  "status": "draft",
+  "last_updated": "2026-02-07",
+
+  "human_purpose": "Diseñar una fuente de alimentación regulada utilizando regulador transistorizado y regulador de circuito integrado.",
+  "tags": ["proyecto", "fuente de alimentación", "regulador", "transistor", "circuito integrado", "diseño"],
+  "difficulty": "avanzado",
+  "estimated_time": "8-12 horas",
+
+  "resource_map": {
+    "entry_point": "PRO-00-Intro.md",
+    "theory": [
+      "theory/PRO-01-Teoria-Fuente-Regulador-Transistorizado.md",
+      "theory/PRO-02-Teoria-Fuente-Regulador-CI.md"
+    ],
+    "methods": [],
+    "problems": [],
+    "solutions": []
+  },
+
+  "subtopics": [
+    {"id": "5.1.1", "title": "Fuente con regulador transistorizado", "file": "PRO-01", "status": "draft"},
+    {"id": "5.1.2", "title": "Fuente con regulador de circuito integrado", "file": "PRO-02", "status": "draft"}
+  ],
+
+  "ai_contract": {
+    "default_output": "markdown",
+    "allowed_tasks": ["explain_concept", "generate_problems", "verify_solution", "generate_graphs"],
+    "solution_guidelines": {
+      "require_context": true,
+      "step_by_step": true
+    }
+  },
+
+  "references": [
+    {
+      "citation": "Malvino, A. P. & Bates, D. J. Principios de Electrónica. McGraw-Hill, 7ª ed.",
+      "mapping": {"Capítulo 18": "Fuentes de alimentación reguladas"}
+    }
+  ]
+}

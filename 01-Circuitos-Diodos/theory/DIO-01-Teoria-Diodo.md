@@ -8,7 +8,7 @@ audience: both
 last_updated: 2026-02-07
 -->
 
-> 🏠 **Navegación:** [← Volver al Índice](../../../WIKI_INDEX.md) | [📚 Glosario](../../../glossary.md) | [← Módulo](../../00-Index.md)
+> 🏠 **Navegación:** [← Volver al Índice](../../WIKI_INDEX.md) | [📚 Glosario](../../glossary.md) | [← Módulo](../00-Index.md)
 
 # El Diodo
 

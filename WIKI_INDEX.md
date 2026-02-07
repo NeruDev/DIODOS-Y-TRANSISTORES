@@ -16,128 +16,76 @@ last_updated: 2026-02-07
 
 ## Módulo 01: Circuitos de Aplicación con Diodos (`DIO`)
 
-- **1.1 Polarización y Recta de Carga**
-  - [Intro](01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/DIO-01-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/theory/)
-  - [Métodos](01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/methods/)
-  - [Problemas](01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/problems/)
-  - [Soluciones](01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/solutions/)
+- [📖 Intro del Módulo](01-Circuitos-Diodos/DIO-00-Intro.md) | [📋 Índice](01-Circuitos-Diodos/00-Index.md)
+- Carpetas: [theory/](01-Circuitos-Diodos/theory/) · [methods/](01-Circuitos-Diodos/methods/) · [problems/](01-Circuitos-Diodos/problems/) · [solutions/](01-Circuitos-Diodos/solutions/) · [media/](01-Circuitos-Diodos/media/)
 
-- **1.2 Circuitos Serie, Paralelo, Serie-Paralelo en DC**
-  - [Intro](01-Circuitos-Diodos/02-Circuitos-Serie-Paralelo/DIO-02-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/02-Circuitos-Serie-Paralelo/theory/)
-  - [Métodos](01-Circuitos-Diodos/02-Circuitos-Serie-Paralelo/methods/)
-  - [Problemas](01-Circuitos-Diodos/02-Circuitos-Serie-Paralelo/problems/)
-  - [Soluciones](01-Circuitos-Diodos/02-Circuitos-Serie-Paralelo/solutions/)
-
-- **1.3.1 Rectificación y Filtrado**
-  - [Intro](01-Circuitos-Diodos/03-Rectificacion-Filtrado/DIO-03-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/03-Rectificacion-Filtrado/theory/)
-  - [Métodos](01-Circuitos-Diodos/03-Rectificacion-Filtrado/methods/)
-  - [Problemas](01-Circuitos-Diodos/03-Rectificacion-Filtrado/problems/)
-  - [Soluciones](01-Circuitos-Diodos/03-Rectificacion-Filtrado/solutions/)
-
-- **1.3.2 Recortadores**
-  - [Intro](01-Circuitos-Diodos/04-Recortadores/DIO-04-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/04-Recortadores/theory/)
-  - [Métodos](01-Circuitos-Diodos/04-Recortadores/methods/)
-  - [Problemas](01-Circuitos-Diodos/04-Recortadores/problems/)
-  - [Soluciones](01-Circuitos-Diodos/04-Recortadores/solutions/)
-
-- **1.3.3 Sujetadores**
-  - [Intro](01-Circuitos-Diodos/05-Sujetadores/DIO-05-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/05-Sujetadores/theory/)
-  - [Métodos](01-Circuitos-Diodos/05-Sujetadores/methods/)
-  - [Problemas](01-Circuitos-Diodos/05-Sujetadores/problems/)
-  - [Soluciones](01-Circuitos-Diodos/05-Sujetadores/solutions/)
-
-- **1.3.4 Multiplicadores**
-  - [Intro](01-Circuitos-Diodos/06-Multiplicadores/DIO-06-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/06-Multiplicadores/theory/)
-  - [Métodos](01-Circuitos-Diodos/06-Multiplicadores/methods/)
-  - [Problemas](01-Circuitos-Diodos/06-Multiplicadores/problems/)
-  - [Soluciones](01-Circuitos-Diodos/06-Multiplicadores/solutions/)
-
-- **1.4 Diodo Zener y Circuitos Reguladores**
-  - [Intro](01-Circuitos-Diodos/07-Diodo-Zener/DIO-07-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/07-Diodo-Zener/theory/)
-  - [Métodos](01-Circuitos-Diodos/07-Diodo-Zener/methods/)
-  - [Problemas](01-Circuitos-Diodos/07-Diodo-Zener/problems/)
-  - [Soluciones](01-Circuitos-Diodos/07-Diodo-Zener/solutions/)
-
-- **1.5 Otros Diodos (Varactor, Schottky, PIN, etc.)**
-  - [Intro](01-Circuitos-Diodos/08-Otros-Diodos/DIO-08-Intro.md)
-  - [Teoría](01-Circuitos-Diodos/08-Otros-Diodos/theory/)
-  - [Métodos](01-Circuitos-Diodos/08-Otros-Diodos/methods/)
-  - [Problemas](01-Circuitos-Diodos/08-Otros-Diodos/problems/)
-  - [Soluciones](01-Circuitos-Diodos/08-Otros-Diodos/solutions/)
+| # | Subtema | Archivo de Teoría |
+|---|---------|-------------------|
+| 1.1 | Polarización y Recta de Carga | [DIO-01](01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md) |
+| 1.2 | Circuitos Serie, Paralelo, Serie-Paralelo | [DIO-02](01-Circuitos-Diodos/theory/DIO-02-Teoria-Circuitos-Serie-Paralelo.md) |
+| 1.3.1 | Rectificación y Filtrado | [DIO-03](01-Circuitos-Diodos/theory/DIO-03-Teoria-Rectificacion-Filtrado.md) |
+| 1.3.2 | Recortadores | [DIO-04](01-Circuitos-Diodos/theory/DIO-04-Teoria-Recortadores.md) |
+| 1.3.3 | Sujetadores | [DIO-05](01-Circuitos-Diodos/theory/DIO-05-Teoria-Sujetadores.md) |
+| 1.3.4 | Multiplicadores | [DIO-06](01-Circuitos-Diodos/theory/DIO-06-Teoria-Multiplicadores.md) |
+| 1.4 | Diodo Zener y Reguladores | [DIO-07](01-Circuitos-Diodos/theory/DIO-07-Teoria-Diodo-Zener.md) |
+| 1.5 | Otros Diodos | [DIO-08](01-Circuitos-Diodos/theory/DIO-08-Teoria-Otros-Diodos.md) |
 
 ---
 
 ## Módulo 02: Transistor Bipolar — BJT (`BJT`)
 
-- **2.1 Características, Parámetros y Punto de Operación**
-  - [Intro](02-Transistor-BJT/01-Caracteristicas-Punto-Operacion/BJT-01-Intro.md)
+- [📖 Intro del Módulo](02-Transistor-BJT/BJT-00-Intro.md) | [📋 Índice](02-Transistor-BJT/00-Index.md)
+- Carpetas: [theory/](02-Transistor-BJT/theory/) · [methods/](02-Transistor-BJT/methods/) · [problems/](02-Transistor-BJT/problems/) · [solutions/](02-Transistor-BJT/solutions/) · [media/](02-Transistor-BJT/media/)
 
-- **2.2.1 Polarización en Emisor Común**
-  - [Intro](02-Transistor-BJT/02-Polarizacion-Emisor-Comun/BJT-02-Intro.md)
-
-- **2.2.2 Polarización en Base Común**
-  - [Intro](02-Transistor-BJT/03-Polarizacion-Base-Comun/BJT-03-Intro.md)
-
-- **2.2.3 Polarización en Colector Común**
-  - [Intro](02-Transistor-BJT/04-Polarizacion-Colector-Comun/BJT-04-Intro.md)
-
-- **2.3 Conmutación**
-  - [Intro](02-Transistor-BJT/05-Conmutacion/BJT-05-Intro.md)
-
-- **2.4 Estabilidad**
-  - [Intro](02-Transistor-BJT/06-Estabilidad/BJT-06-Intro.md)
+| # | Subtema | Archivo de Teoría |
+|---|---------|-------------------|
+| 2.1 | Características, Parámetros y Punto de Operación | [BJT-01](02-Transistor-BJT/theory/BJT-01-Teoria-Caracteristicas-Parametros.md) |
+| 2.2.1 | Polarización en Emisor Común | [BJT-02](02-Transistor-BJT/theory/BJT-02-Teoria-Polarizacion-Emisor-Comun.md) |
+| 2.2.2 | Polarización en Base Común | [BJT-03](02-Transistor-BJT/theory/BJT-03-Teoria-Polarizacion-Base-Comun.md) |
+| 2.2.3 | Polarización en Colector Común | [BJT-04](02-Transistor-BJT/theory/BJT-04-Teoria-Polarizacion-Colector-Comun.md) |
+| 2.3 | Conmutación | [BJT-05](02-Transistor-BJT/theory/BJT-05-Teoria-Conmutacion.md) |
+| 2.4 | Estabilidad | [BJT-06](02-Transistor-BJT/theory/BJT-06-Teoria-Estabilidad.md) |
 
 ---
 
 ## Módulo 03: Transistor Unipolar — FET / MOSFET (`FET`)
 
-- **3.1.1 Polarización Fija**
-  - [Intro](03-Transistor-FET/01-Polarizacion-Fija/FET-01-Intro.md)
+- [📖 Intro del Módulo](03-Transistor-FET/FET-00-Intro.md) | [📋 Índice](03-Transistor-FET/00-Index.md)
+- Carpetas: [theory/](03-Transistor-FET/theory/) · [methods/](03-Transistor-FET/methods/) · [problems/](03-Transistor-FET/problems/) · [solutions/](03-Transistor-FET/solutions/) · [media/](03-Transistor-FET/media/)
 
-- **3.1.2 Autopolarización**
-  - [Intro](03-Transistor-FET/02-Autopolarizacion/FET-02-Intro.md)
-
-- **3.2 Polarización por Divisor de Voltaje**
-  - [Intro](03-Transistor-FET/03-Divisor-Voltaje/FET-03-Intro.md)
-
-- **3.3 Compuerta y Drenador Común**
-  - [Intro](03-Transistor-FET/04-Compuerta-Drenador-Comun/FET-04-Intro.md)
-
-- **3.4 Polarización de MOSFET**
-  - [Intro](03-Transistor-FET/05-Polarizacion-MOSFET/FET-05-Intro.md)
-
-- **3.5 Redes Combinadas**
-  - [Intro](03-Transistor-FET/06-Redes-Combinadas/FET-06-Intro.md)
+| # | Subtema | Archivo de Teoría |
+|---|---------|-------------------|
+| 3.1.1 | Polarización Fija | [FET-01](03-Transistor-FET/theory/FET-01-Teoria-Polarizacion-Fija.md) |
+| 3.1.2 | Autopolarización | [FET-02](03-Transistor-FET/theory/FET-02-Teoria-Autopolarizacion.md) |
+| 3.2 | Divisor de Voltaje | [FET-03](03-Transistor-FET/theory/FET-03-Teoria-Divisor-Voltaje.md) |
+| 3.3 | Compuerta y Drenador Común | [FET-04](03-Transistor-FET/theory/FET-04-Teoria-Compuerta-Drenador-Comun.md) |
+| 3.4 | Polarización de MOSFET | [FET-05](03-Transistor-FET/theory/FET-05-Teoria-Polarizacion-MOSFET.md) |
+| 3.5 | Redes Combinadas | [FET-06](03-Transistor-FET/theory/FET-06-Teoria-Redes-Combinadas.md) |
 
 ---
 
 ## Módulo 04: Amplificadores con BJT y FET (`AMP`)
 
-- **4.1 Introducción a Amplificadores en Pequeña Señal**
-  - [Intro](04-Amplificadores/01-Introduccion-Pequena-Senal/AMP-01-Intro.md)
+- [📖 Intro del Módulo](04-Amplificadores/AMP-00-Intro.md) | [📋 Índice](04-Amplificadores/00-Index.md)
+- Carpetas: [theory/](04-Amplificadores/theory/) · [methods/](04-Amplificadores/methods/) · [problems/](04-Amplificadores/problems/) · [solutions/](04-Amplificadores/solutions/) · [media/](04-Amplificadores/media/)
 
-- **4.2 Amplificador con BJT**
-  - [Intro](04-Amplificadores/02-Amplificador-BJT/AMP-02-Intro.md)
-
-- **4.3 Amplificador con JFET**
-  - [Intro](04-Amplificadores/03-Amplificador-JFET/AMP-03-Intro.md)
+| # | Subtema | Archivo de Teoría |
+|---|---------|-------------------|
+| 4.1 | Introducción a Pequeña Señal | [AMP-01](04-Amplificadores/theory/AMP-01-Teoria-Introduccion-Pequena-Senal.md) |
+| 4.2 | Amplificador con BJT | [AMP-02](04-Amplificadores/theory/AMP-02-Teoria-Amplificador-BJT.md) |
+| 4.3 | Amplificador con JFET | [AMP-03](04-Amplificadores/theory/AMP-03-Teoria-Amplificador-JFET.md) |
 
 ---
 
 ## Módulo 05: Proyecto Final (`PRO`)
 
-- **5.1.1 Fuente con Regulador Transistorizado**
-  - [Intro](05-Proyecto-Final/01-Fuente-Regulador-Transistorizado/PRO-01-Intro.md)
+- [📖 Intro del Módulo](05-Proyecto-Final/PRO-00-Intro.md) | [📋 Índice](05-Proyecto-Final/00-Index.md)
+- Carpetas: [theory/](05-Proyecto-Final/theory/) · [methods/](05-Proyecto-Final/methods/) · [problems/](05-Proyecto-Final/problems/) · [solutions/](05-Proyecto-Final/solutions/) · [media/](05-Proyecto-Final/media/)
 
-- **5.1.2 Fuente con Regulador de Circuito Integrado**
-  - [Intro](05-Proyecto-Final/02-Fuente-Regulador-CI/PRO-02-Intro.md)
+| # | Subtema | Archivo de Teoría |
+|---|---------|-------------------|
+| 5.1.1 | Fuente con Regulador Transistorizado | [PRO-01](05-Proyecto-Final/theory/PRO-01-Teoria-Fuente-Regulador-Transistorizado.md) |
+| 5.1.2 | Fuente con Regulador de CI | [PRO-02](05-Proyecto-Final/theory/PRO-02-Teoria-Fuente-Regulador-CI.md) |
 
 ---
 
