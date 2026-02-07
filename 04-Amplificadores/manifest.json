@@ -17,6 +17,7 @@
       "theory/AMP-02-Teoria-Amplificador-BJT.md",
       "theory/AMP-03-Teoria-Amplificador-JFET.md"
     ],
+    "formularios": ["formularios/AMP-Formulario.md"],
     "methods": [],
     "problems": [],
     "solutions": []

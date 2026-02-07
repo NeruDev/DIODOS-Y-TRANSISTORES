@@ -23,9 +23,11 @@ last_updated: 2026-02-07
 | Subtemas totales (archivos de teoría) | 25 |
 | Archivos de teoría con contenido | 1 (DIO-01) |
 | Archivos de teoría vacíos (stub) | 24 |
-| Scripts de gráficas | 3 |
-| Gráficas generadas | 6 |
-| Términos en glosario | ~25 |
+| Formularios por módulo | 5 (en `formularios/`) |
+| Scripts de gráficas | 7 (en `00-META/tools/`) |
+| Gráficas generadas (DIO) | 6 |
+| Gráficas generables (BJT, FET, AMP, PRO) | ~12 (scripts disponibles) |
+| Términos en glosario | ~45 |
 
 ---
 
@@ -54,10 +56,11 @@ last_updated: 2026-02-07
 
 | Carpeta | Archivos |
 |---------|----------|
+| formularios/ | ✅ DIO-Formulario.md |
 | methods/ | ⬜ Vacía |
 | problems/ | ⬜ Vacía |
 | solutions/ | ⬜ Vacía |
-| media/generated/ | ✅ 3 scripts Python + 6 PNGs |
+| media/generated/ | ✅ 6 PNGs |
 
 ### 02 — Transistor BJT (`BJT`)
 
@@ -80,10 +83,11 @@ last_updated: 2026-02-07
 
 | Carpeta | Archivos |
 |---------|----------|
+| formularios/ | ✅ BJT-Formulario.md |
 | methods/ | ⬜ Vacía |
 | problems/ | ⬜ Vacía |
 | solutions/ | ⬜ Vacía |
-| media/generated/ | ⬜ Vacía |
+| media/generated/ | 🔧 Script disponible (ejecutar para generar) |
 
 ### 03 — Transistor FET (`FET`)
 
@@ -106,10 +110,11 @@ last_updated: 2026-02-07
 
 | Carpeta | Archivos |
 |---------|----------|
+| formularios/ | ✅ FET-Formulario.md |
 | methods/ | ⬜ Vacía |
 | problems/ | ⬜ Vacía |
 | solutions/ | ⬜ Vacía |
-| media/generated/ | ⬜ Vacía |
+| media/generated/ | 🔧 Script disponible (ejecutar para generar) |
 
 ### 04 — Amplificadores (`AMP`)
 
@@ -129,10 +134,11 @@ last_updated: 2026-02-07
 
 | Carpeta | Archivos |
 |---------|----------|
+| formularios/ | ✅ AMP-Formulario.md |
 | methods/ | ⬜ Vacía |
 | problems/ | ⬜ Vacía |
 | solutions/ | ⬜ Vacía |
-| media/generated/ | ⬜ Vacía |
+| media/generated/ | 🔧 Script disponible (ejecutar para generar) |
 
 ### 05 — Proyecto Final (`PRO`)
 
@@ -151,10 +157,11 @@ last_updated: 2026-02-07
 
 | Carpeta | Archivos |
 |---------|----------|
+| formularios/ | ✅ PRO-Formulario.md |
 | methods/ | ⬜ Vacía |
 | problems/ | ⬜ Vacía |
 | solutions/ | ⬜ Vacía |
-| media/generated/ | ⬜ Vacía |
+| media/generated/ | 🔧 Script disponible (ejecutar para generar) |
 
 ---
 
@@ -164,7 +171,7 @@ last_updated: 2026-02-07
 |---------|--------|
 | README.md | ✅ Completo |
 | WIKI_INDEX.md | ✅ Completo |
-| glossary.md | ✅ Completo (~25 términos) |
+| glossary.md | ✅ Completo (~45 términos) |
 | Temario.md | ✅ Completo |
 | Plantilla de Arquitectura Modular Universal.md | ✅ Referencia |
 
@@ -177,6 +184,8 @@ last_updated: 2026-02-07
 | nomenclatura-estandar.md | ✅ Completo |
 | bibliografia-general.md | ✅ Completo |
 | study-guide.md | ✅ Completo |
+| tools/README.md | ✅ Guía de herramientas Python |
+| tools/*.py | ✅ 7 scripts de generación de gráficos |
 
 ---
 

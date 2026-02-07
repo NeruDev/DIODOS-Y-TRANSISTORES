@@ -20,6 +20,7 @@
       "theory/BJT-05-Teoria-Conmutacion.md",
       "theory/BJT-06-Teoria-Estabilidad.md"
     ],
+    "formularios": ["formularios/BJT-Formulario.md"],
     "methods": [],
     "problems": [],
     "solutions": []

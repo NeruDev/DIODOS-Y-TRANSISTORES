@@ -22,6 +22,7 @@
       "theory/DIO-07-Teoria-Diodo-Zener.md",
       "theory/DIO-08-Teoria-Otros-Diodos.md"
     ],
+    "formularios": ["formularios/DIO-Formulario.md"],
     "methods": [],
     "problems": [],
     "solutions": []

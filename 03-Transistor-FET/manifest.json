@@ -20,6 +20,7 @@
       "theory/FET-05-Teoria-Polarizacion-MOSFET.md",
       "theory/FET-06-Teoria-Redes-Combinadas.md"
     ],
+    "formularios": ["formularios/FET-Formulario.md"],
     "methods": [],
     "problems": [],
     "solutions": []

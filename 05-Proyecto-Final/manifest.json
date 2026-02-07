@@ -16,6 +16,7 @@
       "theory/PRO-01-Teoria-Fuente-Regulador-Transistorizado.md",
       "theory/PRO-02-Teoria-Fuente-Regulador-CI.md"
     ],
+    "formularios": ["formularios/PRO-Formulario.md"],
     "methods": [],
     "problems": [],
     "solutions": []

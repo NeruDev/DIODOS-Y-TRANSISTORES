@@ -8,7 +8,7 @@ audience: both
 last_updated: 2026-02-07
 -->
 
-> 🏠 **Navegación:** [← Módulo 04](../00-Index.md) | [📋 Wiki](../../WIKI_INDEX.md) | [📚 Glosario](../../glossary.md)
+> 🏠 **Navegación:** [← Módulo 04](../00-Index.md) | [📋 Wiki](../../WIKI_INDEX.md) | [📚 Glosario](../../glossary.md) | [📁 Formularios](./)
 
 # 📐 Formulario — Módulo 04: Amplificadores con BJT y FET
 

@@ -1,6 +1,28 @@
+"""
+DIO-gen-curva-temperatura-split.py
+──────────────────────────────────
+Genera 3 gráficas separadas del efecto de temperatura en el diodo:
+  1. Polarización directa (encendido)
+  2. Polarización inversa (corriente de fuga)
+  3. Región de ruptura (avalancha)
+
+Salida:
+  - 01-Circuitos-Diodos/media/generated/curva_temp_directa.png
+  - 01-Circuitos-Diodos/media/generated/curva_temp_inversa.png
+  - 01-Circuitos-Diodos/media/generated/curva_temp_ruptura.png
+
+Ejecutar desde la raíz del repositorio:
+  python 00-META/tools/DIO-gen-curva-temperatura-split.py
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as ticker
+import os
+
+# Directorio de salida
+OUTPUT_DIR = os.path.join("01-Circuitos-Diodos", "media", "generated")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 # ----------------- FUNCIONES FÍSICAS -----------------
 def get_vt(T_celsius):
@@ -23,23 +45,17 @@ def diode_current_viz(V, T_celsius, Is_ref=1e-12, n=1, Vbr_nominal=-5.0):
     Vt = get_vt(T_celsius)
     Is = get_is_approx(T_celsius, Is_ref)
     
-    # Parámetros Ruptura
     alpha_br = 0.001 
     Vbr_T = Vbr_nominal * (1 + alpha_br * (T_celsius - 25))
     
-    # Cálculo vectorial seguro
     i_total = np.zeros_like(V)
     
     for idx, v_val in enumerate(V):
-        # 1. Directa
         arg_wd = v_val / (n * Vt)
         if arg_wd > 100: arg_wd = 100
         elif arg_wd < -100: arg_wd = -100
         i_fwd = Is * (np.exp(arg_wd) - 1)
         
-        # 2. Ruptura
-        # Solo calculamos si estamos cerca de Vbr o por debajo
-        # Para suavizar, calculamos siempre y sumamos, pero con cuidado
         arg_br = -(v_val - Vbr_T) / (n * Vt)
         if arg_br > 100: arg_br = 100
         elif arg_br < -100: arg_br = -100
@@ -49,7 +65,7 @@ def diode_current_viz(V, T_celsius, Is_ref=1e-12, n=1, Vbr_nominal=-5.0):
         
     return i_total
 
-# Definición de casos (Colores actualizados)
+# Definición de casos
 temps = [
     {"T": -100, "label": "-100°C (Frío)",      "color": "green", "vth_teorico": 1.01},
     {"T": 25,   "label": "25°C (Ambiente)",    "color": "blue",  "vth_teorico": 0.70},
@@ -63,7 +79,6 @@ plt.figure(figsize=(8, 6))
 for item in temps:
     i = diode_current_viz(v_fwd, item["T"])
     plt.plot(v_fwd, i * 1000, label=f'T = {item["T"]}°C', color=item["color"], linewidth=2)
-    # Marcador Vth
     if item["T"] == 25:
          plt.text(item["vth_teorico"], 2, f'$V_{{th}} \\approx {item["vth_teorico"]}V$', 
                  rotation=90, verticalalignment='bottom', color=item["color"], fontsize=10)
@@ -77,19 +92,17 @@ plt.grid(True, linestyle='--', alpha=0.5)
 plt.legend()
 plt.ylim(0, 20)
 plt.xlim(0, 1.3)
-plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_temp_directa.png', dpi=100)
+plt.tight_layout()
+plt.savefig(os.path.join(OUTPUT_DIR, 'curva_temp_directa.png'), dpi=100)
 print("Generada: curva_temp_directa.png")
 
 # ----------------- GRÁFICA 2: POLARIZACIÓN INVERSA (ZOOM) -----------------
-# Aquí la corriente es Is ~ pA. Es MUY pequeña.
-# Usaremos escala pA (Pico Amperios) para visualizar algo.
-v_rev = np.linspace(-4.0, 0, 1000) # Lejos de ruptura (-5V)
+v_rev = np.linspace(-4.0, 0, 1000)
 
 plt.figure(figsize=(8, 6))
 
 for item in temps:
     i = diode_current_viz(v_rev, item["T"])
-    # Convertir a pA (1e12)
     plt.plot(v_rev, i * 1e12, label=f'T = {item["T"]}°C', color=item["color"], linewidth=2)
 
 plt.title('Región de Polarización Inversa (Corriente de Fuga)')
@@ -99,13 +112,10 @@ plt.axhline(0, color='black', linewidth=1)
 plt.axvline(0, color='black', linewidth=1)
 plt.grid(True, linestyle='--', alpha=0.5)
 plt.legend()
-# Ajuste manual para ver diferencias
-# A 100°C, Is crece mucho -> ~180pA
-# A 25°C -> 1pA
-# A -100°C -> ~0pA
-plt.yscale('symlog', linthresh=1) # Log scale para ver diferencias grandes
-plt.ylim(-200, 10) # Hasta un poco por encima de 0
-plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_temp_inversa.png', dpi=100)
+plt.yscale('symlog', linthresh=1)
+plt.ylim(-200, 10)
+plt.tight_layout()
+plt.savefig(os.path.join(OUTPUT_DIR, 'curva_temp_inversa.png'), dpi=100)
 print("Generada: curva_temp_inversa.png")
 
 # ----------------- GRÁFICA 3: REGIÓN DE RUPTURA -----------------
@@ -125,5 +135,6 @@ plt.grid(True, linestyle='--', alpha=0.5)
 plt.legend(loc='lower left')
 plt.ylim(-20, 0)
 plt.xlim(-6.0, -4.5)
-plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_temp_ruptura.png', dpi=100)
+plt.tight_layout()
+plt.savefig(os.path.join(OUTPUT_DIR, 'curva_temp_ruptura.png'), dpi=100)
 print("Generada: curva_temp_ruptura.png")

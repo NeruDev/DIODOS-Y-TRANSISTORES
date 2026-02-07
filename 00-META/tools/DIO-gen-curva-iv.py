@@ -1,5 +1,24 @@
+"""
+DIO-gen-curva-iv.py
+───────────────────
+Genera la curva característica I-V completa del diodo (directa, inversa, ruptura)
+y un zoom de la región inversa mostrando la corriente de fuga Is.
+
+Salida:
+  - 01-Circuitos-Diodos/media/generated/curva_diodo_general.png
+  - 01-Circuitos-Diodos/media/generated/curva_diodo_zoom_inversa.png
+
+Ejecutar desde la raíz del repositorio:
+  python 00-META/tools/DIO-gen-curva-iv.py
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
+import os
+
+# Directorio de salida (relativo a la raíz del repo)
+OUTPUT_DIR = os.path.join("01-Circuitos-Diodos", "media", "generated")
+os.makedirs(OUTPUT_DIR, exist_ok=True)
 
 def diode_current_complete(V, Is=1e-12, n=1, Vt=0.026, Vbr=-5.0):
     i_shockley = Is * (np.exp(V / (n * Vt)) - 1)
@@ -40,12 +59,13 @@ plt.annotate('', xy=(-4.5, 0.1), xytext=(-0.5, 0.1), arrowprops=dict(arrowstyle=
 
 plt.ylim(-3, 3) 
 plt.xlim(-6.5, 1.5)
-plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_diodo_general.png', dpi=100)
-print("Gráfica general guardada.")
+plt.tight_layout()
+plt.savefig(os.path.join(OUTPUT_DIR, 'curva_diodo_general.png'), dpi=100)
+print("Generada: curva_diodo_general.png")
 
 # ---------------- GRAFICA 2: ZOOM INVERSA ----------------
-plt.clf() # Limpiar figura anterior
-v_zoom = np.linspace(-4.5, 0.1, 500) # Rango inverso antes de ruptura
+plt.clf()
+v_zoom = np.linspace(-4.5, 0.1, 500)
 i_zoom = diode_current_complete(v_zoom, Is=Is_viz, Vbr=Vbr_val)
 
 plt.figure(figsize=(8, 5))
@@ -54,32 +74,26 @@ plt.title('Zoom: Región Inversa y Corriente de Fuga')
 plt.xlabel('Voltaje Inverso ($V_R$)')
 plt.ylabel('Corriente muy pequeña ($I$)')
 
-# Ejes
-plt.axhline(0, color='black', linewidth=1.5, alpha=0.8) # Eje 0 (Referencia)
+plt.axhline(0, color='black', linewidth=1.5, alpha=0.8)
 plt.axvline(0, color='black', linewidth=1)
 plt.grid(True, linestyle=':', alpha=0.6)
 
-# Escala Y muy pequeña para ver Is
-# Is_viz es 1e-4, asique un rango de +/- 2e-4 está bien
-plt.ylim(-2.5e-4, 1.0e-4) # Un poco por encima del cero para contraste
+plt.ylim(-2.5e-4, 1.0e-4)
 plt.xlim(-4.5, 0.2)
 
-# LÍNEA DE REFERENCIA DE IS (ASINTOTA TEÓRICA EN INVERSO)
+# Línea de referencia Is
 plt.axhline(-Is_viz, color='green', linestyle='--', linewidth=1, label='Nivel $I_S$')
 
 # Anotaciones
-# Flecha mostrando la "separación" o magnitud
 plt.annotate('Magnitud de Corriente de Fuga ($I_S$)\n(Desfase respecto a cero)', 
              xy=(-2.0, -Is_viz), xytext=(-2.0, -0.00005),
              arrowprops=dict(arrowstyle='->', color='red', linewidth=2),
              color='red', fontsize=10, ha='center')
 
 plt.text(-3.0, 0.00002, 'Eje Cero ($I=0$)', color='black', fontsize=9)
-
-# Anotación de Voltaje Inverso
 plt.text(-4.0, 0.00005, 'Voltaje Inverso Aplicado', color='purple', fontsize=9)
 
 plt.legend()
 plt.tight_layout()
-plt.savefig('01-Circuitos-Diodos/01-Polarizacion-Recta-Carga/media/generated/curva_diodo_zoom_inversa.png', dpi=100)
-print("Gráfica de zoom guardada.")
+plt.savefig(os.path.join(OUTPUT_DIR, 'curva_diodo_zoom_inversa.png'), dpi=100)
+print("Generada: curva_diodo_zoom_inversa.png")
