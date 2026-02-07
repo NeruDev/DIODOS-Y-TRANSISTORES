@@ -1,0 +1,111 @@
+{
+  "_doc": "Metadatos de imágenes generadas — Módulo 01 (Circuitos con Diodos)",
+  "_naming_convention": "{PREFIJO}-{tema}-{NN}-{descriptor}.png  →  Script: {PREFIJO}-gen-{tema-raíz}.py",
+  "_last_updated": "2026-02-07",
+
+  "images": [
+    {
+      "filename": "DIO-curva-iv-01-general.png",
+      "script": "00-META/tools/DIO-gen-curva-iv.py",
+      "figure_number": 1,
+      "title": "Curva Característica I-V del Diodo (Completa)",
+      "description": "Muestra las tres regiones de operación del diodo (directa, inversa y ruptura) en una sola gráfica. Incluye anotaciones de Vk ≈ 0.7V y VBR.",
+      "used_in": [
+        "01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md"
+      ],
+      "parameters": {
+        "Is_viz": "1e-4 A (amplificada para visualización)",
+        "Vbr": "-5.0 V",
+        "n": 1,
+        "Vt": "0.026 V (temperatura ambiente)"
+      },
+      "notes": "La Is usada es intencionalmente grande (0.1 mA) para que la corriente de fuga sea visible en la escala de amperios del gráfico. No refleja Is real (~pA)."
+    },
+    {
+      "filename": "DIO-curva-iv-02-zoom-inversa.png",
+      "script": "00-META/tools/DIO-gen-curva-iv.py",
+      "figure_number": 2,
+      "title": "Zoom: Región Inversa y Corriente de Fuga",
+      "description": "Ampliación de la región inversa que revela la corriente de fuga Is, mostrando el desfase respecto al eje cero. Complementa la gráfica general donde la fuga es invisible.",
+      "used_in": [
+        "01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md"
+      ],
+      "parameters": {
+        "Is_viz": "1e-4 A (amplificada)",
+        "V_range": "[-4.5V, 0.1V]",
+        "I_scale": "micro-amperios"
+      },
+      "notes": "Escala amplificada para propósitos didácticos. La corriente de fuga real es del orden de nA-pA."
+    },
+    {
+      "filename": "DIO-curva-temp-01-combinada.png",
+      "script": "00-META/tools/DIO-gen-curva-temperatura.py",
+      "figure_number": 1,
+      "title": "Efecto de la Temperatura: Directa, Inversa y Ruptura (Combinada)",
+      "description": "Vista completa del efecto térmico en las tres regiones del diodo. Región directa usa Is calibrada (Vth correctos); inversa/ruptura usa Is empírica.",
+      "used_in": [],
+      "parameters": {
+        "temperatures": [-100, 25, 100],
+        "Vth_values": {"T_-100": "1.01 V", "T_25": "0.70 V", "T_100": "0.51 V"},
+        "Ktc": "-2.5 mV/°C",
+        "Vbr_nominal": "-5.0 V",
+        "V_range": "[-6.0V, 1.3V]"
+      },
+      "notes": "Modelo híbrido: Is calibrada (V > 0) para Vth exactos, Is empírica (V ≤ 0) para fuga y ruptura visibles. La transición en V=0 es suave porque ambos modelos dan corriente ≈ 0 cerca del origen."
+    },
+    {
+      "filename": "DIO-curva-temp-02-directa.png",
+      "script": "00-META/tools/DIO-gen-curva-temperatura-split.py",
+      "figure_number": 1,
+      "title": "Efecto de Temperatura — Polarización Directa (Encendido)",
+      "description": "Muestra cómo el voltaje de umbral Vth se desplaza con la temperatura. A mayor temperatura, el diodo conduce a menor voltaje. Vth marcado con líneas punteadas verticales.",
+      "used_in": [
+        "01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md"
+      ],
+      "parameters": {
+        "temperatures": [-100, 25, 100],
+        "Vth_values": {"T_-100": "1.01 V", "T_25": "0.70 V", "T_100": "0.51 V"},
+        "Ktc": "-2.5 mV/°C",
+        "n": 1,
+        "I_calibration": "1 mA",
+        "model": "Is calibrada al Vth teórico"
+      },
+      "notes": "CORRECCIÓN v2 (2026-02-07): La versión anterior usaba la regla 'Is se duplica cada 10°C' que fallaba en rangos amplios de temperatura. La curva de -100°C conducía ANTES que la de 25°C (incorrecto). Se corrigió calibrando Is(T) a partir del coeficiente empírico Ktc = -2.5 mV/°C, lo cual garantiza que cada curva cruce 1 mA exactamente en su Vth teórico."
+    },
+    {
+      "filename": "DIO-curva-temp-03-inversa.png",
+      "script": "00-META/tools/DIO-gen-curva-temperatura-split.py",
+      "figure_number": 2,
+      "title": "Efecto de Temperatura — Polarización Inversa (Corriente de Fuga)",
+      "description": "Ampliación de la corriente de fuga (escala pA) mostrando cómo Is crece drásticamente con la temperatura. A 100°C: ~181 pA; a 25°C: 1 pA; a -100°C: despreciable.",
+      "used_in": [
+        "01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md"
+      ],
+      "parameters": {
+        "temperatures": [-100, 25, 100],
+        "Is_ref": "1 pA a 25°C",
+        "model": "Is empírica (se duplica cada 10°C)",
+        "y_scale": "symlog (linthresh=1 pA)"
+      },
+      "notes": "Usa la regla empírica 'Is se duplica cada 10°C' para la fuga, consistente con la teoría DIO-01. Escala simétrica logarítmica para mostrar el rango de ~5 órdenes de magnitud."
+    },
+    {
+      "filename": "DIO-curva-temp-04-ruptura.png",
+      "script": "00-META/tools/DIO-gen-curva-temperatura-split.py",
+      "figure_number": 3,
+      "title": "Efecto de Temperatura — Región de Ruptura (Avalancha)",
+      "description": "Muestra cómo el voltaje de ruptura VBR se desplaza ligeramente con la temperatura. El coeficiente α_BR = 0.001 produce un desplazamiento pequeño pero visible.",
+      "used_in": [
+        "01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md"
+      ],
+      "parameters": {
+        "temperatures": [-100, 25, 100],
+        "Vbr_nominal": "-5.0 V",
+        "alpha_BR": 0.001,
+        "Vbr_values": {"T_-100": "-4.38 V", "T_25": "-5.00 V", "T_100": "-5.38 V"},
+        "model": "Is empírica + modelo exponencial de ruptura"
+      },
+      "notes": "El modelo exponencial de ruptura es una simplificación didáctica. En diodos reales, el mecanismo cambia de Zener (|V|<5V, coef. negativo) a Avalancha (|V|>5V, coef. positivo). Este gráfico usa un coeficiente positivo genérico."
+    }
+  ]
+}

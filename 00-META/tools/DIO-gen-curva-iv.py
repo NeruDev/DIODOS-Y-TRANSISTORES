@@ -4,15 +4,19 @@ DIO-gen-curva-iv.py
 Genera la curva característica I-V completa del diodo (directa, inversa, ruptura)
 y un zoom de la región inversa mostrando la corriente de fuga Is.
 
-Salida:
-  - 01-Circuitos-Diodos/media/generated/curva_diodo_general.png
-  - 01-Circuitos-Diodos/media/generated/curva_diodo_zoom_inversa.png
+Nomenclatura de salida (en 01-Circuitos-Diodos/media/generated/):
+  DIO-curva-iv-01-general.png       ← Curva I-V completa
+  DIO-curva-iv-02-zoom-inversa.png  ← Zoom corriente de fuga
+
+  Convención: {PREFIJO}-{tema}-{NN}-{descriptor}.png
 
 Ejecutar desde la raíz del repositorio:
   python 00-META/tools/DIO-gen-curva-iv.py
 """
 
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 
@@ -60,8 +64,8 @@ plt.annotate('', xy=(-4.5, 0.1), xytext=(-0.5, 0.1), arrowprops=dict(arrowstyle=
 plt.ylim(-3, 3) 
 plt.xlim(-6.5, 1.5)
 plt.tight_layout()
-plt.savefig(os.path.join(OUTPUT_DIR, 'curva_diodo_general.png'), dpi=100)
-print("Generada: curva_diodo_general.png")
+plt.savefig(os.path.join(OUTPUT_DIR, 'DIO-curva-iv-01-general.png'), dpi=150)
+print("  ✓ DIO-curva-iv-01-general.png")
 
 # ---------------- GRAFICA 2: ZOOM INVERSA ----------------
 plt.clf()
@@ -95,5 +99,5 @@ plt.text(-4.0, 0.00005, 'Voltaje Inverso Aplicado', color='purple', fontsize=9)
 
 plt.legend()
 plt.tight_layout()
-plt.savefig(os.path.join(OUTPUT_DIR, 'curva_diodo_zoom_inversa.png'), dpi=100)
-print("Generada: curva_diodo_zoom_inversa.png")
+plt.savefig(os.path.join(OUTPUT_DIR, 'DIO-curva-iv-02-zoom-inversa.png'), dpi=150)
+print("  ✓ DIO-curva-iv-02-zoom-inversa.png")

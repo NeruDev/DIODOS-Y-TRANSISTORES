@@ -54,6 +54,6 @@ Dominar los circuitos de aplicación con diodos, desde la comprensión de la pol
 
 | Gráfica | Script |
 |---------|--------|
-| Curva I-V completa del diodo | [curva_diodo.py](media/generated/curva_diodo.py) |
-| Efecto de temperatura (3 regiones) | [grafica_temperatura_split.py](media/generated/grafica_temperatura_split.py) |
-| Efecto de temperatura (vista global) | [grafica_temperatura.py](media/generated/grafica_temperatura.py) |
+| Curva I-V completa del diodo | [DIO-gen-curva-iv.py](../00-META/tools/DIO-gen-curva-iv.py) |
+| Efecto de temperatura (3 regiones) | [DIO-gen-curva-temperatura-split.py](../00-META/tools/DIO-gen-curva-temperatura-split.py) |
+| Efecto de temperatura (vista global) | [DIO-gen-curva-temperatura.py](../00-META/tools/DIO-gen-curva-temperatura.py) |
