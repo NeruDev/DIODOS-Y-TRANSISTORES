@@ -114,15 +114,15 @@ Esta sección contiene las gráficas generadas computacionalmente para ilustrar 
 
 ### 1. Curva Característica Global
 Muestra la curva completa del diodo, incluyendo las zonas de conducción ideal y ruptura.
-![Curva Característica Global](../media/generated/curva_diodo_general.png)
+![Curva Característica Global](../media/generated/DIO-curva-iv-01-general.png)
 
 ### 2. Detalles de la Región Inversa (Zoom)
 A menudo se simplifica diciendo que la corriente en inversa es cero. Sin embargo, al hacer un **zoom** a escala microscópica, observamos la **Corriente de Fuga ($I_S$)**.
 
 Esta gráfica muestra específicamente la magnitud del desfase entre el eje cero (corriente nula) y la curva real de corriente de fuga:
-![Zoom Región Inversa](../media/generated/curva_diodo_zoom_inversa.png)
+![Zoom Región Inversa](../media/generated/DIO-curva-iv-02-zoom-inversa.png)
 
-> **Nota Técnica:** Las gráficas anteriores fueron generadas automáticamente utilizando el script [`curva_diodo.py`](../media/generated/curva_diodo.py), el cual utiliza la ecuación teórica de Shockley para modelar el comportamiento.
+> **Nota Técnica:** Las gráficas anteriores fueron generadas automáticamente utilizando el script [`DIO-gen-curva-iv.py`](../../00-META/tools/DIO-gen-curva-iv.py), el cual utiliza la ecuación teórica de Shockley para modelar el comportamiento.
 
 ---
 
@@ -229,12 +229,12 @@ A continuación se presentan tres vistas detalladas de las regiones de operació
 
 ### 1. Región Directa (Encendido)
 Se aprecia claramente el desplazamiento del voltaje de umbral. A 100°C (Rojo), el diodo conduce significativamente antes.
-![Región Directa](../media/generated/curva_temp_directa.png)
+![Región Directa](../media/generated/DIO-curva-temp-02-directa.png)
 
 ### 2. Región Inversa (Zoom - Corriente de Fuga)
 En esta escala ampliada (picoamperios/nanoamperios), vemos que la corriente de fuga aumenta drásticamente con la temperatura, aunque sigue siendo muy pequeña para propósitos generales.
-![Región Inversa](../media/generated/curva_temp_inversa.png)
+![Región Inversa](../media/generated/DIO-curva-temp-03-inversa.png)
 
 ### 3. Región de Ruptura
 El voltaje de ruptura se mantiene relativamente estable (en este modelo $V_{BR} \approx -5V$), pero la pendiente de la avalancha es pronunciada.
-![Región Ruptura](../media/generated/curva_temp_ruptura.png)
+![Región Ruptura](../media/generated/DIO-curva-temp-04-ruptura.png)
