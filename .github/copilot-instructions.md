@@ -38,6 +38,7 @@ DIODOS-Y-TRANSISTORES/
 │   ├── bibliografia-general.md     → Fuentes bibliográficas
 │   ├── study-guide.md              → Guía de estudio para alumnos
 │   └── tools/                      → Scripts de generación de gráficos (Python)
+│       └── Control_Scripts.md      → Registro centralizado de scripts e imágenes
 │
 ├── 01-Circuitos-Diodos/  (DIO)     → Módulo 1
 ├── 02-Transistor-BJT/    (BJT)     → Módulo 2
@@ -187,6 +188,9 @@ Las imágenes generadas (formato **PNG**) se guardan en el directorio `media/gen
 | `AMP-gen-respuesta-frecuencia.py` | Bode, comparativa EC/BC/CC, efecto RL | `04-Amplificadores/media/generated/` |
 | `PRO-gen-fuente-alimentacion.py` | Rectificación, filtrado, regulador LM317 | `05-Proyecto-Final/media/generated/` |
 | `DIO-gen-esquematico-pequena-senal.py` | Esquemáticos de circuitos (DC, AC, pequeña señal) con schemdraw + gráfica de linealización | `01-Circuitos-Diodos/media/generated/` |
+| `DIO-gen-pequena-senal.py` | Modelo de pequeña señal del diodo (curvas, parámetros dinámicos) | `01-Circuitos-Diodos/media/generated/` |
+| `DIO-gen-recta-carga-circuito.py` | Circuito con recta de carga, esquemáticos, punto Q, límites AC | `01-Circuitos-Diodos/media/generated/` |
+| `DIO-gen-ejercicio-recta-carga.py` | Ejercicio: curva I-V lineal a tramos, recta CD, swing AC | `01-Circuitos-Diodos/media/generated/` |
 
 ### Ejecución
 
@@ -288,6 +292,32 @@ with schemdraw.Drawing(file=os.path.join(OUTPUT_DIR, 'bjt.png'),
 - **Formato de salida:** PNG a 100 DPI como mínimo.
 - **Estilo:** Incluir grid, etiquetas de ejes, título, leyenda y anotaciones de las regiones de operación.
 
+### Política de scripts de generación
+
+Cada gráfico generado debe cumplir las siguientes reglas:
+
+1. **Un script por gráfico (o conjunto temático coherente).** Cada script Python en `00-META/tools/` produce una o varias imágenes estrechamente relacionadas. No mezclar gráficos de temas distintos en un mismo script.
+2. **Referencia cruzada obligatoria.** Toda imagen generada debe estar referenciada en:
+   - La **nota o documento** `.md` donde se utiliza (enlace Markdown estándar).
+   - El archivo de control **[Control_Scripts.md](00-META/tools/Control_Scripts.md)**, donde se lleva el registro centralizado de todos los scripts, sus imágenes y las notas que las consumen.
+3. **Metadatos en cada script.** Todo script `.py` debe incluir un bloque `::SCRIPT_METADATA::` en sus comentarios iniciales con al menos:
+   - `script_id`: nombre del archivo sin extensión.
+   - `module`: prefijo del módulo (`DIO`, `BJT`, `FET`, `AMP`, `PRO`).
+   - `generates`: lista de imágenes PNG que produce.
+   - `referenced_by`: lista de archivos `.md` que enlazan las imágenes.
+   - `last_updated`: fecha de última modificación.
+4. **Actualización del registro.** Al crear, modificar o eliminar un script, actualizar `Control_Scripts.md` de forma inmediata.
+
+### Gestión de imágenes generadas (limpieza de `media/generated/`)
+
+Cuando una imagen nueva **reemplace** a una imagen anterior:
+
+- Actualizar las referencias del repo para apuntar al archivo vigente.
+- Eliminar del repositorio la imagen anterior que ya no se usa.
+- Verificar que no existan enlaces rotos después del reemplazo.
+
+**Regla operativa:** `media/generated/` debe contener solo imágenes con uso actual en documentación o flujo de generación vigente. No se permiten archivos huérfanos.
+
 ---
 
 ## 8. Reglas de Generación de Contenido
@@ -381,6 +411,7 @@ Cada módulo contiene una carpeta `Notas/` que es **zona libre**:
 | [00-META/nomenclatura-estandar.md](00-META/nomenclatura-estandar.md) | Estándares de nomenclatura completos |
 | [00-META/bibliografia-general.md](00-META/bibliografia-general.md) | Fuentes bibliográficas válidas |
 | [00-META/tools/README.md](00-META/tools/README.md) | Documentación de los scripts Python |
+| [00-META/tools/Control_Scripts.md](00-META/tools/Control_Scripts.md) | Registro centralizado de scripts, imágenes y referencias |
 | [glossary.md](glossary.md) | Glosario de términos técnicos |
 | [Temario.md](Temario.md) | Temario oficial de la materia |
 | [AUDITORIA_ESTADO_REPO.md](AUDITORIA_ESTADO_REPO.md) | Estado de completitud del repo |

@@ -66,3 +66,29 @@ with schemdraw.Drawing(file='bjt.png', show=False) as d:
 - Usar `show=False` en `schemdraw.Drawing()` para entorno sin GUI.
 - Usar `dpi=150` mínimo para calidad legible.
 - Documentar los parámetros del circuito en el docstring del script.
+
+## Política de Scripts de Generación de Gráficos
+
+Cada gráfico generado debe cumplir las siguientes reglas:
+
+1. **Un script por gráfico (o conjunto temático coherente).** Cada script Python en `00-META/tools/` produce una o varias imágenes estrechamente relacionadas. No mezclar gráficos de temas distintos en un mismo script.
+2. **Referencia cruzada obligatoria.** Toda imagen generada debe estar referenciada en:
+   - La **nota o documento** `.md` donde se utiliza (enlace Markdown estándar).
+   - El archivo de control **[Control_Scripts.md](00-META/tools/Control_Scripts.md)**, donde se lleva el registro centralizado de todos los scripts, sus imágenes y las notas que las consumen.
+3. **Metadatos en cada script.** Todo script `.py` debe incluir un bloque `::SCRIPT_METADATA::` en sus comentarios iniciales con al menos:
+   - `script_id`: nombre del archivo sin extensión.
+   - `module`: prefijo del módulo (`DIO`, `BJT`, `FET`, `AMP`, `PRO`).
+   - `generates`: lista de imágenes PNG que produce.
+   - `referenced_by`: lista de archivos `.md` que enlazan las imágenes.
+   - `last_updated`: fecha de última modificación.
+4. **Actualización del registro.** Al crear, modificar o eliminar un script, actualizar `Control_Scripts.md` de forma inmediata.
+
+## Gestión de Imágenes Generadas (Limpieza de `media/generated/`)
+
+Cuando una imagen nueva **reemplace** a una imagen anterior:
+
+- Actualizar las referencias del repo para apuntar al archivo vigente.
+- Eliminar del repositorio la imagen anterior que ya no se usa.
+- Verificar que no existan enlaces rotos después del reemplazo.
+
+**Regla operativa:** `media/generated/` debe contener solo imágenes con uso actual en documentación o flujo de generación vigente. No se permiten archivos huérfanos.

@@ -114,6 +114,21 @@ last_updated: 2026-02-13
 
 ---
 
+### DIO-gen-ejercicio-recta-carga.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-ejercicio-recta-carga.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Ejercicio de recta de carga con curva I-V ajustada al modelo de Shockley ($n=1.40$, $I_S=7.24\times10^{-11}\,A$). Circuito: $E=0.8\,V$, $R=250\,\Omega$, $e=0.15\,\mathrm{sen}(\omega t)$. Intersección numérica vía `fsolve`. v2: reemplazó modelo lineal a tramos por exponencial. |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|------------------|
+| `dio-ejercicio-circuito-08v-250ohm.png` | `01-Circuitos-Diodos/media/generated/` | [Nota2.md](../../01-Circuitos-Diodos/Notas/Nota2.md) |
+| `dio-ejercicio-recta-carga-08v-250ohm.png` | `01-Circuitos-Diodos/media/generated/` | [Nota2.md](../../01-Circuitos-Diodos/Notas/Nota2.md) |
+
+---
+
 ### DIO-gen-ejemplo-circuito-ps.py *(pendiente — actualmente dentro de DIO-gen-esquematico-pequena-senal.py)*
 
 | Imagen generada | Ruta | Referenciada en |
@@ -199,9 +214,9 @@ last_updated: 2026-02-13
 
 | Módulo | Scripts | Imágenes | Con referencia | Sin referencia |
 |--------|---------|----------|---------------|----------------|
-| DIO | 6 | 16 | 16 | 0 |
+| DIO | 7 | 18 | 18 | 0 |
 | BJT | 1 | 3 | 0 | 3 |
 | FET | 1 | 3 | 0 | 3 |
 | AMP | 1 | 3 | 0 | 3 |
 | PRO | 1 | 3 | 0 | 3 |
-| **Total** | **10** | **28** | **16** | **12** |
+| **Total** | **11** | **30** | **18** | **12** |
