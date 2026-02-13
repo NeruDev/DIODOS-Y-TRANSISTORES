@@ -7,6 +7,16 @@ Genera las curvas características del transistor FET:
   3. Solución gráfica de autopolarización
   4. Comparativa JFET / MOSFET deplexión / MOSFET enriquecimiento
 
+::SCRIPT_METADATA::
+script_id: FET-gen-curva-transferencia
+module: FET
+generates:
+  - fet_curva_transferencia.png
+  - fet_familia_curvas_id_vds.png
+  - fet_autopolarizacion_grafica.png
+referenced_by: []
+last_updated: 2026-02-13
+
 Dependencias: numpy, matplotlib
 Salida: 03-Transistor-FET/media/generated/
 

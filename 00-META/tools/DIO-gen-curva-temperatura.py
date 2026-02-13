@@ -4,6 +4,15 @@ DIO-gen-curva-temperatura.py
 Genera gráfica COMBINADA del efecto de la temperatura en el diodo
 (regiones directa, inversa y ruptura en una sola figura).
 
+::SCRIPT_METADATA::
+script_id: DIO-gen-curva-temperatura
+module: DIO
+generates:
+  - DIO-curva-temp-01-combinada.png
+referenced_by:
+  - 01-Circuitos-Diodos/media/generated/image-metadata.json
+last_updated: 2026-02-13
+
 Nomenclatura de salida (en 01-Circuitos-Diodos/media/generated/):
   DIO-curva-temp-01-combinada.png
 

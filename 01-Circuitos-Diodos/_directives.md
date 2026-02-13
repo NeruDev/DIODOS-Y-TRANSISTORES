@@ -5,7 +5,7 @@ topic_id: dio-directives
 file_id: DIO-directives
 status: active
 audience: ai_context
-last_updated: 2026-02-07
+last_updated: 2026-02-13
 -->
 
 # Directivas — Módulo 01: Circuitos de Aplicación con Diodos
@@ -42,3 +42,4 @@ last_updated: 2026-02-07
 - **Tareas permitidas:** Explicar conceptos, generar problemas, verificar soluciones, generar gráficas
 - **Al generar gráficas:** Usar matplotlib, guardar en `media/generated/`, documentar parámetros
 - **Al generar soluciones:** Siempre paso a paso con unidades y contexto físico
+- **Reemplazo de imágenes:** Si una imagen nueva sustituye a otra, actualizar referencias y eliminar la imagen anterior sin uso para mantener `media/generated/` limpio.

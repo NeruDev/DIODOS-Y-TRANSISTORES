@@ -7,6 +7,16 @@ Genera gráficas del diseño de fuente de alimentación regulada:
   3. Regulación de voltaje (LM317 y 78xx)
   4. Disipación térmica del regulador
 
+::SCRIPT_METADATA::
+script_id: PRO-gen-fuente-alimentacion
+module: PRO
+generates:
+  - pro_formas_onda_rectificacion.png
+  - pro_efecto_filtrado_capacitor.png
+  - pro_diseno_lm317.png
+referenced_by: []
+last_updated: 2026-02-13
+
 Dependencias: numpy, matplotlib
 Salida: 05-Proyecto-Final/media/generated/
 

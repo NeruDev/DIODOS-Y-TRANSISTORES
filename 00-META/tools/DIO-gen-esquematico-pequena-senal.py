@@ -9,6 +9,20 @@ Genera diagramas esquemáticos para el análisis de pequeña señal del diodo:
   5. Gráfica de linealización alrededor del punto Q (pequeña señal)
   6. Formas de onda temporales: v_s(t), i_D(t) y v_D(t)
 
+::SCRIPT_METADATA::
+script_id: DIO-gen-esquematico-pequena-senal
+module: DIO
+generates:
+  - circuito_dc_diodo.png
+  - modelo_pequena_senal.png
+  - circuito_ac_superpuesto.png
+  - recta_de_carga_punto_q.png
+  - diodo_pequena_senal.png
+  - formas_de_onda_temporal.png
+referenced_by:
+  - 01-Circuitos-Diodos/Notas/Nota1.md
+last_updated: 2026-02-13
+
 Todos los circuitos se dibujan como mallas cerradas (lazos rectangulares)
 para que el camino de la corriente sea claro y didáctico.
 No se usa tierra porque son circuitos serie de una sola malla.

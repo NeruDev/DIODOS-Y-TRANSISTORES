@@ -6,6 +6,16 @@ Genera gráficas de amplificadores en pequeña señal:
   2. Comparativa de ganancia EC / BC / CC
   3. Efecto de la carga RL en la ganancia
 
+::SCRIPT_METADATA::
+script_id: AMP-gen-respuesta-frecuencia
+module: AMP
+generates:
+  - amp_bode_emisor_comun.png
+  - amp_comparativa_ec_bc_cc.png
+  - amp_efecto_rl_ganancia.png
+referenced_by: []
+last_updated: 2026-02-13
+
 Dependencias: numpy, matplotlib, scipy (opcional para Bode preciso)
 Salida: 04-Amplificadores/media/generated/
 

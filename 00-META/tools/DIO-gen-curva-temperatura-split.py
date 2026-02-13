@@ -3,6 +3,17 @@ DIO-gen-curva-temperatura-split.py
 ──────────────────────────────────
 Genera 3 gráficas separadas del efecto de temperatura en el diodo de silicio.
 
+::SCRIPT_METADATA::
+script_id: DIO-gen-curva-temperatura-split
+module: DIO
+generates:
+  - DIO-curva-temp-02-directa.png
+  - DIO-curva-temp-03-inversa.png
+  - DIO-curva-temp-04-ruptura.png
+referenced_by:
+  - 01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md
+last_updated: 2026-02-13
+
 Nomenclatura de salida (en 01-Circuitos-Diodos/media/generated/):
   DIO-curva-temp-02-directa.png   ← Polarización directa (encendido)
   DIO-curva-temp-03-inversa.png   ← Polarización inversa (corriente de fuga)

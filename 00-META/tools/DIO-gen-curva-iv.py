@@ -4,6 +4,16 @@ DIO-gen-curva-iv.py
 Genera la curva característica I-V completa del diodo (directa, inversa, ruptura)
 y un zoom de la región inversa mostrando la corriente de fuga Is.
 
+::SCRIPT_METADATA::
+script_id: DIO-gen-curva-iv
+module: DIO
+generates:
+  - DIO-curva-iv-01-general.png
+  - DIO-curva-iv-02-zoom-inversa.png
+referenced_by:
+  - 01-Circuitos-Diodos/theory/DIO-01-Teoria-Diodo.md
+last_updated: 2026-02-13
+
 Nomenclatura de salida (en 01-Circuitos-Diodos/media/generated/):
   DIO-curva-iv-01-general.png       ← Curva I-V completa
   DIO-curva-iv-02-zoom-inversa.png  ← Zoom corriente de fuga

@@ -1,3 +1,24 @@
+"""
+DIO-gen-pequena-senal.py
+───────────────────
+Gráfica de linealización del punto Q y modelo de pequeña señal del diodo.
+
+::SCRIPT_METADATA::
+script_id: DIO-gen-pequena-senal
+module: DIO
+generates:
+  - diodo_pequena_senal.png
+referenced_by:
+  - 01-Circuitos-Diodos/Notas/Nota1.md
+last_updated: 2026-02-13
+
+Salida:
+  - 01-Circuitos-Diodos/media/generated/diodo_pequena_senal.png
+
+Ejecutar desde la raíz del repositorio:
+  python 00-META/tools/DIO-gen-pequena-senal.py
+"""
+
 import numpy as np
 import matplotlib.pyplot as plt
 

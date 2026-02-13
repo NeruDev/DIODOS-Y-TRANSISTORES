@@ -115,6 +115,12 @@ fig.write_html('curva_interactiva.html')
 
 ## Organización de archivos
 
+## Política de reemplazo y limpieza
+
+- Si una imagen nueva reemplaza a otra existente, la imagen anterior debe eliminarse del repositorio cuando ya no tenga uso.
+- Antes de eliminar, actualizar enlaces y referencias en `.md`, scripts y metadatos asociados.
+- Después del reemplazo, verificar que `media/generated/` no conserve archivos huérfanos.
+
 ```
 00-META/tools/
 ├── README.md              ← Este archivo

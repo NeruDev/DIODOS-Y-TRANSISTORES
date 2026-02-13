@@ -7,6 +7,16 @@ Genera las curvas características del transistor BJT:
   3. Recta de carga DC con punto Q
   4. Regiones de operación (corte, activa, saturación)
 
+::SCRIPT_METADATA::
+script_id: BJT-gen-curvas-caracteristicas
+module: BJT
+generates:
+  - bjt_familia_curvas_ic_vce.png
+  - bjt_recta_carga_dc.png
+  - bjt_regiones_operacion.png
+referenced_by: []
+last_updated: 2026-02-13
+
 Dependencias: numpy, matplotlib
 Salida: 02-Transistor-BJT/media/generated/
 
