@@ -322,6 +322,16 @@ Cuando una imagen nueva **reemplace** a una imagen anterior:
 
 ## 8. Reglas de Generación de Contenido
 
+### Directiva de Mejora de Redacción para Notas
+
+Cuando el usuario proporcione texto destinado a las notas del repositorio (carpeta `Notas/`) como entrada de tipo académico —ya sea descrito de manera superficial, con estructura indeterminada o redacción informal—, la IA **debe** mejorar automáticamente su redacción para darle:
+
+1. **Coherencia:** Asegurar que las ideas se conecten lógicamente entre sí y con el contenido existente del documento.
+2. **Orden:** Estructurar el contenido con encabezados, listas o secuencias que faciliten la lectura y el estudio.
+3. **Contexto:** Añadir las definiciones, notación matemática y referencias necesarias para que el texto sea autocontenido y comprensible para la audiencia objetivo (estudiantes de Ingeniería Electrónica).
+
+Esta directiva aplica únicamente al contenido narrativo y explicativo. Las fórmulas, valores numéricos y datos técnicos proporcionados por el usuario deben respetarse fielmente; solo se mejora la forma, nunca el fondo técnico.
+
 ### Reglas generales
 
 1. **SIEMPRE** dar contexto antes de resolver un problema.

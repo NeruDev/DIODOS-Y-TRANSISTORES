@@ -138,6 +138,32 @@ last_updated: 2026-02-13
 
 ---
 
+### DIO-gen-rectificador-media-onda-esquema.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-rectificador-media-onda-esquema.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Diagrama esquemático de un rectificador de media onda básico |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `rectificador_media_onda_esquema.png` | `01-Circuitos-Diodos/media/generated/` | [Nota3.md](../../01-Circuitos-Diodos/Notas/Nota3.md) |
+
+### DIO-gen-rectificador-media-onda-formas-onda.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-rectificador-media-onda-formas-onda.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Formas de onda $v_s$, $v_o$, $v_D$ para rectificador media onda |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `rectificador_media_onda_ondas.png` | `01-Circuitos-Diodos/media/generated/` | [Nota3.md](../../01-Circuitos-Diodos/Notas/Nota3.md) |
+
+---
+
 ## Módulo 02 — Transistor BJT (`BJT`)
 
 ### BJT-gen-curvas-caracteristicas.py
