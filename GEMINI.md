@@ -78,6 +78,36 @@ with schemdraw.Drawing(file='bjt.png', show=False) as d:
 - Usar `show=False` en `schemdraw.Drawing()` para entorno sin GUI.
 - Usar `dpi=150` mínimo para calidad legible.
 - Documentar los parámetros del circuito en el docstring del script.
+- **Siempre** añadir `import matplotlib; matplotlib.use('Agg')` antes de cualquier otro import de matplotlib o schemdraw (evita el error `TclError` de tkinter).
+
+### Anti-solapamiento de etiquetas en schemdraw
+
+Reglas derivadas de la experiencia práctica con esquemáticos de transformadores y fuentes:
+
+1. **No usar `\n` en `.label()` para dos datos.** Separar en dos llamadas `.label()` con `loc=` distintos:
+   ```python
+   # Correcto
+   elm.Inductor2().down() \
+       .label('$N_2$',                loc='right', ofst=0.15) \
+       .label('$V_s = 12\,V_{rms}$', loc='bot',   ofst=0.15)
+   ```
+2. **Etiqueta de relación de vueltas del transformador:** elevar `+0.70 u` sobre `prim.start[1]` (no `+0.35`).
+3. **`SourceSin()` con dos líneas:** usar `ofst ≥ 0.55` para separar del conductor superior.
+4. **Secundario del transformador:** usar `.flip()` para que los bumps apunten hacia el núcleo. Separación mínima primario–secundario: **2.5 u**.
+
+### Sintaxis PowerShell para ejecutar scripts Python
+
+El entorno usa PowerShell (pwsh) en Windows. Siempre usar el operador `&` para llamar ejecutables:
+
+```powershell
+# Patrón canónico (una sola línea)
+Set-Location "G:\REPOSITORIOS GITHUB\DIODOS Y TRANSISTORES"; & "G:/REPOSITORIOS GITHUB/DIODOS Y TRANSISTORES/.venv/Scripts/python.exe" "00-META/tools/SCRIPT.py"
+```
+
+- Sin `&`: PowerShell lanza `ParserError: Unexpected token`.
+- Separar comandos con `;` (no `&&` como en bash).
+- Capturar stderr con `2>&1` (no `2>/dev/null`).
+- Activar venv con `& ".venv\Scripts\Activate.ps1"` (no `source`).
 
 ## Política de Scripts de Generación de Gráficos
 

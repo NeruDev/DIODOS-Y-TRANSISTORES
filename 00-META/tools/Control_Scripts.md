@@ -5,7 +5,7 @@ topic_id: control-scripts
 file_id: Control_Scripts
 status: active
 audience: ai_context
-last_updated: 2026-02-13
+last_updated: 2026-02-23
 -->
 
 # 📋 Control de Scripts de Generación de Gráficos
@@ -163,7 +163,21 @@ last_updated: 2026-02-13
 | `rectificador_media_onda_ondas.png` | `01-Circuitos-Diodos/media/generated/` | [Nota3.md](../../01-Circuitos-Diodos/Notas/Nota3.md) |
 
 ---
+### DIO-gen-nota4-rectificador-transformador.py
 
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-nota4-rectificador-transformador.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Esquemático y formas de onda del rectificador de media onda con transformador reductor 10:1. Genera: (1) esquemático schemdraw, (2) formas de onda con diodo real ($V_D = 0.7\,V$) + tabla, (3) los tres voltajes principales ($v_s$, $v_o$, $v_D$) en eje $\omega t$ con diodo ideal y todas las anotaciones de valores clave. |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------||
+| `nota4_circuito.png` | `01-Circuitos-Diodos/media/generated/` | [Nota4.md](../../01-Circuitos-Diodos/Notas/Nota4.md) |
+| `nota4_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota4.md](../../01-Circuitos-Diodos/Notas/Nota4.md) |
+| `nota4_voltajes_ideales.png` | `01-Circuitos-Diodos/media/generated/` | [Nota4.md](../../01-Circuitos-Diodos/Notas/Nota4.md) |
+
+---
 ## Módulo 02 — Transistor BJT (`BJT`)
 
 ### BJT-gen-curvas-caracteristicas.py
@@ -240,9 +254,9 @@ last_updated: 2026-02-13
 
 | Módulo | Scripts | Imágenes | Con referencia | Sin referencia |
 |--------|---------|----------|---------------|----------------|
-| DIO | 7 | 18 | 18 | 0 |
+| DIO | 8 | 21 | 21 | 0 |
 | BJT | 1 | 3 | 0 | 3 |
 | FET | 1 | 3 | 0 | 3 |
 | AMP | 1 | 3 | 0 | 3 |
 | PRO | 1 | 3 | 0 | 3 |
-| **Total** | **11** | **30** | **18** | **12** |
+| **Total** | **12** | **33** | **21** | **12** |

@@ -5,7 +5,7 @@ topic_id: ai-directives
 file_id: ai-directives
 status: stable
 audience: ai_context
-last_updated: 2026-02-13
+last_updated: 2026-02-23
 -->
 
 # 🔧 Directivas Técnicas para IA — Diodos y Transistores
@@ -87,3 +87,106 @@ Cada gráfico generado debe cumplir las siguientes reglas:
    - `referenced_by`: lista de archivos `.md` que enlazan las imágenes.
    - `last_updated`: fecha de última modificación.
 4. **Actualización del registro.** Al crear, modificar o eliminar un script, actualizar `Control_Scripts.md` de forma inmediata.
+
+## 5. Anti-solapamiento de Etiquetas en Schemdraw
+
+Al generar esquemáticos con `schemdraw`, las etiquetas de los elementos colisionan fácilmente entre sí cuando hay varios componentes próximos. Las siguientes reglas eliminan este problema:
+
+### 5.1 No usar `\n` en `.label()` para múltiples líneas de texto
+
+Cuando un elemento tiene dos datos que mostrar (p.ej. nombre y valor), **no** concatenarlos en un solo `.label()` con salto de línea. En su lugar, usar **dos llamadas `.label()` separadas** con `loc=` distintos:
+
+```python
+# INCORRECTO — puede solaparse con etiquetas vecinas
+elm.Inductor2().down().label('$N_2$\n$V_s = 12\\,V_{rms}$', loc='right')
+
+# CORRECTO — cada etiqueta en su propio anclaje
+elm.Inductor2().down() \
+    .label('$N_2$',               loc='right', ofst=0.15) \
+    .label('$V_s = 12\\,V_{rms}$', loc='bot',   ofst=0.15)
+```
+
+### 5.2 Etiqueta sobre el núcleo del transformador
+
+La etiqueta de relación de vueltas (`10:1`, `n:1`) debe colocarse **elevada** con respecto a la parte superior del núcleo para no colisionar con las cabezas de las bobinas:
+
+```python
+# offset vertical mínimo recomendado: +0.70 u sobre prim.start[1]
+d += elm.Label().at((cx_nucleo, prim.start[1] + 0.70)).label('$10:1$')
+```
+
+Con `+0.35` u la etiqueta queda encima de los bumps del secundario; con `+0.70` u queda libre.
+
+### 5.3 Fuente sinusoidal con dos líneas de texto
+
+Para `SourceSin()` con voltaje y frecuencia indicados, usar `ofst ≥ 0.55` para separar el texto del conductor superior:
+
+```python
+elm.SourceSin().up().label(
+    '$V_p = 120\\,V_{rms}$\n$f = 60\\,Hz$', loc='left', ofst=0.55
+)
+```
+
+### 5.4 Transformador simétrico con `.flip()`
+
+El secundario de un transformador debe dibujarse con `.flip()` para que sus bumps apunten **hacia el núcleo** (igual que el primario):
+
+```python
+# Primario — bumps a la derecha (dirección natural de .down())
+prim = elm.Inductor2(loops=3).down()
+
+# Secundario — bumps a la izquierda (hacia el núcleo)
+sec  = elm.Inductor2(loops=3).down().flip().at((prim.start[0] + 2.5, prim.start[1]))
+```
+
+Separación mínima entre primario y secundario: **2.5 u**, para dejar espacio al núcleo y sus etiquetas.
+
+### 5.5 Backend matplotlib sin GUI (`Agg`)
+
+En entornos sin display (terminales sin tkinter), `schemdraw` y `matplotlib` fallan con `TclError`. Añadir **siempre** al inicio de cada script, **antes** de cualquier otro import de matplotlib:
+
+```python
+import matplotlib
+matplotlib.use('Agg')  # backend sin GUI — obligatorio en entornos sin display
+import matplotlib.pyplot as plt
+import schemdraw
+```
+
+---
+
+## 6. Sintaxis Correcta de PowerShell para Ejecutar Python
+
+El entorno de trabajo usa **PowerShell** (pwsh) en Windows. La sintaxis difiere de bash en puntos críticos.
+
+### 6.1 Operador de llamada `&` — obligatorio
+
+Para ejecutar un ejecutable cuya ruta es una cadena (especialmente con espacios), se **requiere** el operador `&` (call operator). Sin él, PowerShell interpreta la cadena como expresión y lanza `ParserError: Unexpected token`.
+
+```powershell
+# INCORRECTO — genera ParserError
+"G:/ruta/python.exe" "script.py"
+
+# CORRECTO
+& "G:/ruta/python.exe" "script.py"
+```
+
+### 6.2 Forma estándar para scripts de este repositorio
+
+```powershell
+# Patrón canónico: cambiar directorio + ejecutar script
+Set-Location "G:\REPOSITORIOS GITHUB\DIODOS Y TRANSISTORES"
+& "G:/REPOSITORIOS GITHUB/DIODOS Y TRANSISTORES/.venv/Scripts/python.exe" "00-META/tools/SCRIPT.py"
+
+# En una sola línea (separar comandos con ;)
+Set-Location "G:\REPOSITORIOS GITHUB\DIODOS Y TRANSISTORES"; & "G:/REPOSITORIOS GITHUB/DIODOS Y TRANSISTORES/.venv/Scripts/python.exe" "00-META/tools/SCRIPT.py"
+```
+
+### 6.3 Reglas adicionales
+
+| Regla | Correcto | Incorrecto |
+|-------|----------|------------|
+| Cambiar directorio | `Set-Location "ruta"` | `cd ruta` (alias, evitar en scripts) |
+| Separar comandos en una línea | `cmd1; cmd2` | `cmd1 && cmd2` (sintaxis bash) |
+| Capturar salida y errores | `comando 2>&1` | `comando 2>/dev/null` (bash) |
+| Variables de entorno | `$env:VAR` | `$VAR` (bash) |
+| Activar venv | `& ".venv\Scripts\Activate.ps1"` | `source .venv/bin/activate` (bash) |

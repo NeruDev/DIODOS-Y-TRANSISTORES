@@ -285,6 +285,78 @@ with schemdraw.Drawing(file=os.path.join(OUTPUT_DIR, 'bjt.png'),
     d += elm.Ground()
 ```
 
+### Anti-solapamiento de etiquetas en schemdraw
+
+Reglas derivadas de la práctica con esquemáticos de rectificadores y transformadores:
+
+1. **No usar `\n` en `.label()` para dos datos distintos.** Usar dos llamadas `.label()` separadas con `loc=` distintos:
+
+   ```python
+   # INCORRECTO — solapamiento con etiquetas vecinas
+   elm.Inductor2(loops=3).down().label('$N_2$\n$V_s = 12\\,V_{rms}$', loc='right')
+
+   # CORRECTO — etiquetas independientes en diferentes anclajes
+   elm.Inductor2(loops=3).down() \
+       .label('$N_2$',                 loc='right', ofst=0.15) \
+       .label('$V_s = 12\\,V_{rms}$', loc='bot',   ofst=0.15)
+   ```
+
+2. **Etiqueta sobre el núcleo del transformador:** elevarla al menos `+0.70 u` sobre `prim.start[1]`:
+
+   ```python
+   d += elm.Label().at((cx_nucleo, prim.start[1] + 0.70)).label('$10:1$')
+   ```
+
+3. **`SourceSin()` con voltaje y frecuencia:** usar `ofst ≥ 0.55` para que el texto no tape el conductor superior:
+
+   ```python
+   elm.SourceSin().up().label(
+       '$V_p = 120\\,V_{rms}$\n$f = 60\\,Hz$', loc='left', ofst=0.55
+   )
+   ```
+
+4. **Transformador simétrico:** el secundario usa `.flip()` para que sus bumps apunten hacia el núcleo; separación mínima primario–secundario de **2.5 u**:
+
+   ```python
+   prim = elm.Inductor2(loops=3).down()  # bumps a la derecha
+   sec  = elm.Inductor2(loops=3).down().flip().at((prim.start[0] + 2.5, prim.start[1]))
+   ```
+
+5. **Backend sin GUI:** añadir siempre antes de cualquier otro import de matplotlib/schemdraw:
+
+   ```python
+   import matplotlib
+   matplotlib.use('Agg')  # backend sin GUI — evita TclError de tkinter
+   import matplotlib.pyplot as plt
+   import schemdraw
+   import schemdraw.elements as elm
+   ```
+
+### Sintaxis PowerShell para ejecutar Python en este repositorio
+
+El entorno es **PowerShell (pwsh)** en Windows. Su sintaxis difiere de bash en puntos clave:
+
+```powershell
+# Patrón canónico — cambiar directorio y ejecutar script Python
+Set-Location "G:\REPOSITORIOS GITHUB\DIODOS Y TRANSISTORES"
+& "G:/REPOSITORIOS GITHUB/DIODOS Y TRANSISTORES/.venv/Scripts/python.exe" "00-META/tools/SCRIPT.py"
+
+# En una sola línea
+Set-Location "G:\REPOSITORIOS GITHUB\DIODOS Y TRANSISTORES"; & "G:/REPOSITORIOS GITHUB/DIODOS Y TRANSISTORES/.venv/Scripts/python.exe" "00-META/tools/SCRIPT.py" 2>&1
+```
+
+**Errores frecuentes y sus correcciones:**
+
+| Problema | Incorrecto (bash) | Correcto (PowerShell) |
+|----------|-------------------|-----------------------|
+| Ejecutar un path como comando | `"ruta/python.exe" "script.py"` | `& "ruta/python.exe" "script.py"` |
+| Cambiar directorio | `cd "ruta con espacios"` | `Set-Location "ruta con espacios"` |
+| Encadenar comandos | `cmd1 && cmd2` | `cmd1; cmd2` |
+| Capturar stderr | `cmd 2>/dev/null` | `cmd 2>&1` |
+| Activar venv | `source .venv/bin/activate` | `& ".venv\Scripts\Activate.ps1"` |
+
+> **Regla:** En PowerShell, cualquier ruta de ejecutable pasada como cadena **requiere** el operador `&` para ser invocada. Sin él, PowerShell lanza `ParserError: Unexpected token`.
+
 ### Directivas técnicas para gráficos
 
 - **Escalas dispares:** Componentes electrónicos tienen zonas con magnitudes extremadamente diferentes (ej. Amperios en directa vs. Nanoamperios en inversa). Usar gráficas separadas o insets (gráficas insertadas) para manejar esto; nunca una sola escala lineal.
