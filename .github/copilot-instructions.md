@@ -332,6 +332,35 @@ Reglas derivadas de la práctica con esquemáticos de rectificadores y transform
    import schemdraw.elements as elm
    ```
 
+6. **No usar `.label()` sobre `Inductor2` para voltajes:** los bumps de la bobina tapan el texto. Usar `elm.Label()` con coordenadas explícitas offset `+1.1 u` del lado limpio:
+
+   ```python
+   # INCORRECTO — texto tapado por bumps
+   sec = elm.Inductor2(loops=3).down().label('$V_m$', loc='right')
+
+   # CORRECTO — Label externo posicionado
+   sec = elm.Inductor2(loops=3).down().flip()
+   d += elm.Label().at((sec.start[0] + 1.1, (sec.start[1]+sec.end[1])/2)).label('$V_m$')
+   ```
+
+7. **$R_L$ en rectificadores con derivación central:** colocar **horizontalmente** a la altura media del secundario (`sec_mid_y`), entre el nodo de cátodos y CT. Nunca rutar la carga por un camino externo que rodee el circuito:
+
+   ```python
+   sec_mid_y = (sec_top.start[1] + sec_bot.end[1]) / 2
+   d += elm.Line().at(cathode_junction).down().to((cathode_junction[0], sec_mid_y))
+   d += elm.Resistor().left().to((ct_x, sec_mid_y)).label('$R_L$', loc='bot')
+   ```
+
+8. **Gap de polaridad cerca de inductores:** `elm.Gap()` colisiona con bumps de `Inductor2`. Reservar Gap para componentes compactos (resistores, diodos) y usar `elm.Label()` explícito para indicadores de polaridad junto a bobinas.
+
+9. **Espacio vertical entre ramas paralelas:** si se necesita alojar componentes entre D1 y D2 (ej. $R_L$ horizontal), aumentar `loops` del primario (≥ 4) para ganar altura:
+
+   ```python
+   prim = elm.Inductor2(loops=4).down()       # más loops = más separación vertical
+   sec_top = elm.Inductor2(loops=3).down().flip()
+   sec_bot = elm.Inductor2(loops=3).down().flip()
+   ```
+
 ### Sintaxis PowerShell para ejecutar Python en este repositorio
 
 El entorno es **PowerShell (pwsh)** en Windows. Su sintaxis difiere de bash en puntos clave:

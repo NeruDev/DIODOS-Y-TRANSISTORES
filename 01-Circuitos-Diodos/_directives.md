@@ -43,3 +43,17 @@ last_updated: 2026-02-13
 - **Al generar gráficas:** Usar matplotlib, guardar en `media/generated/`, documentar parámetros
 - **Al generar soluciones:** Siempre paso a paso con unidades y contexto físico
 - **Reemplazo de imágenes:** Si una imagen nueva sustituye a otra, actualizar referencias y eliminar la imagen anterior sin uso para mantener `media/generated/` limpio.
+
+## Lecciones Aprendidas — Esquemáticos schemdraw (Módulo DIO)
+
+Errores documentados durante la generación iterativa del esquemático del rectificador de derivación central (`DIO-gen-nota5-rectificador-onda-completa-central.py`). Estas reglas complementan las directivas generales de `ai-directives.md` §5.
+
+### Transformadores con derivación central
+
+1. **Etiquetas de voltaje sobre inductores:** Nunca usar `.label()` directamente sobre `Inductor2`. Los bumps del componente tapan el texto. Usar `elm.Label()` con coordenadas explícitas desplazadas al menos `+1.1 u` horizontalmente (ver `ai-directives.md` §5.6).
+
+2. **Conexión de $R_L$ a la toma central:** $R_L$ debe conectarse **horizontalmente** entre el nodo de unión de cátodos y la toma central (CT), a la altura media del secundario (`sec_mid_y`). NO trazar el camino de retorno por rutas externas que rodeen el circuito (ver `ai-directives.md` §5.8).
+
+3. **Dimensionamiento del transformador:** Si la carga u otros componentes deben caber **entre** las ramas de salida (ej. entre D1 y D2), aumentar `loops` del primario (≥ 4) para ganar altura vertical suficiente (ver `ai-directives.md` §5.9).
+
+4. **Indicadores de polaridad:** Usar `elm.Gap()` solo para componentes compactos (resistores, diodos). Para voltajes del secundario del transformador, usar `elm.Label()` en lugar de Gap para evitar solapamiento con los bumps (ver `ai-directives.md` §5.7).

@@ -178,6 +178,22 @@ last_updated: 2026-02-23
 | `nota4_voltajes_ideales.png` | `01-Circuitos-Diodos/media/generated/` | [Nota4.md](../../01-Circuitos-Diodos/Notas/Nota4.md) |
 
 ---
+
+### DIO-gen-nota5-rectificador-onda-completa-central.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-nota5-rectificador-onda-completa-central.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Esquemático y formas de onda del rectificador monofásico de onda completa con transformador de derivación central. Genera: (1) esquemático schemdraw con transformador center-tap, dos diodos y $R_L$, (2) formas de onda ($v_{s1}$, $v_{s2}$, $v_o$, $v_{D1}$) con anotaciones de PIV, $V_{DC}$, indicación de diodo en conducción y tabla resumen. |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `nota5_circuito.png` | `01-Circuitos-Diodos/media/generated/` | [Nota5.md](../../01-Circuitos-Diodos/Notas/Nota5.md) |
+| `nota5_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota5.md](../../01-Circuitos-Diodos/Notas/Nota5.md) |
+| `nota5_diodos_ac.png` | `01-Circuitos-Diodos/media/generated/` | [Nota5.md](../../01-Circuitos-Diodos/Notas/Nota5.md) |
+
+---
 ## Módulo 02 — Transistor BJT (`BJT`)
 
 ### BJT-gen-curvas-caracteristicas.py
@@ -254,9 +270,9 @@ last_updated: 2026-02-23
 
 | Módulo | Scripts | Imágenes | Con referencia | Sin referencia |
 |--------|---------|----------|---------------|----------------|
-| DIO | 8 | 21 | 21 | 0 |
+| DIO | 9 | 24 | 24 | 0 |
 | BJT | 1 | 3 | 0 | 3 |
 | FET | 1 | 3 | 0 | 3 |
 | AMP | 1 | 3 | 0 | 3 |
 | PRO | 1 | 3 | 0 | 3 |
-| **Total** | **12** | **33** | **21** | **12** |
+| **Total** | **13** | **36** | **24** | **12** |

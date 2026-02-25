@@ -152,6 +152,86 @@ import matplotlib.pyplot as plt
 import schemdraw
 ```
 
+### 5.6 No usar `.label()` directamente sobre `Inductor2` para etiquetas de voltaje
+
+> **Origen:** Corrección iterativa del esquemático del rectificador monofásico de derivación central (`DIO-gen-nota5-rectificador-onda-completa-central.py`), iteración 1.
+
+**Problema:** Al colocar etiquetas como `$V_m$` o `$V_s$` con `.label()` directamente sobre un `elm.Inductor2()`, el texto se renderiza **encima de los bumps** (ondulaciones) de la bobina, haciéndolo ilegible. Los bumps del inductor ocupan espacio considerable y `.label()` no puede calcular un offset suficiente automáticamente.
+
+**Solución:** Usar elementos `elm.Label()` independientes posicionados con coordenadas explícitas, desplazados horizontalmente fuera de la zona de los bumps:
+
+```python
+# INCORRECTO — texto tapado por los bumps del inductor
+sec_top = elm.Inductor2(loops=3).down().label('$V_m$', loc='right')
+
+# CORRECTO — Label externo con coordenadas explícitas
+sec_top = elm.Inductor2(loops=3).down().flip()
+sec_x = sec_top.start[0]
+sec_mid_y = (sec_top.start[1] + sec_top.end[1]) / 2
+d += elm.Label().at((sec_x + 1.1, sec_mid_y)).label('$V_m$')
+```
+
+El offset horizontal recomendado es `+1.1 u` cuando el inductor tiene `.flip()` (bumps a la izquierda) o `−1.1 u` cuando los bumps apuntan a la derecha.
+
+### 5.7 Elementos `Gap` para indicadores de polaridad de voltaje — offset mínimo
+
+> **Origen:** Iteración 2 del esquemático del rectificador de derivación central.
+
+**Problema:** Al usar `elm.Gap()` como indicador de polaridad (`+`/`−`) para el voltaje sobre un componente, si el Gap queda adyacente a un `Inductor2`, sus etiquetas colisionan igualmente con los bumps de la bobina.
+
+**Solución:** Reservar `elm.Gap()` para componentes con cuerpo compacto (resistores, diodos, fuentes), y usar `elm.Label()` con coordenadas explícitas cuando el indicador de polaridad debe estar cerca de un inductor. Cuando sí se use Gap, asegurar un offset mínimo de `0.55 u` entre el Gap y el borde del inductor.
+
+### 5.8 Carga $R_L$ «interna» vs. «externa» en rectificadores con derivación central
+
+> **Origen:** Iteraciones 2 y 3 del esquemático del rectificador de derivación central.
+
+**Problema:** Al conectar $R_L$ entre el punto de unión de cátodos (nodo de salida) y la toma central (CT) del transformador, la ruta natural en schemdraw tiende a trazar la resistencia por un camino **externo** — bajando desde los cátodos, recorriendo horizontalmente y subiendo hasta CT. Esto produce un esquemático donde $R_L$ aparece «fuera» del circuito, lejos de los diodos.
+
+**Solución:** Colocar $R_L$ **horizontalmente** a la altura del punto medio del secundario (`sec_mid_y`), conectando el nodo de cátodos directamente con CT usando `.left()`:
+
+```python
+# sec_mid_y = altura media entre el inicio del secundario superior y el fin del inferior
+sec_mid_y = (sec_top.start[1] + sec_bot.end[1]) / 2
+
+# Unir cátodos y bajar hasta sec_mid_y
+d += elm.Line().at(cathode_junction).down().to((cathode_junction[0], sec_mid_y))
+
+# RL horizontal hacia la izquierda hasta la coordenada x de CT
+d += elm.Resistor().left().to((ct_x, sec_mid_y)).label('$R_L$', loc='bot')
+```
+
+Esto coloca $R_L$ visualmente **entre** D1 y D2, dentro de la topología del circuito.
+
+### 5.9 Espacio vertical insuficiente entre ramas de diodos paralelos
+
+> **Origen:** Iteración 3 del esquemático del rectificador de derivación central.
+
+**Problema:** Con `loops=3` en ambos secundarios del transformador, la separación vertical entre D1 (rama superior) y D2 (rama inferior) era insuficiente para alojar $R_L$ horizontalmente sin solapamiento visual.
+
+**Solución:** Aumentar el número de loops del primario a `loops=4` (o más) y mantener `loops=3` en cada mitad del secundario. Esto incrementa la altura total del transformador y proporciona espacio vertical suficiente entre las ramas:
+
+```python
+# Primario más alto → más separación vertical total
+prim = elm.Inductor2(loops=4).down()       # 4 loops = mayor altura
+
+# Cada mitad del secundario mantiene 3 loops
+sec_top = elm.Inductor2(loops=3).down().flip()
+sec_bot = elm.Inductor2(loops=3).down().flip()
+```
+
+**Regla práctica:** El número de loops del primario debe ser ≥ la suma de loops de ambas mitades del secundario dividida por 1.5, para garantizar espacio interno suficiente.
+
+### 5.10 Resumen de errores — Esquemático rectificador derivación central
+
+| Iteración | Error | Síntoma | Corrección aplicada |
+|-----------|-------|---------|---------------------|
+| 1 | `.label()` sobre `Inductor2` | Texto tapado por bumps de la bobina | Usar `elm.Label()` con coordenadas explícitas (§5.6) |
+| 1 | $R_L$ sin conexión a CT | Resistencia flotante, circuito abierto | Redirigir retorno de $R_L$ al nodo CT del transformador |
+| 2 | Gap de voltaje adyacente a inductor | Etiquetas `+`/`−` sobre los bumps | Usar Labels explícitos en lugar de Gap cerca de inductores (§5.7) |
+| 2 | $R_L$ por ruta externa | Circuito visualmente incorrecto | Reubicar $R_L$ horizontalmente entre D1 y D2 (§5.8) |
+| 3 | $R_L$ fuera de la topología | Resistencia «rodea» al circuito | Colocar $R_L$ con `.left()` a la altura `sec_mid_y` (§5.8) |
+| 3 | Espacio vertical insuficiente | $R_L$ solapa con diodos/inductores | Aumentar loops del primario a 4 (§5.9) |
+
 ---
 
 ## 6. Sintaxis Correcta de PowerShell para Ejecutar Python
