@@ -194,6 +194,22 @@ last_updated: 2026-02-23
 | `nota5_diodos_ac.png` | `01-Circuitos-Diodos/media/generated/` | [Nota5.md](../../01-Circuitos-Diodos/Notas/Nota5.md) |
 
 ---
+
+### DIO-gen-nota6-rectificador-puente.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-nota6-rectificador-puente.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Esquemático del rectificador monolítico tipo H (puente de Graetz) con transformador de devanado simple, cuatro diodos en configuración de puente y carga $R_L$. Incluye anotaciones de pares de conducción por semiciclo. Formas de onda: $v_s$, $v_o$ (ideal y real), tensión inversa en $D_3$ y $D_1$ (PIV). |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `nota6_circuito.png` | `01-Circuitos-Diodos/media/generated/` | [Nota6.md](../../01-Circuitos-Diodos/Notas/Nota6.md) |
+| `nota6_flujo_corriente.png` | `01-Circuitos-Diodos/media/generated/` | [Nota6.md](../../01-Circuitos-Diodos/Notas/Nota6.md) |
+| `nota6_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota6.md](../../01-Circuitos-Diodos/Notas/Nota6.md) |
+
+---
 ## Módulo 02 — Transistor BJT (`BJT`)
 
 ### BJT-gen-curvas-caracteristicas.py
@@ -270,9 +286,9 @@ last_updated: 2026-02-23
 
 | Módulo | Scripts | Imágenes | Con referencia | Sin referencia |
 |--------|---------|----------|---------------|----------------|
-| DIO | 9 | 24 | 24 | 0 |
+| DIO | 10 | 27 | 27 | 0 |
 | BJT | 1 | 3 | 0 | 3 |
 | FET | 1 | 3 | 0 | 3 |
 | AMP | 1 | 3 | 0 | 3 |
 | PRO | 1 | 3 | 0 | 3 |
-| **Total** | **13** | **36** | **24** | **12** |
+| **Total** | **14** | **39** | **27** | **12** |
