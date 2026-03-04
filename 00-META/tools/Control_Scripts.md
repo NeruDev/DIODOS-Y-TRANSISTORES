@@ -210,6 +210,37 @@ last_updated: 2026-02-23
 | `nota6_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota6.md](../../01-Circuitos-Diodos/Notas/Nota6.md) |
 
 ---
+
+### DIO-gen-nota7-fourier-armonicos.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-nota7-fourier-armonicos.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Descomposición en serie de Fourier del voltaje de salida del rectificador tipo puente. Armónicos individuales, reconstrucción progresiva y espectro de amplitudes. |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `nota7_armonicos_individuales.png` | `01-Circuitos-Diodos/media/generated/` | [Nota7.md](../../01-Circuitos-Diodos/Notas/Nota7.md) |
+| `nota7_reconstruccion_fourier.png` | `01-Circuitos-Diodos/media/generated/` | [Nota7.md](../../01-Circuitos-Diodos/Notas/Nota7.md) |
+| `nota7_espectro_armonicos.png` | `01-Circuitos-Diodos/media/generated/` | [Nota7.md](../../01-Circuitos-Diodos/Notas/Nota7.md) |
+| `nota7_espectro_frecuencia.png` | `01-Circuitos-Diodos/media/generated/` | [Nota7.md](../../01-Circuitos-Diodos/Notas/Nota7.md) |
+
+---
+
+### DIO-gen-nota7-filtro-inductivo.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-nota7-filtro-inductivo.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Esquemático de rectificador puente con filtro inductivo (inductor en serie con la carga). |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `nota7_filtro_inductivo.png` | `01-Circuitos-Diodos/media/generated/` | [Nota7.md](../../01-Circuitos-Diodos/Notas/Nota7.md) |
+
+---
 ## Módulo 02 — Transistor BJT (`BJT`)
 
 ### BJT-gen-curvas-caracteristicas.py
@@ -286,9 +317,9 @@ last_updated: 2026-02-23
 
 | Módulo | Scripts | Imágenes | Con referencia | Sin referencia |
 |--------|---------|----------|---------------|----------------|
-| DIO | 10 | 27 | 27 | 0 |
+| DIO | 12 | 32 | 32 | 0 |
 | BJT | 1 | 3 | 0 | 3 |
 | FET | 1 | 3 | 0 | 3 |
 | AMP | 1 | 3 | 0 | 3 |
 | PRO | 1 | 3 | 0 | 3 |
-| **Total** | **14** | **39** | **27** | **12** |
+| **Total** | **16** | **44** | **32** | **12** |

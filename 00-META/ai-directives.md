@@ -36,6 +36,29 @@ Los componentes electrónicos suelen tener zonas de operación con magnitudes ex
 
 El proyecto utiliza renderizado de fórmulas matemáticas mediante LaTeX.
 
+### Pipes (`|`) dentro de fórmulas LaTeX en tablas Markdown
+
+> **Origen:** Tabla de armónicos de Fourier en `Nota7.md` — el encabezado `$|C_n|$` rompía el renderizado de la tabla porque los `|` se interpretaban como delimitadores de columna.
+
+**Problema:** En Markdown, el carácter `|` es el delimitador de columnas de una tabla. Si se usa `$|C_n|$` (valor absoluto) dentro de una celda de tabla, el parser ve 4 columnas donde debería haber 1, destruyendo la estructura.
+
+**Solución:** Usar las entidades LaTeX `\lvert` y `\rvert` en vez de `|` para valor absoluto dentro de tablas Markdown:
+
+```markdown
+<!-- INCORRECTO — rompe la tabla -->
+| Amplitud $|C_n|$ |
+
+<!-- CORRECTO — renderiza igual, no conflicta con tabla -->
+| Amplitud $\lvert C_n \rvert$ |
+```
+
+**Alternativas equivalentes:**
+- `$\lvert C_n \rvert$` → Recomendada (semánticamente correcta)
+- `$\left| C_n \right|$` → Funciona si no hay conflicto de anidamiento
+- `$\vert C_n \vert$` → También válida
+
+**Regla:** Nunca usar `|` suelto para valor absoluto dentro de celdas de tabla Markdown. Aplicar esta regla también a normas vectoriales `$\lVert \vec{v} \rVert$`.
+
 ### Sintaxis
 *   **Inline (en línea):** Usar un solo signo de dólar `$ E = mc^2 $`.
 *   **Bloque (centrado):** Usar doble signo de dólar `$$` al inicio y final de la línea.
