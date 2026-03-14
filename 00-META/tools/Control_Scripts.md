@@ -241,6 +241,25 @@ last_updated: 2026-02-23
 | `nota7_filtro_inductivo.png` | `01-Circuitos-Diodos/media/generated/` | [Nota7.md](../../01-Circuitos-Diodos/Notas/Nota7.md) |
 
 ---
+
+### DIO-gen-nota8-recortadores.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-nota8-recortadores.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Esquemáticos y formas de onda de recortadores paralelos positivos: (1) simple y (2) con polarización $V_{DC}$. Genera esquemáticos schemdraw y formas de onda con zonas de recorte sombreadas y anotaciones. |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|------------------|
+| `nota8_recortador_paralelo_pos.png` | `01-Circuitos-Diodos/media/generated/` | [Nota8.md](../../01-Circuitos-Diodos/Notas/Nota8.md) |
+| `nota8_recortador_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota8.md](../../01-Circuitos-Diodos/Notas/Nota8.md) |
+| `nota8_recortador_polarizado.png` | `01-Circuitos-Diodos/media/generated/` | [Nota8.md](../../01-Circuitos-Diodos/Notas/Nota8.md) |
+| `nota8_recortador_polarizado_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota8.md](../../01-Circuitos-Diodos/Notas/Nota8.md) |
+| `nota8_recortador_serie.png` | `01-Circuitos-Diodos/media/generated/` | [Nota8.md](../../01-Circuitos-Diodos/Notas/Nota8.md) |
+| `nota8_recortador_serie_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota8.md](../../01-Circuitos-Diodos/Notas/Nota8.md) |
+
+---
 ## Módulo 02 — Transistor BJT (`BJT`)
 
 ### BJT-gen-curvas-caracteristicas.py
@@ -317,9 +336,9 @@ last_updated: 2026-02-23
 
 | Módulo | Scripts | Imágenes | Con referencia | Sin referencia |
 |--------|---------|----------|---------------|----------------|
-| DIO | 12 | 32 | 32 | 0 |
+| DIO | 13 | 38 | 38 | 0 |
 | BJT | 1 | 3 | 0 | 3 |
 | FET | 1 | 3 | 0 | 3 |
 | AMP | 1 | 3 | 0 | 3 |
 | PRO | 1 | 3 | 0 | 3 |
-| **Total** | **16** | **44** | **32** | **12** |
+| **Total** | **17** | **50** | **38** | **12** |
