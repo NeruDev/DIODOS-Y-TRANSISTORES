@@ -30,24 +30,37 @@ Esto asegura la consistencia, precisión y reproducibilidad del material gráfic
 
 ## Herramientas Python Instaladas
 
-El repositorio cuenta con las siguientes librerías Python para generación de contenido gráfico y cálculo:
+El repositorio utiliza un entorno Python 3.12 con las siguientes especificaciones:
 
-### Dependencias base (requeridas)
+### Dependencias del Sistema (Linux/Ubuntu)
+Para el correcto funcionamiento de las interfaces gráficas y generación de esquemáticos:
+- `python3-tk`: Necesario para el backend de `matplotlib` y scripts interactivos.
+- En GitHub Codespaces, se debe asegurar que el `DISPLAY` esté configurado (ej. `export DISPLAY=:1`).
 
+### Dependencias de Python (requirements.txt)
 | Paquete | Uso |
 |---------|-----|
-| **numpy** | Cálculos numéricos, vectorización de ecuaciones |
-| **matplotlib** | Generación de gráficas 2D (curvas I-V, Bode, etc.), exportación a PNG |
-| **scipy** | Optimización (`fsolve` para punto Q), filtros |
+| **numpy** | Cálculos numéricos y vectorización. |
+| **matplotlib** | Generación de gráficas 2D. |
+| **schemdraw** | Dibujo de esquemáticos electrónicos. |
+| **pillow** | Manejo de imágenes y soporte para Tkinter. |
+| **scipy** | Optimización y filtrado. |
+| **lcapy/sympy** | Análisis simbólico y circuitos. |
 
-### Herramientas de esquemáticos y cálculo (instaladas)
+### Configuración de Backends de Matplotlib
+Es crítico seleccionar el backend adecuado según la tarea:
 
-| Paquete | Uso | Elementos semiconductores |
-|---------|-----|---------------------------|
-| **schemdraw** | Dibujo programático de esquemáticos de circuitos. Genera PNG directamente vía matplotlib | 46 elementos: `Diode`, `Zener`, `Schottky`, `Varactor`, `LED`, `BjtNpn`, `BjtPnp`, `JFetN`, `JFetP`, `NFet`, `PFet`, `NMos`, `PMos`, `IgbtN`, `IgbtP`, `SCR`, `Triac`, `Diac`, etc. |
-| **lcapy** | Análisis simbólico de circuitos lineales (impedancias, Laplace, Fourier). Esquemáticos vía circuitikz (requiere LaTeX) | Diodos, BJT (NPN/PNP), JFET, MOSFET |
-| **sympy** | Cálculo simbólico: simplificación de ecuaciones, derivadas, la ecuación de Shockley en forma simbólica | N/A (matemáticas puras) |
-| **SciencePlots** | Estilos matplotlib para publicaciones científicas (`science`, `ieee`, `nature`) | N/A (estilos visuales) |
+1. **Generación Automática (Headless):** Para scripts en `00-META/tools/` que guardan archivos PNG.
+   ```python
+   import matplotlib
+   matplotlib.use('Agg')
+   ```
+2. **Interfaces Interactivas (GUI):** Para herramientas como `practica1_calculadora.py`.
+   ```python
+   import matplotlib
+   matplotlib.use('TkAgg')
+   import tkinter as tk
+   ```
 
 ### Uso de schemdraw (herramienta principal para esquemáticos)
 
