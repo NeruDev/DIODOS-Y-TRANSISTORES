@@ -81,8 +81,17 @@ DEFAULTS = {
     # ── Filtro inductivo (inciso i) ────────────────────────────────────────────
     # L_H     Inductancia del primario del transformador auxiliar (usado como L).
     #   CÓMO MEDIR : Puente LCR a f_prueba = 100 Hz (según indica el inciso i).
-    #   ESPERADO   : Orden de magnitud 10 mH – 500 mH (depende del transformador).
-    "L_H": 0.050,             # H       ← DATO EXPERIMENTAL  (puente LCR a 100 Hz)
+    #   ESPERADO   : ~1.5 H para primario 120V/12V@2A (valor típico propuesto).
+    #                Puede variar ampliamente — siempre medir en el lab.
+    "L_H": 1.5,               # H       ← DATO EXPERIMENTAL  (puente LCR a 100 Hz)
+
+    # RL_Ohm  Resistencia del devanado del inductor (alambre del primario).
+    #   CÓMO MEDIR : Puente LCR a 100 Hz (mide L y R simultáneamente), o
+    #                multímetro en modo Ω directamente sobre las terminales.
+    #   ESPERADO   : ~40 Ω para primario 120V/12V@2A (impedancia del alambre).
+    #   EFECTO     : R_L crea una caída de voltaje DC que REDUCE el voltaje en R.
+    #                Voltaje en carga = Io_dc × R  (no Vo(cd) completo).
+    "RL_Ohm": 40.0,           # Ω       ← DATO EXPERIMENTAL  (puente LCR / multímetro)
 
     # ── Filtro capacitivo (inciso l) ───────────────────────────────────────────
     # C_uF    Capacitor electrolítico instalado en paralelo con la carga.
@@ -117,6 +126,8 @@ def calcular_todo(p: dict) -> dict:
     Vd    = p["Vd"]
     R     = p["R_carga"]
     L     = p["L_H"]
+    RL    = p["RL_Ohm"]               # Ω  resistencia del devanado del inductor
+    RT    = R + RL                    # Ω  resistencia total con filtro inductivo
     C     = p["C_uF"] * 1e-6          # µF → F
     FR_o  = p["FR_obj"]
     w_red = 2.0 * np.pi * f           # rad/s (frecuencia angular de la red)
@@ -229,54 +240,85 @@ def calcular_todo(p: dict) -> dict:
     # ══════════════════════════════════════════════════════════════════════════
     # PASO 8 — FILTRO INDUCTIVO R-L (atenuación de armónicos de corriente)
     # ──────────────────────────────────────────────────────────────────────
-    # Al conectar L en serie con R, la impedancia para el k-ésimo armónico es:
-    #   Zn = √[ R² + (2n·ω_out·L)² ]
-    # La corriente del armónico n resultante es:
-    #   In = Vn / Zn  (Vn = amplitud del armónico n del voltaje de salida)
+    # El inductor se conecta en SERIE con la carga. Su devanado tiene una
+    # resistencia parásita RL, por lo que la resistencia total es RT = R + RL.
     #
-    # A mayor L o mayor n → mayor Zn → mayor atenuación de la corriente.
-    # El factor de atenuación relativo al caso sin filtro es: R / Zn.
+    # Efecto en la componente DC:
+    #   El inductor ideal no cae DC, pero RL sí lo hace:
+    #   Io_dc_RL = Vo(cd) / RT
+    #   V_carga  = Io_dc_RL × R   (solo la fracción sobre R llega a la carga)
+    #   ESPERADO (L=1.5H, RL=40Ω, RT=50Ω): Io_dc_RL ≈ 0.198 A,  V_carga ≈ 1.98V
+    #
+    # Impedancia para el k-ésimo armónico de Fourier (a frecuencia n_k × f_out):
+    #   ω_k  = n_k × ω_out = n_k × 2π × f_out   [rad/s]
+    #   Zk   = √[ RT² + (n_k · ω_out · L)² ]
+    #
+    #   NOTA: el índice n_k corre 1, 2, 3,… mapeando las frecuencias 120, 240, 360 Hz.
+    #   ω_out = 2π×120 rad/s → para n_k=1 (120 Hz): XL = 2π×120×1.5 = 1131 Ω
+    #   Z1 = √(50² + 1131²) ≈ 1132 Ω   (coincide con el documento)
+    #
+    # Atenuación del armónico de corriente respecto al caso sin filtro (sólo R):
+    #   aten_k = (In_con_L / In_sin_L) × 100 = (R / Zk) × 100 %
+    #   Donde In_sin_L = Vn/R y In_con_L = Vn/Zk
     # ══════════════════════════════════════════════════════════════════════════
     w_out = 2.0 * np.pi * r["f_out"]
+    r["RT"]        = RT
+    r["Io_dc_RL"]  = r["Vo_dc"] / RT             # A  corriente DC con filtro RL
+    r["V_carga_RL"]= r["Io_dc_RL"] * R            # V  voltaje solo sobre R (carga)
     r["Z_RL_arms"] = []
     r["IL_arms"]   = []
     r["aten_RL"]   = []
     for k in range(N_HARM):
         n_k  = k + 1
         Vn   = r["fourier_amps"][k]
-        Zn   = np.sqrt(R**2 + (2.0 * n_k * w_out * L)**2)
+        # Reactancia inductiva del armónico n_k·f_out:  XL = n_k·ω_out·L
+        Zn   = np.sqrt(RT**2 + (n_k * w_out * L)**2)
         r["Z_RL_arms"].append(Zn)
         r["IL_arms"].append(Vn / Zn)
-        r["aten_RL"].append(R / Zn * 100.0)   # % que llega vs sin inductor
+        r["aten_RL"].append(R / Zn * 100.0)   # % respecto a sin filtro (base=R)
+
+    # Factor de rizo con filtro inductivo (inciso k, usando armónico n_k=1)
+    # Ir(rms) ≈ I1/√2  (el armónico dominante es cuasisinusoidal)
+    r["Ir_rms_RL"] = r["IL_arms"][0] / np.sqrt(2.0)
+    r["FRi_RL"]    = (r["Ir_rms_RL"] / r["Io_dc_RL"]) * 100.0   # %
 
     # ══════════════════════════════════════════════════════════════════════════
     # PASO 9 — DISEÑO DEL FILTRO CAPACITIVO (FR_i ≤ 5 %)
     # ─────────────────────────────────────────────────────
-    # Para rectificador de onda completa con filtro C en paralelo:
+    # Se retira el inductor y se coloca C en paralelo con R.
     #
-    #   FR ≈ 1 / (4√3 · f_out · C · R)          ← fórmula de diseño simplificada
-    #   → C_min = 1 / (4√3 · FR_obj · f_out · R) para cumplir FR ≤ FR_obj
+    # Rizo pico a pico (modelado como descarga RC hasta el siguiente pico):
+    #   Vr(pp) ≈ Vm_red / (f_out · C · R)
+    #   (usa el voltaje de PICO disponible, no el promedio)
     #
-    # Rizo pico a pico aproximado (descarga exponencial):
-    #   Vr(pp) ≈ Vo(dc) / (f_out · C · R)
+    # Voltaje DC de salida real con filtro (desplazado medio rizo hacia abajo):
+    #   Vo(dc)_C = Vm_red − Vr(pp)/2
+    #   ESPERADO con C=2200µF: Vr(pp)≈5.89V, Vo(dc)_C≈12.63V
     #
-    # Voltaje DC de salida con filtro (considerando el rizo triangular):
-    #   Vo(dc)_C ≈ Vm_red − Vr(pp)/2
+    # Rizo RMS (onda triangular):
+    #   Vr(rms)_C = Vr(pp) / (2√3)
     #
-    # Corriente de rizo RMS (armónico de menor orden n=2, 120 Hz):
-    #   Ir(rms) ≈ Vr(pp) / (2√3)
+    # Factor de rizo con filtro:
+    #   FRi = Vr(rms)_C / Vo(dc)_C × 100 %
+    #   ESPERADO con C=2200µF: FRi ≈ 13.4 %  (≠ 5 %, no es suficiente)
     #
-    # Factor de rizo final:   FRi = Vr(rms_C) / Vo(dc_C) × 100  [%]
-    #
-    # ESPERADO: C ≈ 2405 µF → usar 2200 µF o 3300 µF (valor estándar cercano).
+    # Capacitor mínimo para FRi ≤ 5 %:
+    #   Planteando FR = Vr(pp)/(2√3) / [Vm_red − Vr(pp)/2] = FR_obj
+    #   Sea x = 1/(f_out·R·C):  x / [2√3·(1−x/2)] = FR_obj
+    #   Solución exacta:  x = 2√3·FR_obj / (1 + √3·FR_obj)
+    #   C_min = 1 / (x · f_out · R)
+    #   ESPERADO con FR_obj=5%: C_min ≈ 5229 µF → usar 5600 µF o 6800 µF comercial
     # ══════════════════════════════════════════════════════════════════════════
-    r["C_min_uF"]   = 1.0 / (4.0 * np.sqrt(3.0) * FR_o * r["f_out"] * R) * 1e6
-    r["FR_C"]       = 1.0 / (4.0 * np.sqrt(3.0) * r["f_out"] * C * R)
-    r["Vr_pp"]      = r["Vo_dc"] / (r["f_out"] * C * R)
-    r["Vo_dc_C"]    = r["Vm_red"] - r["Vr_pp"] / 2.0
-    r["Vr_rms_C"]   = r["Vr_pp"] / (2.0 * np.sqrt(3.0))
-    r["Ir_rms_C"]   = r["Vr_rms_C"] / R                  # A corriente de rizo
-    r["FRi"]        = (r["Vr_rms_C"] / r["Vo_dc_C"]) * 100.0   # %
+    r["Vr_pp"]    = r["Vm_red"] / (r["f_out"] * C * R)
+    r["Vo_dc_C"]  = r["Vm_red"] - r["Vr_pp"] / 2.0
+    r["Vr_rms_C"] = r["Vr_pp"] / (2.0 * np.sqrt(3.0))
+    r["Ir_rms_C"] = r["Vr_rms_C"] / R
+    r["FR_C"]     = r["Vr_rms_C"] / r["Vo_dc_C"]          # adimensional
+    r["FRi"]      = r["FR_C"] * 100.0                      # %
+
+    # C_min — solución exacta (no aproximación 1/(4√3·f·C·R))
+    x_min         = 2.0 * np.sqrt(3.0) * FR_o / (1.0 + np.sqrt(3.0) * FR_o)
+    r["C_min_uF"] = 1.0 / (x_min * r["f_out"] * R) * 1e6
 
     return r
 
@@ -486,6 +528,8 @@ class App(tk.Tk):
         s4 = seccion("FILTRO INDUCTIVO")
         entry_row(s4, "L",       self._params["L_H"],     "H",
                   "puente LCR a 100 Hz")
+        entry_row(s4, "RL",      self._params["RL_Ohm"],  "Ω",
+                  "R devanado (LCR / multímetro)")
 
         s5 = seccion("FILTRO CAPACITIVO")
         entry_row(s5, "C",       self._params["C_uF"],    "µF",
@@ -682,52 +726,65 @@ class App(tk.Tk):
             ), tags=("value",))
 
         # ── PASO 8 ──────────────────────────────────────────────────────────────
-        h("PASO 8", "▸ FILTRO INDUCTIVO R-L — atenuación de corriente — incisos i) y j)")
+        h("PASO 8", "▸ FILTRO INDUCTIVO R-L — atenuación de armónicos de corriente — incisos i) j) k)")
+        v("8.0", "RT",
+          "R + R_L   (resistencia total con inductor)",
+          r["RT"], "Ω",
+          f"← R={p['R_carga']:.1f}Ω + R_L={p['RL_Ohm']:.1f}Ω  (medir R_L con LCR/multímetro)")
+        v("8.1", "Io(dc)_RL",
+          "Vo(cd) / RT   [DC se distribuye en todo RT]",
+          r["Io_dc_RL"], "A",
+          "← corriente DC reducida por RL del devanado (sonda Hall, modo DC)")
+        v("8.2", "V_carga_RL",
+          "Io(dc)_RL × R   [voltaje efectivo sobre la carga]",
+          r["V_carga_RL"], "V",
+          "← medir con multímetro DC o osciloscopio en modo DC sobre R")
         for k in range(5):
             nk   = k + 1
             fq   = r["fourier_freqs"][k]
             zn   = r["Z_RL_arms"][k]
+            il   = r["IL_arms"][k]
             atn  = r["aten_RL"][k]
             tree.insert("", tk.END, values=(
-                f"8.{k+1}",
+                f"8.{k+3}",
                 f"|Z_{2*nk}|  ({lbl_n[k]})",
-                f"√[R²+(2n·ω_out·L)²],  n={nk}",
+                f"sqrt(RT^2+(n*w_out*L)^2), n={nk}",
                 f"{zn:.4g}",
                 "Ω",
-                f"arm. {2*nk} llega al {atn:.1f}% → FFT comparar con inciso g"
+                f"arm. {2*nk} → I={il*1e3:.2f}mA  ({atn:.1f}% del caso sin filtro)"
             ), tags=("value",))
+        v("8.8", "Ir(rms)_RL",
+          "I_arm1 / √2   (arm. dominante 120 Hz)",
+          r["Ir_rms_RL"] * 1e3, "mA",
+          "← osciloscopio modo AC: corriente de rizo (inciso k)")
+        v("8.9", "FRi_RL",
+          "Ir(rms)_RL / Io(dc)_RL × 100",
+          r["FRi_RL"], "%",
+          "← factor de rizo con filtro inductivo (comparar con FR sin filtro ≈48%)")
 
         # ── PASO 9 ──────────────────────────────────────────────────────────────
         h("PASO 9", "▸ FILTRO CAPACITIVO — diseño FR_i ≤ 5 % — incisos k) y l)")
         v("9.1", "C_min",
-          "1 / (4√3·FR_obj·f_out·R)",
+          "sol. exacta: x=2√3·FR_obj/(1+√3·FR_obj), C=1/(x·f_out·R)",
           r["C_min_uF"], "µF",
-          "← usar valor estándar comercial ≥ a este (ej. 2200/3300/4700 µF)")
-        v("9.2", "FR_C",
-          f"1/(4√3·f_out·C·R)  con C={p['C_uF']:.0f}µF",
-          r["FR_C"], "—",
-          "← medir Vr(pp) con osciloscopio en modo AC")
-        v("9.3", "FR_C[%]",
-          "FR_C × 100",
-          r["FR_C"] * 100, "%",
-          "← inciso m): comparar FFT con/sin capacitor")
-        v("9.4", "Vr(pp)",
-          "Vo(dc) / (f_out·C·R)",
+          "← usar valor estándar ≥ C_min (ej. 5600/6800 µF o 3×2200 µF en paralelo)")
+        v("9.2", "Vr(pp)",
+          "Vm_red / (f_out·C·R)",
           r["Vr_pp"], "V",
-          "← osciloscopio modo AC: medir rizo pico a pico (inciso k)")
-        v("9.5", "Vo(dc)_C",
+          "← osciloscopio modo AC: medir pico a pico del rizo (inciso k)")
+        v("9.3", "Vo(dc)_C",
           "Vm_red − Vr(pp)/2",
           r["Vo_dc_C"], "V",
-          "← osciloscopio: medir Vout DC con el capacitor instalado")
-        v("9.6", "Vr(rms)_C",
+          "← multímetro DC o osciloscopio modo DC sobre Vout con C instalado")
+        v("9.4", "Vr(rms)_C",
           "Vr(pp) / (2√3)",
           r["Vr_rms_C"], "V",
-          "← osciloscopio modo AC + RMS: corriente de rizo (inciso k)")
-        v("9.7", "Ir(rms)_C",
+          "← osciloscopio modo AC+RMS: rizo sobre la carga")
+        v("9.5", "Ir(rms)_C",
           "Vr(rms)_C / R",
           r["Ir_rms_C"], "A",
-          "← sonda Hall modo AC: corriente RMS de rizo en la carga")
-        v("9.8", "FRi",
+          "← sonda Hall modo AC: corriente RMS de rizo")
+        v("9.6", "FRi",
           "Vr(rms)_C / Vo(dc)_C × 100  [objetivo ≤ 5 %]",
           r["FRi"], "%",
           "← calcular con valores medidos; debe ser ≤ 5 % con C_min")
@@ -799,18 +856,20 @@ class App(tk.Tk):
         i_D1 = np.where(vs >= 0, i_carga, 0.0)
 
         # Corriente en la carga con filtro inductivo
-        # Reconstrucción armónica: Io_dc + Σ In_RL·cos(n·w_out·t + φn)
+        # Reconstrucción armónica: Io_dc_RL + Σ In_RL·cos(n_k·w_out·t + φn)
+        # Donde Zn = √(RT²+(n_k·w_out·L)²) y φn = −atan(n_k·w_out·L / RT)
+        RT    = p["R_carga"] + p["RL_Ohm"]
         w_out = 2.0 * np.pi * r["f_out"]
-        i_RL  = np.full_like(t, r["Io_dc"])
+        i_RL  = np.full_like(t, r["Io_dc_RL"])   # DC reducido por RL del devanado
         for k in range(5):
             nk   = k + 1
             Vn   = r["fourier_amps"][k]
-            LX   = 2.0 * nk * w_out * p["L_H"]
-            Zn   = np.sqrt(R**2 + LX**2)
-            phi  = -np.arctan2(LX, R)
+            XL   = nk * w_out * p["L_H"]         # reactancia: n·ω_out·L  (NO 2·n·ω)
+            Zn   = np.sqrt(RT**2 + XL**2)
+            phi  = -np.arctan2(XL, RT)
             coef = -4.0 * Vmr / (np.pi * (4.0 * nk**2 - 1.0))
             In   = (coef / Zn if Zn > 0 else 0.0)
-            i_RL += In * np.cos(2.0 * nk * w_out * t + phi)
+            i_RL += In * np.cos(nk * w_out * t + phi)
 
         # ── Subplots ─────────────────────────────────────────────────────────
         axs = fig.subplots(4, 1, sharex=True)
@@ -869,9 +928,9 @@ class App(tk.Tk):
         axs[3].plot(t_ms, i_carga, color=clr["vs"],  lw=0.9,
                     ls="--", alpha=0.5, label="Is(t) sin inductor")
         axs[3].plot(t_ms, i_RL,    color=clr["id"],  lw=lw,
-                    label=f"Is(t) con L={p['L_H']*1e3:.1f} mH")
-        axs[3].axhline(r["Io_dc"], ls="--", color=clr["dc"], lw=1.0,
-                       label=f"Io(dc) = {r['Io_dc']:.3f} A")
+                    label=f"Is(t) con L={p['L_H']:.2f}H, RL={p['RL_Ohm']:.0f}Ω")
+        axs[3].axhline(r["Io_dc_RL"], ls="--", color=clr["dc"], lw=1.0,
+                       label=f"Io(dc)_RL = {r['Io_dc_RL']:.3f} A  (vs {r['Io_dc']:.3f}A sin L)")
         axs[3].set_xlabel("Tiempo [ms]", color="#6c7086", fontsize=8)
         _ax_fmt(axs[3],
                 "is(t) — Corriente secundario: sin / con inductor L  [incisos h, i, j]")
@@ -1037,16 +1096,23 @@ class App(tk.Tk):
 
         f_out = r["f_out"]
         R     = p["R_carga"]
+        RL    = p["RL_Ohm"]
+        RT    = R + RL
         L     = p["L_H"]
         C_act = p["C_uF"] * 1e-6
         FR_o  = p["FR_obj"]
         w_out = 2.0 * np.pi * f_out
 
-        # Curva FR vs C (escala logarítmica de 100 µF a 100 000 µF)
-        C_arr  = np.logspace(2, 5, 600) * 1e-6
-        FR_arr = 1.0 / (4.0 * np.sqrt(3.0) * f_out * C_arr * R) * 100.0   # %
+        # Curva FR(C): usando la fórmula correcta Vm_red/(f_out·R·C) (no 1/(4√3·f·C·R))
+        # FR = [Vm_red/(f_out·R·C)/(2√3)] / [Vm_red − Vm_red/(2·f_out·R·C)]
+        # Sea x = 1/(f_out·R·C): FR(x) = x / (2√3·(1−x/2))
+        C_arr = np.logspace(2, 5, 600) * 1e-6     # 100 µF … 100 000 µF
+        x_arr = 1.0 / (f_out * R * C_arr)
+        FR_arr = (x_arr / (2.0 * np.sqrt(3.0) * (1.0 - x_arr / 2.0))) * 100.0  # %
+        FR_arr = np.clip(FR_arr, 0, 200)
 
-        # Curva atenuación [%] vs L para cada armónico
+        # Curva atenuación [%] vs L para cada armónico: usando RT y Zn=√(RT²+(n·w_out·L)²)
+        # Referencia sin filtro: In_0 = Vn/R;  Con filtro: In = Vn/Zn;  aten = R/Zn × 100%
         L_arr   = np.logspace(-3, 0, 500)   # 1 mH … 1 H
         n_arms  = [1, 2, 3, 4, 5]
         colores = ["#89b4fa", "#a6e3a1", "#fab387", "#f38ba8", "#cba6f7"]
@@ -1082,12 +1148,13 @@ class App(tk.Tk):
 
         # ── Derecha: atenuación corriente por armónico vs L ───────────────────
         for k, nk in enumerate(n_arms):
-            Zn_arr  = np.sqrt(R**2 + (2.0 * nk * w_out * L_arr)**2)
-            aten_arr = R / Zn_arr * 100.0
+            # Zn = √(RT² + (n_k·ω_out·L)²)  donde n_k mapea arm. 2,4,6,8,10
+            Zn_arr   = np.sqrt(RT**2 + (nk * w_out * L_arr)**2)
+            aten_arr = R / Zn_arr * 100.0   # % vs sin inductor (base = solo R)
             ax2.semilogx(L_arr * 1e3, aten_arr, color=colores[k], lw=1.8,
                          label=f"arm. {2*nk}  ({2*nk*f_out:.0f} Hz)")
         ax2.axvline(L * 1e3, color="white", lw=1.5, ls="--",
-                    label=f"L_medido = {L*1e3:.1f} mH")
+                    label=f"L = {L:.2f} H  ({L*1e3:.1f} mH)")
         ax2.set_xlabel("Inductancia L [mH]", color="#6c7086", fontsize=8)
         ax2.set_ylabel("I_arm / I_arm_sin_L [%]", color="#6c7086", fontsize=8)
         ax2.set_title(
@@ -1100,14 +1167,14 @@ class App(tk.Tk):
         self._canvas_filtros.draw()
 
         # Resumen textual
-        Z1   = np.sqrt(R**2 + (2.0 * w_out * L)**2)
+        Z1   = np.sqrt(RT**2 + (1.0 * w_out * L)**2)   # armónico fund. 120Hz con RT
         at1  = R / Z1 * 100.0
         self._lbl_filtros_res.config(text=(
-            f"  Resumen de diseño:  "
+            f"  Resumen:  "
             f"C_min = {r['C_min_uF']:.0f} µF  |  "
-            f"Con C = {p['C_uF']:.0f} µF → FR = {r['FR_C']*100:.2f} %  |  "
-            f"Con L = {L*1e3:.1f} mH → arm. fund. (120 Hz) llega "
-            f"al {at1:.1f} % de su valor sin inductor"
+            f"Con C = {p['C_uF']:.0f} µF → FRi = {r['FRi']:.1f} %  |  "
+            f"L = {L:.2f} H, RL = {RL:.0f} Ω, RT = {RT:.0f} Ω  |  "
+            f"arm. fund. (120Hz) llega al {at1:.2f} % (Io_dc_RL = {r['Io_dc_RL']:.3f} A)"
         ))
 
     # ── ACCIÓN: CALCULAR TODO ─────────────────────────────────────────────────

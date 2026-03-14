@@ -13,8 +13,11 @@
   - GUI completa con tkinter + matplotlib (TkAgg)
   - 4 tabs: Cálculos por Pasos | Formas de Onda | Fourier | Diseño Filtros
   - 9 pasos de cálculo alineados con incisos a)-m) de PRACTICA_1.md
-  - Validado: todos los valores teóricos nominales correctos (10/10 checks)
-  - FRi con C=2200µF = 7.92% → advertencia visible; C_min = 2406 µF para FR≤5%
+  - Validado contra PROCEDIMIENTO_PRACTICA_1.md: 21/21 checks OK
+  - L_H default = 1.5H, RL_Ohm = 40Ω (primario 120/12V@2A típico)
+  - Bug crítico corregido: impedancia PASO 8 usaba 2×n×w_out (debía ser n×w_out)
+  - Vr(pp) PASO 9 usa Vm_red (no Vo_dc); C_min exacto ≈5229µF para FR≤5%
+  - FRi con C=2200µF = 13.4% (documento); Vo_dc_C = 12.63V; RT=50Ω
 
 ## Entorno de ejecución
 - Python: `.venv/Scripts/python.exe` (desde raíz del repo)
