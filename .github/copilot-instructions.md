@@ -206,19 +206,30 @@ for script in 00-META/tools/*.py; do python "$script"; done
 
 ### Dependencias Python (requeridas)
 
+**Requisito del Sistema (Linux):** `sudo apt-get install python3-tk` (indispensable para interfaces gráficas).
+
+**Ejecución de Scripts:**
 ```bash
-pip install numpy matplotlib scipy schemdraw lcapy sympy SciencePlots
+# Instalación de dependencias:
+pip install -r requirements.txt
+
+# Scripts de generación automática (PNG):
+python 00-META/tools/DIO-gen-curva-iv.py
+
+# Herramientas interactivas (GUI) en Codespaces:
+export DISPLAY=:1
+python "01-Circuitos-Diodos/Notas/PRACTICA 1/practica1_calculadora.py"
 ```
 
 | Paquete | Uso |
 |---------|-----|
 | **numpy** | Cálculos numéricos, vectorización de ecuaciones |
-| **matplotlib** | Generación de gráficas 2D, exportación a PNG |
-| **scipy** | Optimización (`fsolve` para punto Q), filtros |
-| **schemdraw** | Dibujo programático de esquemáticos de circuitos electrónicos. Genera PNG directamente vía matplotlib. Soporta 46 elementos semiconductores: `Diode`, `Zener`, `Schottky`, `Varactor`, `LED`, `BjtNpn`, `BjtPnp`, `JFetN`, `JFetP`, `NFet`, `PFet`, `NMos`, `PMos`, `IgbtN`, `SCR`, `Triac`, `Diac`, etc. |
-| **lcapy** | Análisis simbólico de circuitos lineales (impedancias, Laplace, Fourier). Generación de esquemáticos vía circuitikz (requiere LaTeX para dibujos) |
-| **sympy** | Cálculo simbólico, simplificación de ecuaciones, derivadas |
-| **SciencePlots** | Estilos matplotlib para publicaciones científicas (`science`, `ieee`, `nature`). Usar con `plt.style.context(['science', 'no-latex'])` |
+| **matplotlib** | Generación de gráficas 2D. Backend `Agg` para PNG, `TkAgg` para GUI. |
+| **pillow** | Soporte de imágenes para Tkinter. |
+| **schemdraw** | Dibujo programático de esquemáticos. |
+| **scipy** | Optimización y filtros. |
+| **lcapy/sympy** | Análisis simbólico y circuitos. |
+| **SciencePlots** | Estilos científicos para gráficas. |
 
 ### Dependencias Python (recomendadas/opcionales)
 

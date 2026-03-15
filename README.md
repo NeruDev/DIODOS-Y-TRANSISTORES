@@ -53,6 +53,37 @@ graph LR
 
 ---
 
+## 🛠️ Requisitos de Software
+
+Para ejecutar los scripts de generación de gráficas y las calculadoras interactivas, se requiere:
+
+- **Python 3.12+**
+- **Dependencias del sistema (Linux/Codespaces):** `python3-tk` (necesario para interfaces gráficas).
+- **Entorno Virtual:** Se recomienda usar el `.venv` incluido o crear uno nuevo y ejecutar:
+  ```bash
+  pip install -r requirements.txt
+  ```
+
+---
+
+## 🚀 Ejecución de Herramientas
+
+### Generación de Gráficas (Headless)
+Los scripts en `00-META/tools/` generan imágenes PNG automáticamente:
+```bash
+python 00-META/tools/DIO-gen-curva-iv.py
+```
+
+### Calculadoras Interactivas (GUI)
+Para herramientas con interfaz gráfica (como `practica1_calculadora.py`), es necesario configurar el display en entornos como GitHub Codespaces:
+```bash
+export DISPLAY=:1
+python "01-Circuitos-Diodos/Notas/PRACTICA 1/practica1_calculadora.py"
+```
+*Nota: En Codespaces, use la característica de "Desktop" o "VNC" para interactuar con la ventana.*
+
+---
+
 ## 🏗️ Arquitectura del Repositorio
 
 Este repositorio sigue la **Plantilla de Arquitectura Modular Universal** (ver [Plantilla](Plantilla%20de%20Arquitectura%20Modular%20Universal.md)).
