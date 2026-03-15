@@ -2,20 +2,31 @@
   "name": "Diodos y Transistores - Entorno Academico",
   "image": "mcr.microsoft.com/devcontainers/python:3.12-bookworm",
   "features": {
-    "ghcr.io/devcontainers/features/desktop-gui:1": {
+    "ghcr.io/devcontainers/features/desktop-lite:1": {
       "version": "latest",
       "display": ":1"
+    },
+    "ghcr.io/devcontainers/features/node-js:1": {
+      "version": "22"
     }
   },
   "customizations": {
     "vscode": {
       "extensions": [
         "ms-python.python",
-        "ms-python.vscode-pylance"
+        "ms-python.vscode-pylance",
+        "ms-python.debugpy",
+        "ms-python.autopep8",
+        "google.geminicodeassist",
+        "dbaeumer.vscode-eslint",
+        "shd101wyy.markdown-preview-enhanced",
+        "vscode-icons-team.vscode-icons",
+        "github.github-vscode-theme",
+        "ms-ceintl.vscode-language-pack-es"
       ]
     }
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y python3-tk && pip install -r requirements.txt",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y python3-tk && pip install -r requirements.txt && npm install -g @google/gemini-cli",
   "remoteEnv": {
     "DISPLAY": ":1"
   }
