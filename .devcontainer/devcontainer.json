@@ -5,9 +5,6 @@
     "ghcr.io/devcontainers/features/desktop-lite:1": {
       "version": "latest",
       "display": ":1"
-    },
-    "ghcr.io/devcontainers/features/node-js:1": {
-      "version": "22"
     }
   },
   "customizations": {
@@ -26,7 +23,7 @@
       ]
     }
   },
-  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y python3-tk && pip install -r requirements.txt && npm install -g @google/gemini-cli",
+  "postCreateCommand": "sudo apt-get update && sudo apt-get install -y python3-tk && pip install -r requirements.txt && sudo npm install -g @google/gemini-cli",
   "remoteEnv": {
     "DISPLAY": ":1"
   }
