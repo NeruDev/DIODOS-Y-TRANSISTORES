@@ -30,22 +30,23 @@ Esto asegura la consistencia, precisión y reproducibilidad del material gráfic
 
 ## Herramientas Python Instaladas
 
-El repositorio utiliza un entorno Python 3.12 con las siguientes especificaciones:
+El repositorio utiliza un entorno Python 3.14.0 con las siguientes especificaciones:
 
 ### Dependencias del Sistema (Linux/Ubuntu)
 Para el correcto funcionamiento de las interfaces gráficas y generación de esquemáticos:
-- `python3-tk`: Necesario para el backend de `matplotlib` y scripts interactivos.
+- `python3-tk`: Necesario para el backend de `matplotlib` (tkinter) y scripts interactivos.
 - En GitHub Codespaces, se debe asegurar que el `DISPLAY` esté configurado (ej. `export DISPLAY=:1`).
 
-### Dependencias de Python (requirements.txt)
-| Paquete | Uso |
-|---------|-----|
-| **numpy** | Cálculos numéricos y vectorización. |
-| **matplotlib** | Generación de gráficas 2D. |
-| **schemdraw** | Dibujo de esquemáticos electrónicos. |
-| **pillow** | Manejo de imágenes y soporte para Tkinter. |
-| **scipy** | Optimización y filtrado. |
-| **lcapy/sympy** | Análisis simbólico y circuitos. |
+### Dependencias de Python (Instaladas en .venv)
+| Paquete | Versión | Uso |
+|---------|---------|-----|
+| **numpy** | 2.4.2 | Cálculos numéricos y vectorización. |
+| **matplotlib** | 3.10.8 | Generación de gráficas 2D. |
+| **schemdraw** | 0.22 | Dibujo de esquemáticos electrónicos. |
+| **pillow** | 12.1.0 | Manejo de imágenes y soporte para Tkinter. |
+| **packaging** | 26.0 | Gestión de versiones. |
+| **python-dateutil** | 2.9.0.post0 | Utilidades de fechas. |
+| **six** | 1.17.0 | Compatibilidad. |
 
 ### Configuración de Backends de Matplotlib
 Es crítico seleccionar el backend adecuado según la tarea:

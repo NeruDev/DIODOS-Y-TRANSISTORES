@@ -57,11 +57,21 @@ graph LR
 
 Para ejecutar los scripts de generación de gráficas y las calculadoras interactivas, se requiere:
 
-- **Python 3.12+**
-- **Dependencias del sistema (Linux/Codespaces):** `python3-tk` (necesario para interfaces gráficas).
-- **Entorno Virtual:** Se recomienda usar el `.venv` incluido o crear uno nuevo y ejecutar:
+- **Python 3.14.0** (Versión actual del entorno `.venv`).
+- **Dependencias del sistema (Linux/Codespaces):** `python3-tk` (necesario para interfaces gráficas `tkinter`).
+- **Librerías de Python:**
+  - `numpy==2.4.2`
+  - `matplotlib==3.10.8`
+  - `schemdraw==0.22`
+  - `pillow==12.1.0`
+  - `packaging==26.0`
+  - `python-dateutil==2.9.0.post0`
+  - `six==1.17.0`
+
+- **Configuración del Entorno:**
+  Se recomienda usar el `.venv` incluido. Si se requiere reinstalar las librerías manualmente, ejecute:
   ```bash
-  pip install -r requirements.txt
+  pip install numpy==2.4.2 matplotlib==3.10.8 schemdraw==0.22 pillow==12.1.0 packaging==26.0 python-dateutil==2.9.0.post0 six==1.17.0
   ```
 
 ---
