@@ -359,8 +359,8 @@ class App(tk.Tk):
         self.geometry("1300x840")
         self.minsize(1050, 700)
 
-        # Variables tkinter para cada parámetro de entrada
-        self._params = {k: tk.DoubleVar(value=v) for k, v in DEFAULTS.items()}
+        # Variables tkinter para cada parámetro de entrada (StringVar evita rotura de binding al borrar texto)
+        self._params = {k: tk.StringVar(value=str(v)) for k, v in DEFAULTS.items()}
         self._resultados: dict = {}
 
         self._build_styles()
@@ -490,11 +490,21 @@ class App(tk.Tk):
             return frm
 
         # ── Helper: fila de entrada (label + Entry + unidad) ───────────────────
-        def entry_row(frm, label, var, unit="", hint=""):
+        def entry_row(frm, label_tex, var, unit="", hint=""):
             row = tk.Frame(frm, bg=self.BG_PANEL)
             row.pack(fill=tk.X, padx=6, pady=2)
-            tk.Label(row, text=label, bg=self.BG_PANEL, fg=self.FG_LABEL,
-                     font=("Consolas", 9), width=9, anchor=tk.W).pack(side=tk.LEFT)
+            
+            lbl_frm = tk.Frame(row, bg=self.BG_PANEL, width=90, height=30)
+            lbl_frm.pack_propagate(False)
+            lbl_frm.pack(side=tk.LEFT)
+            
+            try:
+                img_lbl = self._get_latex_image(label_tex, width=0.9, height=0.3, wrap_math=True)
+                tk.Label(lbl_frm, image=img_lbl, bg=self.BG_PANEL).pack(expand=True, fill=tk.BOTH)
+            except Exception:
+                tk.Label(lbl_frm, text=label_tex, bg=self.BG_PANEL, fg=self.FG_LABEL,
+                         font=("Consolas", 9), anchor=tk.W).pack(side=tk.LEFT)
+
             ent = tk.Entry(row, textvariable=var,
                            bg=self.BG_ENTRY, fg=self.FG_TITLE,
                            insertbackground=self.FG_TITLE,
@@ -509,32 +519,32 @@ class App(tk.Tk):
 
         # ── Secciones de entrada ───────────────────────────────────────────────
         s1 = seccion("TRANSFORMADOR")
-        entry_row(s1, "Vs_rms",  self._params["Vs_rms"],  "V",
+        entry_row(s1, "V_{s(rms)}",  self._params["Vs_rms"],  "V",
                   "multímetro AC (secundario)")
-        entry_row(s1, "f_red",   self._params["f_red"],   "Hz",
+        entry_row(s1, "f_{red}",   self._params["f_red"],   "Hz",
                   "osciloscopio → 1/T")
 
         s2 = seccion("DIODOS 1N4005")
-        entry_row(s2, "Vd (c/u)", self._params["Vd"],     "V",
+        entry_row(s2, "V_d \\text{ (c/u)}", self._params["Vd"],     "V",
                   "multímetro modo diodo")
         tk.Label(s2, text="   (2 en serie por semiciclo → 2·Vd total)",
                  bg=self.BG_PANEL, fg="#585b70",
                  font=("Consolas", 7)).pack(anchor=tk.W, padx=6, pady=(0, 4))
 
         s3 = seccion("CARGA")
-        entry_row(s3, "R_carga", self._params["R_carga"], "Ω",
+        entry_row(s3, "R_{carga}", self._params["R_carga"], "Ω",
                   "multímetro Ω (desconectado)")
 
         s4 = seccion("FILTRO INDUCTIVO")
         entry_row(s4, "L",       self._params["L_H"],     "H",
                   "puente LCR a 100 Hz")
-        entry_row(s4, "RL",      self._params["RL_Ohm"],  "Ω",
+        entry_row(s4, "R_L",      self._params["RL_Ohm"],  "Ω",
                   "R devanado (LCR / multímetro)")
 
         s5 = seccion("FILTRO CAPACITIVO")
         entry_row(s5, "C",       self._params["C_uF"],    "µF",
                   "valor estándar instalado")
-        entry_row(s5, "FR_obj",  self._params["FR_obj"],  "",
+        entry_row(s5, "FR_{obj}",  self._params["FR_obj"],  "",
                   "objetivo (0.05 = 5 %)")
 
         # ── Botón calcular ─────────────────────────────────────────────────────
@@ -548,8 +558,30 @@ class App(tk.Tk):
                  font=("Consolas", 7), justify=tk.CENTER).pack(pady=(2, 12))
 
     # ── TAB 1: CÁLCULOS POR PASOS ─────────────────────────────────────────────
+    def _get_latex_image(self, tex, width=3.5, height=0.45, wrap_math=True):
+        key = (tex, width, height, wrap_math)
+        if not hasattr(self, "_latex_cache"):
+            self._latex_cache = {}
+        if key not in self._latex_cache:
+            import io, base64
+            from matplotlib.figure import Figure
+            from matplotlib.backends.backend_agg import FigureCanvasAgg
+            # Ajustamos un tamaño base para que la letra no quede enana o gigante
+            fig = Figure(figsize=(width, height), facecolor=self.BG_MAIN)
+            FigureCanvasAgg(fig)
+            text_str = f"${tex}$" if wrap_math else tex
+            fig.text(0.01, 0.5, text_str, fontsize=11, 
+                     color="#cdd6f4", ha='left', va='center', usetex=False)
+            buf = io.BytesIO()
+            fig.savefig(buf, format='png', facecolor=fig.get_facecolor(), 
+                        edgecolor='none', dpi=100, bbox_inches='tight', pad_inches=0.01)
+            buf.seek(0)
+            data = base64.b64encode(buf.read())
+            self._latex_cache[key] = tk.PhotoImage(data=data)
+        return self._latex_cache[key]
+
     def _build_tab_calcs(self, parent):
-        """Tabla paso a paso: parámetro | fórmula | valor teórico | dónde medir."""
+        """Tabla paso a paso renderizando LaTeX."""
         tk.Label(parent,
                  text="ORDEN DE CÁLCULO — Puente Graetz / Rectificador de Onda Completa",
                  bg=self.BG_TAB, fg=self.FG_TITLE,
@@ -560,243 +592,226 @@ class App(tk.Tk):
                  bg=self.BG_TAB, fg=self.FG_LABEL,
                  font=("Consolas", 8)).pack(pady=(0, 4))
 
-        cols = ("paso", "param", "formula", "teorico", "unidad", "donde_medir")
-        frm  = tk.Frame(parent, bg=self.BG_TAB)
-        frm.pack(fill=tk.BOTH, expand=True, padx=8, pady=4)
+        # Reemplazamos Treeview por un Canvas + Frame para permitir imágenes
+        canvas = tk.Canvas(parent, bg=self.BG_TAB, highlightthickness=0)
+        vsb    = ttk.Scrollbar(parent, orient=tk.VERTICAL, command=canvas.yview)
+        canvas.configure(yscrollcommand=vsb.set)
+        vsb.pack(side=tk.RIGHT, fill=tk.Y)
+        canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=8, pady=4)
 
-        vsb = ttk.Scrollbar(frm, orient=tk.VERTICAL)
-        hsb = ttk.Scrollbar(frm, orient=tk.HORIZONTAL)
-        tree = ttk.Treeview(frm, columns=cols, show="headings",
-                            yscrollcommand=vsb.set, xscrollcommand=hsb.set,
-                            height=30)
-        vsb.config(command=tree.yview)
-        hsb.config(command=tree.xview)
-        vsb.pack(side=tk.RIGHT,  fill=tk.Y)
-        hsb.pack(side=tk.BOTTOM, fill=tk.X)
-        tree.pack(fill=tk.BOTH, expand=True)
+        self._calcs_inner = tk.Frame(canvas, bg=self.BG_TAB)
+        canvas.create_window((0, 0), window=self._calcs_inner, anchor=tk.NW)
 
-        hdrs = [("paso",      "Paso",                   55,  tk.W),
-                ("param",     "Parámetro",              115,  tk.W),
-                ("formula",   "Fórmula",                305,  tk.W),
-                ("teorico",   "Teórico",                 90,  tk.E),
-                ("unidad",    "Unidad",                  55,  tk.W),
-                ("donde_medir", "Dónde / cómo medir experimentalmente", 280, tk.W)]
-        for col, text, w, anchor in hdrs:
-            tree.heading(col, text=text, anchor=anchor)
-            tree.column(col,  width=w, minwidth=40, anchor=anchor)
+        def _resize(e=None):
+            canvas.configure(scrollregion=canvas.bbox("all"))
+        self._calcs_inner.bind("<Configure>", _resize)
 
-        tree.tag_configure("header",
-                           background="#313244", foreground=self.FG_STEP,
-                           font=("Consolas", 9, "bold"))
-        tree.tag_configure("value",
-                           background=self.BG_MAIN, foreground=self.FG_VALUE)
-        tree.tag_configure("warn",
-                           background=self.BG_MAIN, foreground=self.FG_WARN)
+        def _scroll(e):
+            canvas.yview_scroll(int(-1*(e.delta/120)), "units")
+        canvas.bind_all("<MouseWheel>", _scroll)
 
-        self._tree_calcs = tree
+        # Matriz de variables o etiquetas dinámicas para "Teórico"
+        # Usaremos diccionarios para guardar las referencias de Labels que se actualizan
+        self._lbls_teoricos = {}
+        
+        self._current_row = 0
+        def h(paso, texto):
+            frm = tk.Frame(self._calcs_inner, bg="#313244")
+            frm.grid(row=self._current_row, column=0, columnspan=6, sticky=tk.EW, pady=(8,2))
+            tk.Label(frm, text=f"{paso} - {texto}", bg="#313244", fg=self.FG_STEP,
+                     font=("Consolas", 9, "bold"), anchor=tk.W).pack(side=tk.LEFT, padx=5, pady=2)
+            self._current_row += 1
+
+        def v(paso, tex_param, raw_formula, unit, hint="", key=None):
+            if key is None:
+                key = paso
+            
+            fg_color = self.FG_VALUE
+            bg_color = self.BG_MAIN
+            
+            # Columnas fijas:
+            # 0: paso, 1: param, 2: formula, 3: teo, 4: ext, 5: hint
+            c0 = tk.Label(self._calcs_inner, text=paso, bg=bg_color, fg=self.FG_LABEL, width=5, anchor=tk.CENTER)
+            
+            c1_frm = tk.Frame(self._calcs_inner, bg=bg_color, width=90, height=45)
+            c1_frm.pack_propagate(False)
+            try:
+                img_param = self._get_latex_image(tex_param, width=0.9, height=0.45)
+                c1_lbl = tk.Label(c1_frm, image=img_param, bg=bg_color)
+                c1_lbl.pack(expand=True)
+            except Exception:
+                c1_lbl = tk.Label(c1_frm, text=tex_param, bg=bg_color, fg=self.FG_LABEL)
+                c1_lbl.pack(expand=True)
+            
+            c2_frm = tk.Frame(self._calcs_inner, bg=bg_color, width=280, height=45)
+            c2_frm.pack_propagate(False)
+            try:
+                img_form = self._get_latex_image(raw_formula, width=3.5, height=0.45)
+                c2_lbl = tk.Label(c2_frm, image=img_form, bg=bg_color)
+                c2_lbl.pack(expand=True)
+            except Exception as e:
+                c2_lbl = tk.Label(c2_frm, text=raw_formula, bg=bg_color, fg=self.FG_LABEL)
+                c2_lbl.pack(expand=True)
+
+            c3 = tk.Label(self._calcs_inner, text="", bg=bg_color, fg=fg_color, width=10, anchor=tk.CENTER)
+            c4 = tk.Label(self._calcs_inner, text=unit, bg=bg_color, fg=self.FG_LABEL, width=6, anchor=tk.CENTER)
+            
+            c5_frm = tk.Frame(self._calcs_inner, bg=bg_color, width=420, height=45)
+            c5_frm.pack_propagate(False)
+            if hint:
+                try:
+                    img_hint = self._get_latex_image(hint, width=4.5, height=0.45, wrap_math=False)
+                    c5_lbl = tk.Label(c5_frm, image=img_hint, bg=bg_color)
+                    c5_lbl.pack(anchor=tk.W, fill=tk.Y, pady=2)
+                except Exception:
+                    c5_lbl = tk.Label(c5_frm, text=hint, bg=bg_color, fg=self.FG_LABEL)
+                    c5_lbl.pack(anchor=tk.W, fill=tk.Y)
+            else:
+                c5_lbl = tk.Label(c5_frm, text="", bg=bg_color)
+                c5_lbl.pack()
+
+            c0.grid(row=self._current_row, column=0, sticky=tk.NSEW, padx=1, pady=1)
+            c1_frm.grid(row=self._current_row, column=1, sticky=tk.NSEW, padx=1, pady=1)
+            c2_frm.grid(row=self._current_row, column=2, sticky=tk.NSEW, padx=1, pady=1)
+            c3.grid(row=self._current_row, column=3, sticky=tk.NSEW, padx=1, pady=1)
+            c4.grid(row=self._current_row, column=4, sticky=tk.NSEW, padx=1, pady=1)
+            c5_frm.grid(row=self._current_row, column=5, sticky=tk.NSEW, padx=1, pady=1)
+
+            self._lbls_teoricos[key] = c3
+            self._current_row += 1
+
+        # Construir estructura estática de la tabla
+        h("PASO 1", "▸ TRANSFORMADOR — Voltaje de pico del secundario")
+        v("1.1", "V_m", "V_{s(rms)} \\times \\sqrt{2}", "V", "← medir $V_{m}$ secundario (CH1)")
+        v("1.2", "V_{m(red)}", "V_m - 2 V_d", "V", "← $V_m$ medido − $2 \\times V_d$ medido")
+        v("1.3", "f_{out}", "2 f_{red}", "Hz", "← medir frecuencia $V_{out}$ (~120 Hz)")
+        v("1.4", "T_{out}", "\\frac{1}{f_{out}}", "ms", "← período señal rectificada")
+
+        h("PASO 2", "▸ VOLTAJE Y CORRIENTE DC PROMEDIO — inciso a)")
+        v("2.1", "V_{o(cd)}", "\\frac{2}{\\pi} V_{m(red)}", "V", "← osciloscopio: MEAN sobre $V_{out}$")
+        v("2.2", "I_{o(cd)}", "\\frac{V_{o(cd)}}{R}", "A", "← sonda Hall: corriente promedio en carga")
+
+        h("PASO 3", "▸ VOLTAJE Y CORRIENTE RMS — sin filtro — inciso a)")
+        v("3.1", "V_{o(rms)}", "\\frac{V_{m(red)}}{\\sqrt{2}}", "V", "← osciloscopio: RMS en $V_{out}$ (AC)")
+        v("3.2", "I_{o(rms)}", "\\frac{V_{o(rms)}}{R}", "A", "← sonda Hall: corriente RMS en carga")
+
+        h("PASO 4", "▸ FACTOR DE FORMA Y RIZO — sin filtro — inciso a/k)")
+        v("4.1", "FF", "\\frac{V_{o(rms)}}{V_{o(cd)}}", "—", "← ideal: $\\pi/(2\\sqrt{2}) \\approx 1.11$")
+        v("4.2", "V_{r(rms)}", "\\sqrt{V_{o(rms)}^2 - V_{o(cd)}^2}", "V", "← osciloscopio: AC + RMS en $V_{out}$")
+        v("4.3", "FR", "\\frac{V_{r(rms)}}{V_{o(cd)}}", "—", "← $FR \\approx 0.48$ sin filtro (48.3 %)")
+        v("4.4", "FR [%]", "FR \\times 100", "%", "← $I_{r(rms)}/V_{o(cd)} \\times 100$")
+
+        h("PASO 5", "▸ PARÁMETROS DE LOS DIODOS — inciso a)")
+        v("5.1", "I_{D(prom)}", "\\frac{I_{o(cd)}}{2}", "A", "← sonda Hall en serie con D1 (+)")
+        v("5.2", "I_{D(rms)}", "\\frac{I_{o(rms)}}{\\sqrt{2}}", "A", "← RMS corriente de D1")
+        v("5.3", "V_{PR}", "V_m", "V", "← tensión inversa en D2 (mismo semiciclo)")
+        v("5.4", "P_{diodo}", "V_d \\times I_{D(prom)}", "W", "← potencia disipada por diodo")
+
+        h("PASO 6", "▸ POTENCIAS Y RENDIMIENTO — inciso a)")
+        v("6.1", "P_{o(cd)}", "\\frac{V_{o(cd)}^2}{R}", "W", "← potencia DC útil en carga")
+        v("6.2", "P_{o(ca)}", "\\frac{V_{o(rms)}^2}{R}", "W", "← potencia AC del rectificador")
+        v("6.3", "\\eta", "\\frac{P_{o(cd)}}{P_{o(ca)}} \\times 100", "%", "← ideal onda completa: 81.1 %")
+
+        h("PASO 7", "▸ SERIE DE FOURIER de vo(t) — incisos f) y g)")
+        for k in range(5):
+            nk = k + 1
+            v(f"7.{k+1}", f"a_{{{2*nk}}}", f"\\frac{{4 V_{{m(red)}}}}{{\\pi ((2\\cdot{nk})^2 - 1)}}", "V", f"← FFT pico a {nk*120} Hz", key=f"7_{nk}")
+
+        h("PASO 8", "▸ FILTRO R-L — atenuación armónicos — incisos i,j,k")
+        v("8.0", "R_T", "R + R_L", "Ω", "← $R$ total con espira de L")
+        v("8.1", "I_{o(dc)\\_RL}", "\\frac{V_{o(cd)}}{R_T}", "A", "← DC atenuada por $R_L$ (modo DC)")
+        v("8.2", "V_{carga\\_L}", "I_{o(dc)\\_RL} \\times R", "V", "← sobre la carga")
+        for k in range(5):
+            nk = k+1
+            v(f"8.{k+3}", f"|Z_{{{2*nk}}}|", f"\\sqrt{{R_T^2 + ({nk}\\omega_{{out}}L)^2}}", "Ω", "", key=f"8_Z_{nk}")
+            v("", f"I_{{{2*nk}}}", f"\\frac{{a_{{{2*nk}}}}}{{|Z_{{{2*nk}}}|}}", "mA", "", key=f"8_I_{nk}")
+        v("8.8", "I_{r(rms)\\_RL}", "\\frac{I_{arm1}}{\\sqrt{2}}", "mA", "← osciloscopio: corriente de rizo (inciso k)")
+        v("8.9", "FR_{i\\_RL}", "\\frac{I_{r(rms)\\_RL}}{I_{o(dc)\\_RL}} \\times 100", "%", "← FR con filtro inductivo")
+
+        h("PASO 9", "▸ FILTRO CAPACITIVO — FR_i ≤ 5 % — incisos k,l")
+        v("9.1", "C_{min}", "C = \\frac{1}{x f_{out} R}, \\; x = f(FR_{obj})", "µF", "← usar estándar $\\ge C_{min}$")
+        v("9.2", "V_{r(pp)}", "\\frac{V_{m(red)}}{f_{out} C R}", "V", "← osciloscopio AC: medir $V_{pp}$ de rizo")
+        v("9.3", "V_{o(dc)\\_C}", "V_{m(red)} - \\frac{V_{r(pp)}}{2}", "V", "← multímetro DC sobre $V_{out}$")
+        v("9.4", "V_{r(rms)\\_C}", "\\frac{V_{r(pp)}}{2\\sqrt{3}}", "V", "← osciloscopio AC+RMS")
+        v("9.5", "I_{r(rms)\\_C}", "\\frac{V_{r(rms)\\_C}}{R}", "A", "← sonda Hall AC")
+        v("9.6", "FR_i", "\\frac{V_{r(rms)\\_C}}{V_{o(cd)\\_C}} \\times 100", "%", "← calculado (debe ser $\\le 5 \\%$)")
+
+        # Advertencia de FR
+        self._lbls_teoricos["FRi_warn"] = tk.Label(self._calcs_inner, text="", bg=self.BG_MAIN, fg=self.FG_WARN, anchor=tk.W, font=("Consolas", 9, "bold"))
+        self._lbls_teoricos["FRi_warn"].grid(row=self._current_row, column=0, columnspan=6, sticky=tk.EW, pady=5)
+
 
     def _poblar_tabla_calcs(self):
-        """Llena (o refresca) la tabla de cálculos con los resultados actuales."""
+        """Llena la tabla estática de cálculos con los resultados actuales."""
         r    = self._resultados
-        tree = self._tree_calcs
-        p    = {k: v.get() for k, v in self._params.items()}
+        lbls = self._lbls_teoricos
+        
+        def set_val(key, val, divisor=1.0, precision=5):
+            if key in lbls:
+                try:
+                    s = f"{(float(val)/divisor):.{precision}g}"
+                except:
+                    s = str(val)
+                lbls[key].config(text=s)
 
-        for item in tree.get_children():
-            tree.delete(item)
+        # Paso 1
+        set_val("1.1", r["Vm"])
+        set_val("1.2", r["Vm_red"])
+        set_val("1.3", r["f_out"])
+        set_val("1.4", r["T_out"], 1e-3)
 
-        def h(paso, texto):
-            tree.insert("", tk.END,
-                        values=(paso, texto, "", "", "", ""),
-                        tags=("header",))
+        # Paso 2
+        set_val("2.1", r["Vo_dc"])
+        set_val("2.2", r["Io_dc"])
 
-        def v(paso, param, formula, val, unit, hint=""):
-            s = f"{val:.5g}" if isinstance(val, float) else str(val)
-            tree.insert("", tk.END,
-                        values=(paso, param, formula, s, unit, hint),
-                        tags=("value",))
+        # Paso 3
+        set_val("3.1", r["Vo_rms"])
+        set_val("3.2", r["Io_rms"])
 
-        # ── PASO 1 ──────────────────────────────────────────────────────────────
-        h("PASO 1", "▸ TRANSFORMADOR — Voltaje de pico del secundario")
-        v("1.1", "Vm",
-          "Vs_rms × √2",
-          r["Vm"], "V",
-          "← osciloscopio: medir Vpico en el secundario (canal CH1)")
-        v("1.2", "Vm_red",
-          "Vm − 2·Vd",
-          r["Vm_red"], "V",
-          "← Vm medido − 2 × Vd medido con multímetro")
-        v("1.3", "f_out",
-          "2 × f_red  (onda completa duplica la frecuencia)",
-          r["f_out"], "Hz",
-          "← osciloscopio: medir frecuencia de Vout (esperar ~120 Hz)")
-        v("1.4", "T_out",
-          "1 / f_out",
-          r["T_out"] * 1e3, "ms",
-          "← período de la señal rectificada")
+        # Paso 4
+        set_val("4.1", r["FF"])
+        set_val("4.2", r["Vr_rms"])
+        set_val("4.3", r["FR"])
+        set_val("4.4", r["FR"] * 100.0)
 
-        # ── PASO 2 ──────────────────────────────────────────────────────────────
-        h("PASO 2", "▸ VOLTAJE Y CORRIENTE DC PROMEDIO — inciso a)")
-        v("2.1", "Vo(cd)",
-          "(2/π) × Vm_red",
-          r["Vo_dc"], "V",
-          "← osciloscopio: modo MEAN sobre Vout (o multímetro DC)")
-        v("2.2", "Io(cd)",
-          "Vo(cd) / R",
-          r["Io_dc"], "A",
-          "← sonda de efecto Hall: corriente promedio en la carga (inciso e)")
+        # Paso 5
+        set_val("5.1", r["ID_prom"])
+        set_val("5.2", r["ID_rms"])
+        set_val("5.3", r["VPR"])
+        set_val("5.4", r["P_diodo"])
 
-        # ── PASO 3 ──────────────────────────────────────────────────────────────
-        h("PASO 3", "▸ VOLTAJE Y CORRIENTE RMS — sin filtro — inciso a)")
-        v("3.1", "Vo(rms)",
-          "Vm_red / √2",
-          r["Vo_rms"], "V",
-          "← osciloscopio: función RMS sobre Vout (modo AC)")
-        v("3.2", "Io(rms)",
-          "Vo(rms) / R",
-          r["Io_rms"], "A",
-          "← sonda de efecto Hall: corriente RMS en la carga (inciso e)")
+        # Paso 6
+        set_val("6.1", r["Po_dc"])
+        set_val("6.2", r["Po_ca"])
+        set_val("6.3", r["eta"])
 
-        # ── PASO 4 ──────────────────────────────────────────────────────────────
-        h("PASO 4", "▸ FACTOR DE FORMA Y RIZO — sin filtro — inciso a) y k)")
-        v("4.1", "FF",
-          "Vo(rms) / Vo(cd)   [ideal: π/(2√2) ≈ 1.11]",
-          r["FF"], "—",
-          "← calcular a partir de Vo(rms) y Vo(cd) medidos")
-        v("4.2", "Vr(rms)",
-          "√[ Vo(rms)² − Vo(cd)² ]",
-          r["Vr_rms"], "V",
-          "← osciloscopio: modo AC + RMS sobre Vout (rizo)")
-        v("4.3", "FR",
-          "√(FF²−1)  =  Vr(rms)/Vo(cd)",
-          r["FR"], "—",
-          f"← ~0.483 sin filtro (48.3 %) — muy alto, justifica filtros")
-        v("4.4", "FR [%]",
-          "FR × 100",
-          r["FR"] * 100, "%",
-          "← medir Ir(rms) y calcular Ir(rms)/Vo(cd) × 100 (inciso k)")
-
-        # ── PASO 5 ──────────────────────────────────────────────────────────────
-        h("PASO 5", "▸ PARÁMETROS DE LOS DIODOS — inciso a)")
-        v("5.1", "ID(prom)",
-          "Io(cd) / 2   [cada diodo conduce 50% del ciclo]",
-          r["ID_prom"], "A",
-          "← medir con sonda Hall en serie con D1 (semiciclo positivo)")
-        v("5.2", "ID(rms)",
-          "Io(rms) / √2",
-          r["ID_rms"], "A",
-          "← función RMS de la corriente de D1 en el osciloscopio")
-        v("5.3", "VPR",
-          "Vm   [puente Graetz: VPR = Vm, no 2Vm como en tap central]",
-          r["VPR"], "V",
-          "← osciloscopio: tensión inversa sobre D2 durante semiciclo +")
-        v("5.4", "P_diodo",
-          "Vd × ID(prom)   [por cada diodo]",
-          r["P_diodo"], "W",
-          "← potencia disipada por diodo (para verificar disipador)")
-
-        # ── PASO 6 ──────────────────────────────────────────────────────────────
-        h("PASO 6", "▸ POTENCIAS Y RENDIMIENTO — inciso a)")
-        v("6.1", "Po(cd)",
-          "Vo(cd)² / R   =   Vo(cd)·Io(cd)",
-          r["Po_dc"], "W",
-          "← potencia DC útil entregada a la carga")
-        v("6.2", "Po(CA)",
-          "Vo(rms)² / R   =   Vo(rms)·Io(rms)",
-          r["Po_ca"], "W",
-          "← potencia AC total entregada por el rectificador")
-        v("6.3", "η",
-          "Po(cd)/Po(CA)×100   [ideal onda completa: 81.1 %]",
-          r["eta"], "%",
-          "← calcular con valores medidos de voltaje y corriente")
-
-        # ── PASO 7 ──────────────────────────────────────────────────────────────
-        h("PASO 7", "▸ SERIE DE FOURIER de vo(t) — incisos f) y g)")
-        lbl_n = ["2f₀", "4f₀", "6f₀", "8f₀", "10f₀"]
+        # Paso 7
         for k in range(5):
-            nk  = k + 1
-            fq  = r["fourier_freqs"][k]
-            amp = r["fourier_amps"][k]
-            tree.insert("", tk.END, values=(
-                f"7.{k+1}",
-                f"a_{2*nk}  ({lbl_n[k]})",
-                f"4·Vm_red / [π·(4n²−1)],  n={nk}",
-                f"{amp:.5g}",
-                "V",
-                f"← FFT osciloscopio: pico a {fq:.0f} Hz (inciso f)"
-            ), tags=("value",))
+            set_val(f"7_{k+1}", r["fourier_amps"][k])
 
-        # ── PASO 8 ──────────────────────────────────────────────────────────────
-        h("PASO 8", "▸ FILTRO INDUCTIVO R-L — atenuación de armónicos de corriente — incisos i) j) k)")
-        v("8.0", "RT",
-          "R + R_L   (resistencia total con inductor)",
-          r["RT"], "Ω",
-          f"← R={p['R_carga']:.1f}Ω + R_L={p['RL_Ohm']:.1f}Ω  (medir R_L con LCR/multímetro)")
-        v("8.1", "Io(dc)_RL",
-          "Vo(cd) / RT   [DC se distribuye en todo RT]",
-          r["Io_dc_RL"], "A",
-          "← corriente DC reducida por RL del devanado (sonda Hall, modo DC)")
-        v("8.2", "V_carga_RL",
-          "Io(dc)_RL × R   [voltaje efectivo sobre la carga]",
-          r["V_carga_RL"], "V",
-          "← medir con multímetro DC o osciloscopio en modo DC sobre R")
+        # Paso 8
+        set_val("8.0", r["RT"])
+        set_val("8.1", r["Io_dc_RL"])
+        set_val("8.2", r["V_carga_RL"])
         for k in range(5):
-            nk   = k + 1
-            fq   = r["fourier_freqs"][k]
-            zn   = r["Z_RL_arms"][k]
-            il   = r["IL_arms"][k]
-            atn  = r["aten_RL"][k]
-            tree.insert("", tk.END, values=(
-                f"8.{k+3}",
-                f"|Z_{2*nk}|  ({lbl_n[k]})",
-                f"sqrt(RT^2+(n*w_out*L)^2), n={nk}",
-                f"{zn:.4g}",
-                "Ω",
-                f"arm. {2*nk} → I={il*1e3:.2f}mA  ({atn:.1f}% del caso sin filtro)"
-            ), tags=("value",))
-        v("8.8", "Ir(rms)_RL",
-          "I_arm1 / √2   (arm. dominante 120 Hz)",
-          r["Ir_rms_RL"] * 1e3, "mA",
-          "← osciloscopio modo AC: corriente de rizo (inciso k)")
-        v("8.9", "FRi_RL",
-          "Ir(rms)_RL / Io(dc)_RL × 100",
-          r["FRi_RL"], "%",
-          "← factor de rizo con filtro inductivo (comparar con FR sin filtro ≈48%)")
+            set_val(f"8_Z_{k+1}", r["Z_RL_arms"][k])
+            set_val(f"8_I_{k+1}", r["IL_arms"][k], 1e-3) # mA
+        set_val("8.8", r["Ir_rms_RL"], 1e-3)
+        set_val("8.9", r["FRi_RL"])
 
-        # ── PASO 9 ──────────────────────────────────────────────────────────────
-        h("PASO 9", "▸ FILTRO CAPACITIVO — diseño FR_i ≤ 5 % — incisos k) y l)")
-        v("9.1", "C_min",
-          "sol. exacta: x=2√3·FR_obj/(1+√3·FR_obj), C=1/(x·f_out·R)",
-          r["C_min_uF"], "µF",
-          "← usar valor estándar ≥ C_min (ej. 5600/6800 µF o 3×2200 µF en paralelo)")
-        v("9.2", "Vr(pp)",
-          "Vm_red / (f_out·C·R)",
-          r["Vr_pp"], "V",
-          "← osciloscopio modo AC: medir pico a pico del rizo (inciso k)")
-        v("9.3", "Vo(dc)_C",
-          "Vm_red − Vr(pp)/2",
-          r["Vo_dc_C"], "V",
-          "← multímetro DC o osciloscopio modo DC sobre Vout con C instalado")
-        v("9.4", "Vr(rms)_C",
-          "Vr(pp) / (2√3)",
-          r["Vr_rms_C"], "V",
-          "← osciloscopio modo AC+RMS: rizo sobre la carga")
-        v("9.5", "Ir(rms)_C",
-          "Vr(rms)_C / R",
-          r["Ir_rms_C"], "A",
-          "← sonda Hall modo AC: corriente RMS de rizo")
-        v("9.6", "FRi",
-          "Vr(rms)_C / Vo(dc)_C × 100  [objetivo ≤ 5 %]",
-          r["FRi"], "%",
-          "← calcular con valores medidos; debe ser ≤ 5 % con C_min")
+        # Paso 9
+        set_val("9.1", r["C_min_uF"])
+        set_val("9.2", r["Vr_pp"])
+        set_val("9.3", r["Vo_dc_C"])
+        set_val("9.4", r["Vr_rms_C"])
+        set_val("9.5", r["Ir_rms_C"])
+        set_val("9.6", r["FRi"])
 
-        # Advertencia si FRi > 5 %
         if r["FRi"] > 5.5:
-            tree.insert("", tk.END, values=(
-                "!!", "ADVERTENCIA",
-                f"FRi = {r['FRi']:.2f}% > 5% — capacitor insuficiente",
-                f"{r['FRi']:.2f}", "%",
-                f"← aumentar C a ≥ {r['C_min_uF']:.0f} µF para cumplir objetivo"
-            ), tags=("warn",))
+            lbls["FRi_warn"].config(text=f"!! ADVERTENCIA: FRi = {r['FRi']:.2f}% > 5% — Aumentar C a ≥ {r['C_min_uF']:.0f} µF")
+        else:
+            lbls["FRi_warn"].config(text="")
+
 
     # ── TAB 2: FORMAS DE ONDA ─────────────────────────────────────────────────
     def _build_tab_ondas(self, parent):
@@ -819,7 +834,7 @@ class App(tk.Tk):
 
     def _actualizar_ondas(self):
         r   = self._resultados
-        p   = {k: v.get() for k, v in self._params.items()}
+        p   = self._get_params()
         fig = self._fig_ondas
         fig.clear()
 
@@ -982,7 +997,7 @@ class App(tk.Tk):
 
     def _actualizar_fourier(self):
         r   = self._resultados
-        p   = {k: v.get() for k, v in self._params.items()}
+        p   = self._get_params()
         fig = self._fig_fourier
         fig.clear()
 
@@ -1090,7 +1105,7 @@ class App(tk.Tk):
 
     def _actualizar_filtros(self):
         r   = self._resultados
-        p   = {k: v.get() for k, v in self._params.items()}
+        p   = self._get_params()
         fig = self._fig_filtros
         fig.clear()
 
@@ -1177,11 +1192,21 @@ class App(tk.Tk):
             f"arm. fund. (120Hz) llega al {at1:.2f} % (Io_dc_RL = {r['Io_dc_RL']:.3f} A)"
         ))
 
+    # ── UTILIDAD: LEER PARÁMETROS ─────────────────────────────────────────────
+    def _get_params(self) -> dict:
+        """Lee y convierte a float de forma segura los parámetros de entrada."""
+        p = {}
+        for k, v in self._params.items():
+            val_str = v.get().strip().replace(',', '.')
+            p[k] = float(val_str) if val_str else 0.0
+        return p
+
     # ── ACCIÓN: CALCULAR TODO ─────────────────────────────────────────────────
     def _calcular(self):
         """Lee parámetros de los campos, ejecuta los 9 pasos y actualiza todos los tabs."""
         try:
-            p = {k: v.get() for k, v in self._params.items()}
+            p = self._get_params()
+
             # Validaciones básicas
             if p["Vs_rms"] <= 0 or p["R_carga"] <= 0 or p["C_uF"] <= 0:
                 messagebox.showerror("Parámetro inválido",
