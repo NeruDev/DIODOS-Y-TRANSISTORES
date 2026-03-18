@@ -94,6 +94,33 @@ python "01-Circuitos-Diodos/Notas/PRACTICA 1/practica1_calculadora.py"
 
 ---
 
+## 🚀 Configuración para GitHub Codespaces
+
+Este GitHub Codespace está configurado para operar como un espejo funcional del entorno local actual (Windows, Python 3.14.0), asegurando una paridad total durante el desarrollo. Se confirmó explícitamente que el entorno es compatible con la versión local.
+
+### 1. Instalación del Intérprete y Dependencias del Sistema
+El entorno corre sobre **Python 3.14.0** nativo de Linux y usa un entorno virtual (`.venv`) independiente. Se compiló el lenguaje y se instaló la dependencia crítica para poder utilizar librerías con interfaces de ventana u obtener outputs gráficos (`tk-dev` y `python3-tk`). Se configuró la variable de entorno para enviar la salida gráfica por el puerto VNC (`export DISPLAY=:1`).
+
+### 2. Recreación del Entorno Virtual (.venv)
+Se creó un entorno virtual nativo para Linux (`python3.14 -m venv .venv`) aislado del sistema para evitar conflictos, preinstalando explícitamente las versiones maestras:
+```bash
+pip install numpy==2.4.2 matplotlib==3.10.8 schemdraw==0.22 pillow==12.1.0 packaging==26.0 python-dateutil==2.9.0.post0 six==1.17.0
+```
+
+### 3. Solución de Problemas de GUI visual (Calculadoras interactivas)
+Si se ejecutan scripts interactivos y existe algún problema al mostrar las ventanas interactivas:
+
+1. Activa tu entorno virtual con `.venv`: \`source .venv/bin/activate\`
+2. Asegúrate de configurar el contexto de visualización X11 de la terminal: \`export DISPLAY=:1\`
+3. Ve a la pestaña **Puertos (Ports)** dentro de VS Code.
+4. Abre la URL en el navegador del puerto **Desktop** o **noVNC** (usualmente asociado al 6080).
+5. Lanza el script. La calculadora será renderizada de inmediato en ese escritorio del navegador:
+   ```bash
+   python "01-Circuitos-Diodos/Notas/PRACTICA 1/practica1_calculadora.py"
+   ```
+
+---
+
 ## 🏗️ Arquitectura del Repositorio
 
 Este repositorio sigue la **Plantilla de Arquitectura Modular Universal** (ver [Plantilla](Plantilla%20de%20Arquitectura%20Modular%20Universal.md)).
