@@ -5,7 +5,7 @@ topic_id: control-scripts
 file_id: Control_Scripts
 status: active
 audience: ai_context
-last_updated: 2026-02-23
+last_updated: 2026-03-18
 -->
 
 # 📋 Control de Scripts de Generación de Gráficos
@@ -260,6 +260,66 @@ last_updated: 2026-02-23
 | `nota8_recortador_serie_formas_onda.png` | `01-Circuitos-Diodos/media/generated/` | [Nota8.md](../../01-Circuitos-Diodos/Notas/Nota8.md) |
 
 ---
+
+### DIO-gen-duplicador-voltaje.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-duplicador-voltaje.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Esquemático de circuito duplicador de voltaje (multiplicador de voltaje básico) |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `duplicador-voltaje.png` | `01-Circuitos-Diodos/media/generated/` | [Nota9.md](../../01-Circuitos-Diodos/Notas/Nota9.md) |
+
+---
+
+### DIO-gen-duplicador-voltaje-horizontal.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-duplicador-voltaje-horizontal.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Versiones horizontales (flujo L→R) del duplicador de voltaje con línea superior (positivos) y línea inferior (tierra) |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `duplicador-voltaje-h1.png` | `01-Circuitos-Diodos/media/generated/` | [Nota9.md](../../01-Circuitos-Diodos/Notas/Nota9.md) |
+| `duplicador-voltaje-h2.png` | `01-Circuitos-Diodos/media/generated/` | [Nota9.md](../../01-Circuitos-Diodos/Notas/Nota9.md) |
+| `duplicador-voltaje-h3.png` | `01-Circuitos-Diodos/media/generated/` | [Nota9.md](../../01-Circuitos-Diodos/Notas/Nota9.md) |
+
+---
+
+### DIO-gen-curva-zener.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-curva-zener.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Curva característica I-V del diodo Zener |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `DIO-curva-zener-01-iv.png` | `01-Circuitos-Diodos/media/generated/` | Nota9.md |
+| `DIO-curva-zener-02-zoom.png` | `01-Circuitos-Diodos/media/generated/` | Nota9.md |
+
+---
+
+### DIO-gen-zener-regulador.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/DIO-gen-zener-regulador.py` |
+| **Módulo** | `DIO` — 01-Circuitos-Diodos |
+| **Descripción** | Esquema básico de regulador Zener con resistencia limitadora y bloque de carga |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `DIO-esquema-zener-regulador.png` | `01-Circuitos-Diodos/media/generated/` | Nota9.md |
+
+---
+
 ## Módulo 02 — Transistor BJT (`BJT`)
 
 ### BJT-gen-curvas-caracteristicas.py
@@ -336,9 +396,9 @@ last_updated: 2026-02-23
 
 | Módulo | Scripts | Imágenes | Con referencia | Sin referencia |
 |--------|---------|----------|---------------|----------------|
-| DIO | 13 | 38 | 38 | 0 |
+| DIO | 17 | 45 | 45 | 0 |
 | BJT | 1 | 3 | 0 | 3 |
 | FET | 1 | 3 | 0 | 3 |
 | AMP | 1 | 3 | 0 | 3 |
 | PRO | 1 | 3 | 0 | 3 |
-| **Total** | **17** | **50** | **38** | **12** |
+| **Total** | **21** | **57** | **45** | **12** |

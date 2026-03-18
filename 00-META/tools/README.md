@@ -42,6 +42,10 @@
 | `DIO-gen-curva-iv.py` | Curva I-V del diodo + zoom inversa | `DIO-curva-iv-01-general.png`, `DIO-curva-iv-02-zoom-inversa.png` |
 | `DIO-gen-curva-temperatura.py` | Efecto temperatura (combinada) | `DIO-curva-temp-01-combinada.png` |
 | `DIO-gen-curva-temperatura-split.py` | Temperatura split (directa/inversa/ruptura) | `DIO-curva-temp-02-directa.png`, `DIO-curva-temp-03-inversa.png`, `DIO-curva-temp-04-ruptura.png` |
+| `DIO-gen-duplicador-voltaje.py` | Duplicador de voltaje (layout vertical) | `duplicador-voltaje.png` |
+| `DIO-gen-duplicador-voltaje-horizontal.py` | Duplicador de voltaje (layout L→R, **estándar H3**) | `duplicador-voltaje-h1.png`, `duplicador-voltaje-h2.png`, `duplicador-voltaje-h3.png` |
+| `DIO-gen-curva-zener.py` | Curva característica I-V del diodo Zener | `DIO-curva-zener-01-iv.png`, `DIO-curva-zener-02-zoom.png` |
+| `DIO-gen-zener-regulador.py` | Esquema básico de regulador Zener | `DIO-esquema-zener-regulador.png` |
 | `BJT-gen-curvas-caracteristicas.py` | Familia IC-VCE, recta de carga, regiones | `02-Transistor-BJT/media/generated/` |
 | `FET-gen-curva-transferencia.py` | Transferencia, salida, autopolarización | `03-Transistor-FET/media/generated/` |
 | `AMP-gen-respuesta-frecuencia.py` | Bode, comparativa EC/BC/CC, efecto RL | `04-Amplificadores/media/generated/` |
@@ -102,6 +106,54 @@ with schemdraw.Drawing() as d:
     d += elm.Line().left()
     d += elm.Capacitor().up().label('C')
 ```
+
+## Estándar H3 para Circuitos Complejos
+
+Para esquemáticos de circuitos con múltiples componentes (multiplicadores, fuentes reguladas, amplificadores), se recomienda el **estándar H3**:
+
+### Parámetros técnicos H3
+
+| Parámetro | Valor | Descripción |
+|-----------|-------|-------------|
+| `unit_size` | 3.5 | Espaciado amplio entre componentes |
+| `comp_length` | 3.5 | Longitud de componentes |
+| `separation` | 2.0 | Separación entre secciones |
+| `fontsize` | 13 | Tamaño de etiquetas |
+| `dpi` | 300 | Resolución de imagen |
+
+### Layout horizontal (flujo L→R)
+
+- **Línea superior única:** conexiones de nodos positivos
+- **Línea inferior única:** referencia a tierra (GND)
+
+### Paleta de colores didácticos
+
+```python
+COLOR_FUENTE = '#2563EB'       # Azul - fuentes AC/DC y transformadores
+COLOR_DIODO = '#DC2626'        # Rojo - diodos y semiconductores
+COLOR_CAPACITOR = '#16A34A'    # Verde - capacitores
+COLOR_RESISTOR = '#EA580C'     # Naranja - resistencias
+COLOR_CONEXION = '#374151'     # Gris oscuro - líneas, nodos y tierra
+COLOR_VOLTAJE = '#7C3AED'      # Violeta - indicadores de voltaje
+COLOR_NODO = '#111827'         # Negro - puntos de nodo
+```
+
+### Reglas de posicionamiento de etiquetas
+
+**CRÍTICO:** Las etiquetas **NUNCA** deben solaparse con líneas de conexión ni componentes.
+
+| Ubicación | Técnica recomendada |
+|-----------|---------------------|
+| Línea superior | `loc='top'` con `ofst=0.3` |
+| Línea inferior | Coordenadas absolutas `(x - 0.5, y)` |
+| Voltajes | Espacio libre, nunca sobre componentes |
+
+```python
+# Ejemplo: etiqueta desplazada para evitar solapamiento con GND
+d += elm.Label().at((nodo_B[0] - 0.5, nodo_B[1])).label('B')
+```
+
+> **Referencia:** Ver `DIO-gen-duplicador-voltaje-horizontal.py` como implementación de ejemplo del estándar H3.
 
 ### Ejemplo rápido — plotly (curva interactiva)
 
