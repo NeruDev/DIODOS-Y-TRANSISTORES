@@ -59,6 +59,9 @@ m).- Adicione el filtro capacitivo como se muestra en la figura-3 y mediante el 
 ### Análisis de Circuitos y Mapas de Nodos
 
 #### Figura 1: Rectificador puente monofásico de onda completa
+
+![Figura 1: Rectificador puente de onda completa](media/practica1_figura1_puente.png)
+
 * **Análisis:** Utiliza 4 diodos en configuración de puente de Graetz para rectificar ambos semiciclos de la onda senoidal, duplicando la frecuencia de salida a 120Hz y mejorando la eficiencia respecto a la media onda.
 * **Nodos:**
     * **Nodo 0 (GND):** Ánodos de D3, D4 y terminal inferior de la Carga.
@@ -67,6 +70,9 @@ m).- Adicione el filtro capacitivo como se muestra en la figura-3 y mediante el 
     * **Nodo 3 (Salida V+):** Cátodos de D1, D2 y terminal superior de la Carga.
 
 #### Figura 2: Rectificador tipo-H con filtro inductivo
+
+![Figura 2: Rectificador con filtro inductivo](media/practica1_figura2_filtro_L.png)
+
 * **Análisis:** Se añade un inductor (L1) en serie con la carga. El inductor se opone a los cambios bruscos de corriente, aplanando la forma de onda de la corriente que llega a la carga.
 * **Nodos:**
     * **Nodo 0 (GND):** Ánodos de D3, D4, terminal inferior de R1, terminal inferior de V1 (0Vdc).
@@ -76,6 +82,9 @@ m).- Adicione el filtro capacitivo como se muestra en la figura-3 y mediante el 
     * **Nodo 4 (Salida Filtrada):** Salida de L1, terminal superior de R1.
 
 #### Figura 3: Rectificador -H con filtro capacitivo
+
+![Figura 3: Rectificador con filtro capacitivo](media/practica1_figura3_filtro_C.png)
+
 * **Análisis:** Se añade un capacitor (C1) en paralelo a la carga. Almacena energía en los picos de voltaje y la libera cuando el voltaje rectificado cae, reduciendo drásticamente el rizo de voltaje.
 * **Nodos:**
     * **Nodo 0 (GND):** Ánodos D3, D4, terminal inferior de C1 y R1, terminal inferior de V1 (0Vdc).
