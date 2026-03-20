@@ -1,0 +1,13 @@
+{
+  "title": "Transistor Bipolar (BJT)",
+  "status": "draft",
+  "prerequisites": ["01-circuitos-diodos"],
+  "tags": ["BJT", "transistor", "polarización", "emisor común", "base común", "colector común"],
+  "last_updated": "2026-03-20",
+  "modules": {
+    "theory": true,
+    "methods": false,
+    "problems": false,
+    "solutions": false
+  }
+}

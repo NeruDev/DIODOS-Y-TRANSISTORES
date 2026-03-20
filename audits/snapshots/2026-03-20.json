@@ -1,0 +1,62 @@
+{
+  "timestamp": "2026-03-20T13:24:57.405615",
+  "modules": [
+    {
+      "name": "01-circuitos-diodos",
+      "theory_files": 8,
+      "problem_files": 0,
+      "solution_files": 0,
+      "assets": 46,
+      "notes_files": 9,
+      "status": "review",
+      "title": "Circuitos de Aplicación con Diodos"
+    },
+    {
+      "name": "02-transistor-bjt",
+      "theory_files": 6,
+      "problem_files": 0,
+      "solution_files": 0,
+      "assets": 0,
+      "notes_files": 1,
+      "status": "draft",
+      "title": "Transistor Bipolar (BJT)"
+    },
+    {
+      "name": "03-transistor-fet",
+      "theory_files": 6,
+      "problem_files": 0,
+      "solution_files": 0,
+      "assets": 0,
+      "notes_files": 1,
+      "status": "draft",
+      "title": "Transistor Unipolar (FET)"
+    },
+    {
+      "name": "04-amplificadores",
+      "theory_files": 3,
+      "problem_files": 0,
+      "solution_files": 0,
+      "assets": 0,
+      "notes_files": 1,
+      "status": "draft",
+      "title": "Amplificadores con BJT y FET"
+    },
+    {
+      "name": "05-proyecto-final",
+      "theory_files": 2,
+      "problem_files": 0,
+      "solution_files": 0,
+      "assets": 0,
+      "notes_files": 1,
+      "status": "draft",
+      "title": "Proyecto Final — Fuente de Alimentación"
+    }
+  ],
+  "totals": {
+    "theory_files": 25,
+    "problem_files": 0,
+    "solution_files": 0,
+    "assets": 46,
+    "notes_files": 13
+  }
+}

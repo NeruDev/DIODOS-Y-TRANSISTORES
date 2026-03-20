@@ -1,0 +1,13 @@
+{
+  "title": "Amplificadores con BJT y FET",
+  "status": "draft",
+  "prerequisites": ["02-transistor-bjt", "03-transistor-fet"],
+  "tags": ["amplificador", "pequeña señal", "ganancia", "transconductancia"],
+  "last_updated": "2026-03-20",
+  "modules": {
+    "theory": true,
+    "methods": false,
+    "problems": false,
+    "solutions": false
+  }
+}

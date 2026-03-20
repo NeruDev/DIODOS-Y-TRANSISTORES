@@ -1,11 +1,11 @@
-# GEMINI.md — Contexto para Google Gemini
+# CLAUDE.md — Contexto para Claude (Anthropic)
 
 > **Hereda de:** [AGENTS.md](AGENTS.md) — Fuente de verdad centralizada
 > **Última sincronización:** 2026-03-20
 
 ---
 
-## Instrucciones para Gemini
+## Instrucciones para Claude
 
 1. **Leer** [AGENTS.md](AGENTS.md) como primera acción obligatoria.
 2. **Consultar** `manifest.json` del módulo objetivo.
@@ -27,29 +27,40 @@
 
 ---
 
-## Extensiones Específicas para Gemini
+## Extensiones Específicas para Claude
 
-### Directiva de mejora de redacción para Notas/
-
-Cuando el usuario proporcione texto informal para `Notas/`, el agente **debe** mejorar automáticamente:
-
-1. **Coherencia:** Conexión lógica entre ideas.
-2. **Orden:** Estructura con encabezados y listas.
-3. **Contexto:** Definiciones y notación necesarias.
-
-Solo se mejora la forma; los valores técnicos se respetan fielmente.
-
-### Entorno de ejecución
+### Entorno de ejecución preferido
 
 ```bash
 # Activar entorno Python
 source .venv/bin/activate  # Linux/Codespaces
+& ".venv\Scripts\Activate.ps1"  # Windows PowerShell
 
 # Para GUI en Codespaces
 export DISPLAY=:1
+```
 
-# Ejecutar scripts desde la raíz
+### Ejecución de scripts
+
+```bash
+# Desde la raíz del repositorio
 python 00-meta/tools/DIO-gen-curva-iv.py
+```
+
+```powershell
+# PowerShell (Windows)
+Set-Location "G:\REPOSITORIOS GITHUB\DIODOS Y TRANSISTORES"
+& ".venv\Scripts\python.exe" "00-meta/tools/SCRIPT.py"
+```
+
+### Precaución LaTeX en heredocs bash
+
+Usar `<<'EOF'` (comillas simples) para evitar expansión de `$`:
+
+```bash
+cat >> archivo.md <<'EOF'
+El voltaje térmico es $V_T$
+EOF
 ```
 
 ---

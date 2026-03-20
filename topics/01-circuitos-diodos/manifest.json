@@ -1,0 +1,13 @@
+{
+  "title": "Circuitos de Aplicación con Diodos",
+  "status": "review",
+  "prerequisites": [],
+  "tags": ["diodo", "polarización", "recta de carga", "rectificación", "filtrado", "recortadores", "sujetadores", "multiplicadores", "Zener"],
+  "last_updated": "2026-03-20",
+  "modules": {
+    "theory": true,
+    "methods": false,
+    "problems": false,
+    "solutions": false
+  }
+}

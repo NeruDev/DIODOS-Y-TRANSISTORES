@@ -1,0 +1,13 @@
+{
+  "title": "Proyecto Final — Fuente de Alimentación",
+  "status": "draft",
+  "prerequisites": ["04-amplificadores"],
+  "tags": ["proyecto", "fuente", "regulador", "diseño integrador"],
+  "last_updated": "2026-03-20",
+  "modules": {
+    "theory": true,
+    "methods": false,
+    "problems": false,
+    "solutions": false
+  }
+}
