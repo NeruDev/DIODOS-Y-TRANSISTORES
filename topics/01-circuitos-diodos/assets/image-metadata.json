@@ -106,6 +106,48 @@
         "model": "Is empírica + modelo exponencial de ruptura"
       },
       "notes": "El modelo exponencial de ruptura es una simplificación didáctica. En diodos reales, el mecanismo cambia de Zener (|V|<5V, coef. negativo) a Avalancha (|V|>5V, coef. positivo). Este gráfico usa un coeficiente positivo genérico."
+    },
+    {
+      "filename": "DIO-curva-zener-01-iv.png",
+      "script": "00-META/tools/DIO-gen-curva-zener.py",
+      "figure_number": 1,
+      "title": "Curva Característica I-V del Diodo Zener",
+      "description": "Muestra la curva de corriente vs voltaje enfatizando la región de ruptura Zener donde el voltaje se mantiene constante.",
+      "used_in": [
+        "01-Circuitos-Diodos/Notas/Nota9.md"
+      ],
+      "parameters": {
+        "Vz": "-5.1 V",
+        "Rz": "10 Ohms"
+      },
+      "notes": "Generado para mostrar el comportamiento de regulación de voltaje."
+    },
+    {
+      "filename": "DIO-curva-zener-02-zoom.png",
+      "script": "00-META/tools/DIO-gen-curva-zener.py",
+      "figure_number": 2,
+      "title": "Zoom: Región de Bloqueo del Diodo Zener",
+      "description": "Ampliación de la zona de polarización inversa antes de la ruptura, mostrando la escala de la corriente de fuga en nanoamperios.",
+      "used_in": [
+        "01-Circuitos-Diodos/Notas/Nota9.md"
+      ],
+      "parameters": {
+        "V_range": "[-4.5V, 0.15V]",
+        "I_scale": "nano-amperios"
+      },
+      "notes": "Muestra que el diodo no es un circuito abierto perfecto antes de Vz."
+    },
+    {
+      "filename": "DIO-esquema-zener-regulador.png",
+      "script": "00-META/tools/DIO-gen-zener-regulador.py",
+      "figure_number": 3,
+      "title": "Esquema del Regulador Zener Básico",
+      "description": "Diagrama esquemático de un regulador de voltaje en el que el zener está polarizado de manera inversa para la estabilización del voltaje sobre un bloque de carga.",
+      "used_in": [
+        "01-Circuitos-Diodos/Notas/Nota9.md"
+      ],
+      "parameters": {},
+      "notes": "Se emplea schemdraw con Resistor(type='iec') para generar el bloque rectangular y se invirtió la polaridad predeterminada del zener para que el cátodo esté arriba."
     }
   ]
 }

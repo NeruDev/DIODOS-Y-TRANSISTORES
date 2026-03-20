@@ -172,16 +172,103 @@ Set-Location "G:\REPOSITORIOS GITHUB\DIODOS Y TRANSISTORES"; & ".venv\Scripts\py
 | Capturar stderr | `cmd 2>/dev/null` | `cmd 2>&1` |
 | Activar venv | `source .venv/bin/activate` | `& ".venv\Scripts\Activate.ps1"` |
 
-> **Regla:** En PowerShell, cualquier ruta de ejecutable pasada como cadena **requiere** el operador `&` para ser invocada.
+> **Regla:** En PowerShell, cualquier ruta de ejecutable pasada como cadena **requiere** el operador `&` para ser invocada. Sin él, PowerShell lanza `ParserError: Unexpected token`.
 
----
+### Directivas técnicas para gráficos
 
-## Directivas Técnicas para Gráficos
+- **Escalas dispares:** Componentes electrónicos tienen zonas con magnitudes extremadamente diferentes (ej. Amperios en directa vs. Nanoamperios en inversa). Usar gráficas separadas o insets (gráficas insertadas) para manejar esto; nunca una sola escala lineal.
+- **Ecuación de Shockley:** Incluir el término de ruptura si se desea visualizar el diodo completo: `i_breakdown = -Is * np.exp(-(V - Vbr) / (n * Vt))`
+- **Formato de salida:** PNG a 100 DPI como mínimo.
+- **Estilo:** Incluir grid, etiquetas de ejes, título, leyenda y anotaciones de las regiones de operación.
 
-- **Escalas dispares:** Usar gráficas separadas o insets; nunca una sola escala lineal.
-- **Ecuación de Shockley:** Incluir término de ruptura si se visualiza diodo completo.
-- **Formato de salida:** PNG a 100 DPI mínimo.
-- **Estilo:** Grid, etiquetas de ejes, título, leyenda y anotaciones de regiones.
+### Directivas para esquemáticos de circuitos complejos
+
+Para circuitos con múltiples componentes (multiplicadores, fuentes reguladas, amplificadores multietapa, etc.), aplicar las siguientes reglas:
+
+1. **Especificaciones estándar H3 (recomendadas para circuitos complejos):**
+   ```python
+   # Parámetros estándar H3 — usar como base para circuitos complejos
+   unit_size = 3.5       # Espaciado amplio entre componentes
+   comp_length = 3.5     # Longitud de componentes para buena proporción
+   separation = 2.0      # Separación generosa entre secciones del circuito
+   fontsize = 13         # Etiquetas legibles a cualquier tamaño
+   dpi = 300             # Alta resolución para impresión y pantalla
+   ```
+   - Usar `unit=3.5` o superior en `schemdraw.Drawing()` para espaciado adecuado
+   - Usar `dpi=300` o superior para alta resolución y legibilidad
+   - Usar `fontsize=13` o superior para etiquetas visibles
+   - Usar coordenadas absolutas para posicionamiento preciso de componentes
+
+2. **Layout horizontal (flujo L→R) para circuitos complejos:**
+   - **Línea superior única:** conexiones de nodos y componentes activos (positivos)
+   - **Línea inferior única:** referencia a tierra física (negativos/GND)
+   - Este estándar facilita la lectura del flujo de señal de izquierda a derecha
+
+3. **Colores diferenciados para fines didácticos:**
+   - Usar una paleta de colores consistente para distinguir tipos de componentes:
+     ```python
+     COLOR_FUENTE = '#2563EB'       # Azul - fuentes AC/DC y transformadores
+     COLOR_DIODO = '#DC2626'        # Rojo - diodos y semiconductores
+     COLOR_CAPACITOR = '#16A34A'    # Verde - capacitores
+     COLOR_RESISTOR = '#EA580C'     # Naranja - resistencias
+     COLOR_CONEXION = '#374151'     # Gris oscuro - líneas, nodos y tierra
+     COLOR_VOLTAJE = '#7C3AED'      # Violeta - indicadores de voltaje
+     COLOR_NODO = '#111827'         # Negro - puntos de nodo
+     ```
+   - Aplicar colores con `.color(COLOR_X)` en cada elemento de schemdraw
+
+4. **Posicionamiento de etiquetas (CRÍTICO para legibilidad):**
+   - **Las etiquetas NUNCA deben solaparse** con líneas de conexión, componentes ni otras etiquetas
+   - **Etiquetas en línea superior:** usar `loc='top'` con `ofst=0.3` o superior
+   - **Etiquetas en línea inferior:** usar coordenadas absolutas desplazadas (`x - 0.5, y`) para evitar solapamiento con GND
+   - **Etiquetas de voltaje:** ubicar en espacio libre, nunca sobre componentes
+   - **Aprovechar el espacio extra:** el tamaño ampliado del diagrama permite colocar etiquetas fuera de cualquier elemento
+   - Ejemplo de etiqueta desplazada:
+     ```python
+     # Mal: etiqueta sobre línea de tierra
+     d += elm.Label().at(nodo_B).label('B', loc='bot', ofst=0.3)
+
+     # Bien: etiqueta desplazada a la izquierda
+     d += elm.Label().at((nodo_B[0] - 0.5, nodo_B[1])).label('B')
+     ```
+
+5. **Anotación de voltajes importantes:**
+   - Etiquetar voltajes clave del circuito ($V_m$, $V_o$, $V_{C1}$, $V_{C2}$, etc.)
+   - Usar `elm.Gap()` con etiquetas `['+', '$V_o$', '−']` para indicadores de polaridad
+   - Usar `elm.Label()` para voltajes en nodos específicos
+   - Identificar nodos críticos con letras (A, B, C, ...) cuando sea necesario
+
+6. **Espaciado y organización:**
+   - Usar transformador compacto: separación primario-secundario de `0.8` a `1.0` unidades
+   - Usar coordenadas absolutas `(x, y)` para posicionamiento preciso y evitar solapamientos
+   - Usar tres niveles verticales: `y_top`, `y_mid`, `y_bot` para organización clara
+   - Usar líneas de conexión explícitas en lugar de superposición de terminales
+
+### Política de scripts de generación
+
+Cada gráfico generado debe cumplir las siguientes reglas:
+
+1. **Un script por gráfico (o conjunto temático coherente).** Cada script Python en `00-meta/tools/` produce una o varias imágenes estrechamente relacionadas. No mezclar gráficos de temas distintos en un mismo script.
+2. **Referencia cruzada obligatoria.** Toda imagen generada debe estar referenciada en:
+   - La **nota o documento** `.md` donde se utiliza (enlace Markdown estándar).
+   - El archivo de control **[Control_Scripts.md](00-meta/tools/Control_Scripts.md)**, donde se lleva el registro centralizado de todos los scripts, sus imágenes y las notas que las consumen.
+3. **Metadatos en cada script.** Todo script `.py` debe incluir un bloque `::SCRIPT_METADATA::` en sus comentarios iniciales con al menos:
+   - `script_id`: nombre del archivo sin extensión.
+   - `module`: prefijo del módulo (`DIO`, `BJT`, `FET`, `AMP`, `PRO`).
+   - `generates`: lista de imágenes PNG que produce.
+   - `referenced_by`: lista de archivos `.md` que enlazan las imágenes.
+   - `last_updated`: fecha de última modificación.
+4. **Actualización del registro.** Al crear, modificar o eliminar un script, actualizar `Control_Scripts.md` de forma inmediata.
+
+### Gestión de imágenes generadas (limpieza de `media/generated/`)
+
+Cuando una imagen nueva **reemplace** a una imagen anterior:
+
+- Actualizar las referencias del repo para apuntar al archivo vigente.
+- Eliminar del repositorio la imagen anterior que ya no se usa.
+- Verificar que no existan enlaces rotos después del reemplazo.
+
+**Regla operativa:** `media/generated/` debe contener solo imágenes con uso actual en documentación o flujo de generación vigente. No se permiten archivos huérfanos.
 
 ---
 
