@@ -462,15 +462,25 @@ class App(tk.Tk):
 
         def _resize(e=None):
             canvas.configure(scrollregion=canvas.bbox("all"))
-            canvas.itemconfig(win_id, width=canvas.winfo_width())
+            if e.widget == canvas:
+                canvas.itemconfig(win_id, width=e.width)
 
         inner.bind("<Configure>", _resize)
         canvas.bind("<Configure>", _resize)
 
-        # Scroll con rueda del ratón
-        def _scroll(e):
-            canvas.yview_scroll(int(-1 * (e.delta / 120)), "units")
-        canvas.bind_all("<MouseWheel>", _scroll)
+        # Scroll con rueda del ratón (compatible con Windows y Linux/noVNC)
+        def _on_mousewheel(e):
+            if e.num == 4: canvas.yview_scroll(-1, "units")
+            elif e.num == 5: canvas.yview_scroll(1, "units")
+            else: canvas.yview_scroll(int(-1 * (e.delta / 120)), "units")
+
+        # Vincular solo cuando el mouse entra al panel
+        canvas.bind("<Enter>", lambda _: (canvas.bind_all("<MouseWheel>", _on_mousewheel),
+                                          canvas.bind_all("<Button-4>", _on_mousewheel),
+                                          canvas.bind_all("<Button-5>", _on_mousewheel)))
+        canvas.bind("<Leave>", lambda _: (canvas.unbind_all("<MouseWheel>"),
+                                          canvas.unbind_all("<Button-4>"),
+                                          canvas.unbind_all("<Button-5>")))
 
         # ── Título ─────────────────────────────────────────────────────────────
         tk.Label(inner, text="DATOS DE ENTRADA",
@@ -600,15 +610,27 @@ class App(tk.Tk):
         canvas.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=8, pady=4)
 
         self._calcs_inner = tk.Frame(canvas, bg=self.BG_TAB)
-        canvas.create_window((0, 0), window=self._calcs_inner, anchor=tk.NW)
+        self._win_id_calcs = canvas.create_window((0, 0), window=self._calcs_inner, anchor=tk.NW)
 
         def _resize(e=None):
             canvas.configure(scrollregion=canvas.bbox("all"))
-        self._calcs_inner.bind("<Configure>", _resize)
+            if e.widget == canvas:
+                canvas.itemconfig(self._win_id_calcs, width=e.width)
 
-        def _scroll(e):
-            canvas.yview_scroll(int(-1*(e.delta/120)), "units")
-        canvas.bind_all("<MouseWheel>", _scroll)
+        self._calcs_inner.bind("<Configure>", _resize)
+        canvas.bind("<Configure>", _resize)
+
+        def _on_mw_calcs(e):
+            if e.num == 4: canvas.yview_scroll(-1, "units")
+            elif e.num == 5: canvas.yview_scroll(1, "units")
+            else: canvas.yview_scroll(int(-1 * (e.delta / 120)), "units")
+
+        canvas.bind("<Enter>", lambda _: (canvas.bind_all("<MouseWheel>", _on_mw_calcs),
+                                          canvas.bind_all("<Button-4>", _on_mw_calcs),
+                                          canvas.bind_all("<Button-5>", _on_mw_calcs)))
+        canvas.bind("<Leave>", lambda _: (canvas.unbind_all("<MouseWheel>"),
+                                          canvas.unbind_all("<Button-4>"),
+                                          canvas.unbind_all("<Button-5>")))
 
         # Matriz de variables o etiquetas dinámicas para "Teórico"
         # Usaremos diccionarios para guardar las referencias de Labels que se actualizan
