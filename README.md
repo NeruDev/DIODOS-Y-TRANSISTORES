@@ -62,6 +62,15 @@ graph LR
   pip install numpy==2.4.2 matplotlib==3.10.8 schemdraw==0.22 pillow==12.1.0 packaging==26.0 python-dateutil==2.9.0.post0 six==1.17.0
   ```
 
+### Opcionales para diagramas avanzados
+
+- **Python (diagramas y simulacion):**
+  ```bash
+  pip install lcapy PySpice pygraphviz
+  ```
+- **Sistema (Debian/Codespaces):** `ngspice`, `graphviz`, `libgraphviz-dev`, `texlive-latex-base`, `texlive-pictures`, `dvisvgm`, `ghostscript`
+- **Nota sobre LaTeX:** `pdflatex` es una dependencia del sistema (no una extension de VS Code). Las extensiones solo ayudan con edicion y previsualizacion.
+
 ---
 
 ## Ejecución de Herramientas

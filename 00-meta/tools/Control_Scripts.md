@@ -338,6 +338,52 @@ last_updated: 2026-03-18
 
 ---
 
+### BJT-gen-base-comun-esquema.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/BJT-gen-base-comun-esquema.py` |
+| **Módulo** | `BJT` — 02-Transistor-BJT |
+| **Descripción** | Esquema de configuración en base común (NPN) con $R_C$, $R_E$, $V_{CC}$ y $V_{EE}$ |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `bjt-base-comun-esquema.png` | `topics/02-transistor-bjt/assets/` | [Nota1.md](../../topics/02-transistor-bjt/Notas/Nota1.md) |
+
+---
+
+### BJT-gen-base-comun-entrada.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/BJT-gen-base-comun-entrada.py` |
+| **Módulo** | `BJT` — 02-Transistor-BJT |
+| **Descripción** | Caracteristicas de entrada $I_E$ vs $V_{BE}$ para distintos $V_{CB}$ |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `bjt-base-comun-entrada.png` | `topics/02-transistor-bjt/assets/` | [Nota1.md](../../topics/02-transistor-bjt/Notas/Nota1.md) |
+
+---
+
+### BJT-gen-lcapy-configuraciones.py
+
+| Campo | Valor |
+|-------|-------|
+| **Script** | `00-META/tools/BJT-gen-lcapy-configuraciones.py` |
+| **Módulo** | `BJT` — 02-Transistor-BJT |
+| **Descripción** | Pruebas Lcapy con simbolos espaciados y configuraciones EC/CC/BC |
+
+| Imagen generada | Ruta | Referenciada en |
+|----------------|------|-----------------|
+| `bjt-lcapy-npn-espaciado.png` | `topics/02-transistor-bjt/assets/` | [Nota2.md](../../topics/02-transistor-bjt/Notas/Nota2.md) |
+| `bjt-lcapy-pnp-espaciado.png` | `topics/02-transistor-bjt/assets/` | [Nota2.md](../../topics/02-transistor-bjt/Notas/Nota2.md) |
+| `bjt-lcapy-emisor-comun.png` | `topics/02-transistor-bjt/assets/` | [Nota2.md](../../topics/02-transistor-bjt/Notas/Nota2.md) |
+| `bjt-lcapy-colector-comun.png` | `topics/02-transistor-bjt/assets/` | [Nota2.md](../../topics/02-transistor-bjt/Notas/Nota2.md) |
+| `bjt-lcapy-base-comun.png` | `topics/02-transistor-bjt/assets/` | [Nota2.md](../../topics/02-transistor-bjt/Notas/Nota2.md) |
+
+---
+
 ## Módulo 03 — Transistor FET (`FET`)
 
 ### FET-gen-curva-transferencia.py

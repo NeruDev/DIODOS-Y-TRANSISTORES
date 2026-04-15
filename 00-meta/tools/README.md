@@ -113,8 +113,32 @@ pip install numpy matplotlib scipy
 | **sympy** | Cálculo simbólico (simplificación de ecuaciones, LaTeX) | `pip install sympy` |
 | **lcapy** | Análisis simbólico de circuitos lineales (impedancias, transferencias) | `pip install lcapy` |
 | **PySpice** | Simulación SPICE desde Python (análisis DC, AC, transitorios) | `pip install PySpice` |
+| **pygraphviz** | Diagramas de bloques con ruteo automatico (Graphviz) | `pip install pygraphviz` |
 | **control** | Diagramas de Bode/Nyquist precisos, análisis de estabilidad | `pip install control` |
 | **SciencePlots** | Estilos matplotlib para publicaciones científicas (IEEE, Nature) | `pip install SciencePlots` |
+
+### Dependencias del sistema (para herramientas avanzadas)
+
+- **Lcapy:** requiere `pdflatex` y utilidades de conversion (recomendado `texlive-latex-base`, `texlive-pictures`, `dvisvgm`, `ghostscript`).
+- **PySpice:** requiere `ngspice`.
+- **pygraphviz:** requiere `graphviz` y `libgraphviz-dev`.
+
+Ejemplo en Debian/Codespaces:
+```bash
+sudo apt-get update
+sudo apt-get install -y ngspice graphviz libgraphviz-dev texlive-latex-base texlive-pictures dvisvgm ghostscript
+```
+
+> Nota: `pdflatex` es una dependencia del sistema (no una extension de VS Code). Las extensiones solo mejoran la edicion y previsualizacion.
+
+### Matriz de herramientas
+
+| Herramienta | Estetica | Facilidad | Transistores | Uso ideal |
+|-------------|----------|-----------|--------------|-----------|
+| **schemdraw** | Media | Alta | Basicos | Diagramas rapidos en Markdown |
+| **Lcapy** | Excelente | Media | Avanzados | Material tipo libro y teoria formal |
+| **PySpice** | N/A | Baja | Reales | Validacion con modelos de fabricante |
+| **Graphviz (pygraphviz)** | Alta | Media | N/A | Diagramas de bloques y ruteo automatico |
 
 ### Ejemplo rápido — schemdraw (circuito rectificador)
 

@@ -14,3 +14,6 @@ sympy==1.14.0
 plotly==6.6.0
 networkx==3.6.1
 opencv-python==4.13.0.92
+lcapy>=1.0,<2.0
+PySpice>=1.5,<2.0
+pygraphviz>=1.11,<2.0
