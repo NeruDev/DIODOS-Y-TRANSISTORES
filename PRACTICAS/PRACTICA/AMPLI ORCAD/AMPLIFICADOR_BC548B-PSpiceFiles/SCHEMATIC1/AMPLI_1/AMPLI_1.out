@@ -1,0 +1,153 @@
+
+**** 05/27/26 00:34:00 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-AMPLI_1"  [ G:\6TO SEMESTRE\DIODOS Y TRANSISTORES\TEMA 4\AMPLI ORCAD\AMPLIFICADOR_BC548B-PSpiceFiles\SCHEMAT
+
+
+ ****     CIRCUIT DESCRIPTION
+
+
+******************************************************************************
+
+
+
+
+** Creating circuit file "AMPLI_1.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Profile Libraries :
+* Local Libraries :
+* From [PSPICE NETLIST] section of C:\Users\jesus\cdssetup\OrCAD_PSpice\17.2.0\PSpice.ini file:
+.lib "nomd.lib" 
+
+*Analysis directives: 
+.TRAN  0 1ms 0 1ns 
+.OPTIONS ADVCONV
+.OPTIONS RELTOL= 0.0001
+.OPTIONS METHOD= Gear
+.PROBE64 V(*) I(*) W(alias(*)) D(alias(*)) NOISE(alias(*)) 
+.INC "..\SCHEMATIC1.net" 
+
+
+
+**** INCLUDING SCHEMATIC1.net ****
+* source AMPLIFICADOR_BC548B
+Q_Q1         N14637 N14610 N14633 BC548B 
+C_C1         N14604 N14610  47u  TC=0,0 
+C_C2         0 N14633  100u  TC=0,0 
+C_C3         N14731 N14637  10u  TC=0,0 
+R_R1         N14595 N14604  50 TC=0,0 
+R_R2         N14610 N14739  3.3k TC=0,0 
+R_R3         0 N14610  2.2k TC=0,0 
+R_R4         N14637 N14739  100 TC=0,0 
+R_R5         0 N14633  100 TC=0,0 
+R_R6         0 N14731  1k TC=0,0 
+V_V1         N14739 0 15Vdc
+V_V2         N14595 0  AC 0
++SIN 0 1mV 1K 0 0 0
+
+**** RESUMING AMPLI_1.cir ****
+.END
+
+**** 05/27/26 00:34:00 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-AMPLI_1"  [ G:\6TO SEMESTRE\DIODOS Y TRANSISTORES\TEMA 4\AMPLI ORCAD\AMPLIFICADOR_BC548B-PSpiceFiles\SCHEMAT
+
+
+ ****     BJT MODEL PARAMETERS
+
+
+******************************************************************************
+
+
+
+
+               BC548B          
+               NPN             
+       LEVEL    1            
+          IS    7.049000E-15 
+          BF  374.6          
+          NF    1            
+         VAF   62.79         
+         IKF     .08157      
+         ISE   68.000000E-15 
+          NE    1.576        
+          BR    1            
+          NR    1            
+         IKR    3.924        
+         ISC   12.400000E-15 
+          NC    1.835        
+          NK     .4767       
+         ISS    0            
+          RE    0            
+          RC     .9747       
+         CJE   11.500000E-12 
+         VJE     .5          
+         MJE     .6715       
+         CJC    5.250000E-12 
+         VJC     .5697       
+         MJC     .3147       
+        XCJC    1            
+         CJS    0            
+         VJS     .75         
+          TF  410.200000E-12 
+         XTF   40.06         
+         VTF   10            
+         ITF    1.491        
+          TR   10.000000E-09 
+         XTB    1.5          
+          KF    0            
+          AF    1            
+          CN    2.42         
+           D     .87         
+
+
+**** 05/27/26 00:34:00 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-AMPLI_1"  [ G:\6TO SEMESTRE\DIODOS Y TRANSISTORES\TEMA 4\AMPLI ORCAD\AMPLIFICADOR_BC548B-PSpiceFiles\SCHEMAT
+
+
+ ****     INITIAL TRANSIENT SOLUTION       TEMPERATURE =   27.000 DEG C
+
+
+******************************************************************************
+
+
+
+ NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE     NODE   VOLTAGE
+
+
+(N14595)    0.0000 (N14604)    0.0000 (N14610)    5.7366 (N14633)    4.9624     
+
+(N14637)   10.0580 (N14731)    0.0000 (N14739)   15.0000 
+
+
+
+
+    VOLTAGE SOURCE CURRENTS
+    NAME         CURRENT
+
+    V_V1        -5.223E-02
+    V_V2         0.000E+00
+
+    TOTAL POWER DISSIPATION   7.83E-01  WATTS
+
+
+
+          JOB CONCLUDED
+
+**** 05/27/26 00:34:00 ******* PSpice Lite (March 2016) ******* ID# 10813 ****
+
+ ** Profile: "SCHEMATIC1-AMPLI_1"  [ G:\6TO SEMESTRE\DIODOS Y TRANSISTORES\TEMA 4\AMPLI ORCAD\AMPLIFICADOR_BC548B-PSpiceFiles\SCHEMAT
+
+
+ ****     JOB STATISTICS SUMMARY
+
+
+******************************************************************************
+
+
+
+  Total job time (using Solver 1)   =        4.02
+

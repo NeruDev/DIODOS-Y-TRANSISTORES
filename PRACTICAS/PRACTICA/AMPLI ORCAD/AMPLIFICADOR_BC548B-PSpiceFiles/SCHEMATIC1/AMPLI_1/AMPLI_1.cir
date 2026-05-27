@@ -1,0 +1,21 @@
+** Profile: "SCHEMATIC1-AMPLI_1"  [ G:\6TO SEMESTRE\DIODOS Y TRANSISTORES\TEMA 4\AMPLI ORCAD\AMPLIFICADOR_BC548B-PSpiceFiles\SCHEMATIC1\AMPLI_1.sim ] 
+
+** Creating circuit file "AMPLI_1.cir" 
+** WARNING: THIS AUTOMATICALLY GENERATED FILE MAY BE OVERWRITTEN BY SUBSEQUENT SIMULATIONS
+
+*Libraries: 
+* Profile Libraries :
+* Local Libraries :
+* From [PSPICE NETLIST] section of C:\Users\jesus\cdssetup\OrCAD_PSpice\17.2.0\PSpice.ini file:
+.lib "nomd.lib" 
+
+*Analysis directives: 
+.TRAN  0 1ms 0 1ns 
+.OPTIONS ADVCONV
+.OPTIONS RELTOL= 0.0001
+.OPTIONS METHOD= Gear
+.PROBE64 V(*) I(*) W(alias(*)) D(alias(*)) NOISE(alias(*)) 
+.INC "..\SCHEMATIC1.net" 
+
+
+.END
